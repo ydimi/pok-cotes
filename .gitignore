@@ -1,0 +1,16 @@
+# Garde-fou d'étanchéité : ce dépôt est PUBLIC et ne doit contenir que le site rendu.
+# On n'ignore pas le bruit, on interdit tout par défaut et on ré-autorise les exceptions.
+*.json
+*.md
+*.mjs
+*.csv
+*.xlsx
+*.log
+.env
+node_modules/
+data/
+scripts/
+reference/
+
+!README.md
+!publish.mjs
