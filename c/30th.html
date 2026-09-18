@@ -165,7 +165,13 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
     var liens = '<div class="liens">'
       + '<a href="' + esc(l.cardmarket) + '" target="_blank" rel="noopener">'
       + (c.cmDirect ? 'Cardmarket FR' : 'Cardmarket') + '</a>'
-      + (l.pricecharting ? '<a href="' + esc(l.pricecharting) + '" target="_blank" rel="noopener">Ventes</a>' : '')
+      // Le lien « Ventes » n'apparaît QUE si le prix affiché vient effectivement de ces ventes.
+      // Sinon il envoie vers des chiffres qui contredisent la page sans rien expliquer : sur le
+      // Mewtwo-ex n°157, il montrait six ventes d'AVANT la sortie du set, entre 353 et 871 €,
+      // à côté d'une tendance Cardmarket de 165 €. Un lien qui contredit doit disparaître, pas
+      // se faire commenter.
+      + (l.pricecharting && b && b.origine === 'ventes'
+          ? '<a href="' + esc(l.pricecharting) + '" target="_blank" rel="noopener">Ventes</a>' : '')
       + '<a href="' + esc(l.ebay) + '" target="_blank" rel="noopener">eBay</a>'
       + '<a href="' + esc(l.leboncoin) + '" target="_blank" rel="noopener">leboncoin</a>'
       + '<a href="' + esc(l.vinted) + '" target="_blank" rel="noopener">Vinted</a>'
