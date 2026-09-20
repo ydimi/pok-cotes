@@ -23,7 +23,16 @@ h2{font-size:1.1rem;margin:26px 0 4px}
 table{width:100%;border-collapse:collapse;font-size:.9rem}
 th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:baseline}
 th{color:var(--muted);font-weight:500;font-size:.78rem}
-th.n,td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+td.n{white-space:nowrap}
+/* Le nombre d'offres passe sous le prix : « 7,80 – 11,00 € · 11 offres » sur une seule ligne
+   débordait de l'écran en 430 px. */
+td.n .det{display:block;color:var(--muted);font-size:.76rem;white-space:normal}
+@media(max-width:520px){
+  body{font-size:16px}
+  table{font-size:.84rem}
+  th,td{padding:6px 4px}
+}
 tbody tr:first-child td{font-weight:600}
 td.rang{color:var(--muted);width:2em;font-variant-numeric:tabular-nums}
 td a{text-decoration:none}
@@ -38,6 +47,12 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 .cle{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);
      border-radius:0 8px 8px 0;padding:12px 14px;margin:18px 0;font-size:.9rem;line-height:1.55}
 .cle b{color:#fff}
+.ou p,.risque p,.risque li{color:var(--muted);font-size:.88rem;line-height:1.55}
+.ou b,.risque b{color:var(--text)}
+.risque{background:#1c140822;border-left:3px solid var(--warn);border-radius:0 8px 8px 0;
+        padding:2px 14px 10px;margin-top:8px}
+.risque ul{padding-left:20px;margin:6px 0}
+.risque li{margin:5px 0}
 </style>
 </head>
 <body>
@@ -50,29 +65,32 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 <a class="retour" href="index.html">← les collections</a>
 
 <div class="cle">
-  Un booster ne coûte pas le même prix selon les extensions — de 4,64 €
-  à <b>14,41 €</b>. Comparer les
-  extensions sans tenir compte de ce prix n'a aucun sens : c'est pourquoi il y a deux
-  classements de rentabilité, et un troisième pour le plaisir.
+  Un booster ne coûte pas le même prix selon les extensions ni selon l'endroit où on l'achète.
+  Relevé en France&nbsp;: de <b>3,70 €</b> à
+  <b>18,28 €</b> l'unité. Comparer les extensions sans
+  tenir compte de ce prix n'a aucun sens&nbsp;: le premier classement est donc celui du prix
+  français réel, et le dernier celui du plaisir.
 </div>
 
 
 <section>
-  <h2>Au prix du marché</h2>
+  <h2>Au prix français</h2>
+  <p class="intro">Le prix réellement pratiqué en France, relevé sur eBay France : ni le prix conseillé, ni le prix américain. C’est le classement qui compte pour acheter ici.</p>
+  <table>
+    <thead><tr><th></th><th>Extension</th><th class="n">Booster en France</th><th class="n">Espérance</th><th class="n">Rapport</th></tr></thead>
+    <tbody><tr><td class="rang">1</td><td><a href="c/me02.html">Flammes Fantasmagoriques</a></td><td class="n">4,77 € – 5,94 €<span class="det">3 offres</span></td><td class="n">5,16 €</td><td class="n bon">0.96</td></tr><tr><td class="rang">2</td><td><a href="c/sv10.html">Rivalités Destinées</a></td><td class="n">4,15 € – 4,49 €<span class="det">4 offres</span></td><td class="n">3,33 €</td><td class="n bon">0.77</td></tr><tr><td class="rang">3</td><td><a href="c/me02.5.html">Héros Transcendants</a></td><td class="n">6,27 € – 18,28 €<span class="det">11 offres</span></td><td class="n">6,21 €</td><td class="n moyen">0.51</td></tr><tr><td class="rang">4</td><td><a href="c/sv09.html">Aventures Ensemble</a></td><td class="n">3,70 € – 4,49 €<span class="det">4 offres</span></td><td class="n">1,92 €</td><td class="n moyen">0.47</td></tr><tr><td class="rang">5</td><td><a href="c/me05.html">Nuit Noire</a></td><td class="n">7,80 € – 11,00 €<span class="det">11 offres</span></td><td class="n">2,92 €</td><td class="n mauvais">0.31</td></tr><tr><td class="rang">6</td><td><a href="c/me04.html">Chaos Ascendant</a></td><td class="n">4,40 € – 12,33 €<span class="det">17 offres</span></td><td class="n">2,51 €</td><td class="n mauvais">0.30</td></tr><tr><td class="rang">7</td><td><a href="c/me03.html">Équilibre Parfait</a></td><td class="n">6,66 € – 9,98 €<span class="det">10 offres</span></td><td class="n">2,46 €</td><td class="n mauvais">0.30</td></tr></tbody>
+  </table>
+</section>
+
+<p class="intro"><b>Trop peu d'offres en France</b> au moment du relevé pour établir un prix : Foudre Noire, Flamme Blanche, Évolutions Prismatiques, Méga-Évolution, 30ᵉ Anniversaire. Une extension épuisée ne se trouve plus qu'en display ou sur le marché de l'occasion.</p>
+
+
+<section>
+  <h2>Au prix du marché international</h2>
   <p class="intro">Ce que vous payez réellement un booster à l’unité aujourd’hui. Le rapport reste toujours sous 1 : sinon ouvrir des boosters serait de l’argent gratuit, et le marché corrigerait.</p>
   <table>
     <thead><tr><th></th><th>Extension</th><th class="n">Booster</th><th class="n">Espérance</th><th class="n">Rapport</th></tr></thead>
     <tbody><tr><td class="rang">1</td><td><a href="c/sv10.5b.html">Foudre Noire</a></td><td class="n">12,90 €</td><td class="n">10,54 €</td><td class="n bon">0.82</td></tr><tr><td class="rang">2</td><td><a href="c/sv10.5w.html">Flamme Blanche</a></td><td class="n">12,11 €</td><td class="n">8,81 €</td><td class="n bon">0.73</td></tr><tr><td class="rang">3</td><td><a href="c/sv08.5.html">Évolutions Prismatiques</a></td><td class="n">11,94 €</td><td class="n">7,27 €</td><td class="n moyen">0.61</td></tr><tr><td class="rang">4</td><td><a href="c/me05.html">Nuit Noire</a></td><td class="n">5,18 €</td><td class="n">2,92 €</td><td class="n moyen">0.56</td></tr><tr><td class="rang">5</td><td><a href="c/me02.5.html">Héros Transcendants</a></td><td class="n">11,35 €</td><td class="n">6,21 €</td><td class="n moyen">0.55</td></tr><tr><td class="rang">6</td><td><a href="c/me01.html">Méga-Évolution</a></td><td class="n">7,30 €</td><td class="n">3,97 €</td><td class="n moyen">0.54</td></tr><tr><td class="rang">7</td><td><a href="c/me04.html">Chaos Ascendant</a></td><td class="n">4,64 €</td><td class="n">2,51 €</td><td class="n moyen">0.54</td></tr><tr><td class="rang">8</td><td><a href="c/me02.html">Flammes Fantasmagoriques</a></td><td class="n">10,50 €</td><td class="n">5,16 €</td><td class="n mauvais">0.49</td></tr><tr><td class="rang">9</td><td><a href="c/me03.html">Équilibre Parfait</a></td><td class="n">5,03 €</td><td class="n">2,46 €</td><td class="n mauvais">0.49</td></tr><tr><td class="rang">10</td><td><a href="c/sv10.html">Rivalités Destinées</a></td><td class="n">7,86 €</td><td class="n">3,33 €</td><td class="n mauvais">0.42</td></tr><tr><td class="rang">11</td><td><a href="c/sv09.html">Aventures Ensemble</a></td><td class="n">7,97 €</td><td class="n">1,92 €</td><td class="n mauvais">0.24</td></tr><tr><td class="rang">12</td><td><a href="c/30th.html">30ᵉ Anniversaire</a></td><td class="n">14,41 €</td><td class="n">2,86 €</td><td class="n mauvais">0.20</td></tr></tbody>
-  </table>
-</section>
-
-
-<section>
-  <h2>Au prix boutique</h2>
-  <p class="intro">À budget égal, si vous en trouvez au prix conseillé (4,50 €). Utile en rayon, moins réaliste pour les extensions épuisées.</p>
-  <table>
-    <thead><tr><th></th><th>Extension</th><th class="n">Espérance</th><th class="n">Rapport</th></tr></thead>
-    <tbody><tr><td class="rang">1</td><td><a href="c/sv10.5b.html">Foudre Noire</a></td><td class="n">10,54 €</td><td class="n bon">2.34</td></tr><tr><td class="rang">2</td><td><a href="c/sv10.5w.html">Flamme Blanche</a></td><td class="n">8,81 €</td><td class="n bon">1.96</td></tr><tr><td class="rang">3</td><td><a href="c/sv08.5.html">Évolutions Prismatiques</a></td><td class="n">7,27 €</td><td class="n bon">1.62</td></tr><tr><td class="rang">4</td><td><a href="c/me02.5.html">Héros Transcendants</a></td><td class="n">6,21 €</td><td class="n bon">1.38</td></tr><tr><td class="rang">5</td><td><a href="c/me02.html">Flammes Fantasmagoriques</a></td><td class="n">5,16 €</td><td class="n bon">1.15</td></tr><tr><td class="rang">6</td><td><a href="c/me01.html">Méga-Évolution</a></td><td class="n">3,97 €</td><td class="n moyen">0.88</td></tr><tr><td class="rang">7</td><td><a href="c/sv10.html">Rivalités Destinées</a></td><td class="n">3,33 €</td><td class="n moyen">0.74</td></tr><tr><td class="rang">8</td><td><a href="c/me05.html">Nuit Noire</a></td><td class="n">2,92 €</td><td class="n mauvais">0.65</td></tr><tr><td class="rang">9</td><td><a href="c/30th.html">30ᵉ Anniversaire</a></td><td class="n">2,86 €</td><td class="n mauvais">0.63</td></tr><tr><td class="rang">10</td><td><a href="c/me04.html">Chaos Ascendant</a></td><td class="n">2,51 €</td><td class="n mauvais">0.56</td></tr><tr><td class="rang">11</td><td><a href="c/me03.html">Équilibre Parfait</a></td><td class="n">2,46 €</td><td class="n mauvais">0.55</td></tr><tr><td class="rang">12</td><td><a href="c/sv09.html">Aventures Ensemble</a></td><td class="n">1,92 €</td><td class="n mauvais">0.43</td></tr></tbody>
   </table>
 </section>
 
@@ -86,6 +104,48 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
   </table>
 </section>
 
+<section>
+  <h2>Où acheter, et à quel prix</h2>
+  <div class="ou">
+    <p><b>Grande distribution et enseignes culturelles</b> — Carrefour, Leclerc, Auchan, Fnac,
+    Cultura, Micromania. Prix conseillé, sans surprime, et souvent le même quelle que soit
+    l'extension. <b>C'est imbattable quand on trouve</b> : aucun autre circuit ne fera mieux.
+    Le problème est le stock, pas le prix — les hypermarchés sont vidés en quelques heures sur
+    les grosses sorties. Aucune de ces enseignes ne vend de cartes à l'unité.</p>
+
+    <p><b>Boutiques spécialisées</b> — Philibert, Play-in, Pokesumo, Les Gentlemen du Jeu,
+    DestockTCG. Chacune fixe son tarif : sur une extension recherchée, le booster peut doubler.
+    En revanche elles vendent des <b>cartes à l'unité</b>, et acheter la carte qu'on veut
+    revient presque toujours moins cher que d'espérer la tirer.</p>
+
+    <p><b>eBay et Cardmarket</b> — marché de revendeurs autant que de particuliers. C'est là
+    que se forment les prix du tableau ci-dessus, et le seul recours sur une extension épuisée.</p>
+  </div>
+
+  <h2>Leboncoin et Vinted</h2>
+  <div class="risque">
+    <p><b>Pour les cartes à l'unité, le risque est faible.</b> On voit la carte, le prix se
+    compare, et le pire qui puisse arriver est une erreur d'état ou de version — ce que les
+    fiches de collection de ce site servent justement à éviter.</p>
+
+    <p><b>Pour les boosters scellés, le risque est élevé</b>, et de trois natures :</p>
+    <ul>
+      <li><b>Le booster rescellé</b> — ouvert, vidé de sa carte de valeur, refermé.
+      Indétectable en photo.</li>
+      <li><b>La pesée</b> — un booster contenant une holographique pèse quelques dixièmes de
+      gramme de plus. Des vendeurs pèsent les boosters d'un display et revendent séparément
+      les « légers », vidés de toute chance. Un lot dépareillé à prix cassé, c'est souvent ça.</li>
+      <li><b>Le paiement hors plateforme</b> — PayPal « entre proches », virement, lien
+      externe. C'est le signal d'alerte le plus fiable, et il annule toute protection.</li>
+    </ul>
+
+    <p><b>Règle simple : n'achetez du scellé en petites annonces que si le prix est proche du
+    prix boutique.</b> Un booster imbattable est un booster déjà ouvert. Restez dans la
+    plateforme et son paiement sécurisé, <b>filmez l'ouverture du colis</b> — c'est la seule
+    preuve recevable en litige — et méfiez-vous des comptes récents sans historique.</p>
+  </div>
+</section>
+
 <details>
   <summary>Comment ces chiffres sont calculés</summary>
   <p>Pour chaque extension&nbsp;: <code>espérance = Σ P(rareté) × prix moyen des cartes de cette
@@ -97,6 +157,11 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
   <p>Les prix viennent de TCGplayer, marché américain, convertis au taux du jour. Les cartes se
   revendent plus cher en France — mesuré à 1,56 fois en médiane — donc l'espérance affichée ici
   est <b>prudente</b> pour un vendeur français.</p>
+  <p>Les prix français viennent de l'API officielle d'eBay France, filtrée sur les vendeurs
+  situés en France. Les lots, displays, coffrets et blisters sont écartés, ainsi que les cartes
+  à l'unité qu'eBay renvoie malgré le mot « booster ». La fourchette s'ancre sur l'offre la
+  moins chère crédible et écarte les vendeurs qui ne vendront pas. En dessous de trois offres
+  retenues, aucun prix n'est affiché.</p>
   <p>Ce calcul décrit le marché d'aujourd'hui. Une extension peut prendre de la valeur une fois
   épuisée, et le prix d'un booster monte alors avec elle.</p>
   <p>Page générée par <code>scripts/gen-boosters.mjs</code> — ne pas éditer à la main.</p>
