@@ -57,7 +57,6 @@ details p{color:var(--muted);font-size:.84rem}
 details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size:.92em}
 /* Six colonnes ne tiennent pas sur un téléphone. On masque le prix international, qui ne
    sert qu'à situer et dont l'explication reste sous le tableau. */
-@media(max-width:620px){
 
 #haut{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;
       background:var(--panel);border:1px solid var(--line);color:var(--text);cursor:pointer;
@@ -66,6 +65,7 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 #haut:hover{border-color:var(--accent);color:var(--accent)}
 #haut.on{display:flex}
 @media(max-width:480px){#haut{right:12px;bottom:12px}}
+@media(max-width:620px){
   table{font-size:.82rem}
   th,td{padding:7px 3px}
   th:nth-child(7),td:nth-child(7){display:none}

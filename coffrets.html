@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Quels coffrets acheter</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#2a313c;--text:#e6edf3;--muted:#8b949e;
+      --ok:#3fb950;--warn:#d29922;--bad:#f85149;--accent:#58a6ff}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+     font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.5}
+a{color:var(--accent)}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px 56px}
+.retour{display:inline-block;margin:16px 0 0;font-size:.88rem;text-decoration:none}
+header{border-bottom:1px solid var(--line);margin-bottom:6px;padding:20px 0 12px}
+h1{margin:0 0 4px;font-size:1.5rem}
+.sous{color:var(--muted);font-size:.84rem}
+h2{font-size:1.08rem;margin:30px 0 4px}
+.filtres{margin:14px 0 2px;font-size:.88rem;color:var(--muted)}
+.filtres label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.filtres input{width:17px;height:17px;accent-color:var(--accent)}
+.filtres label:hover{color:var(--text)}
+.filtres select{background:var(--panel);color:var(--text);border:1px solid var(--line);
+                border-radius:6px;padding:5px 8px;font-size:.88rem;font-family:inherit;margin-left:10px}
+.filtres .ast{display:block;margin-top:6px;font-size:.8rem;line-height:1.45}
+.filtres .ast b{color:var(--text)}
+.vide{color:var(--muted);font-size:.88rem;padding:14px 0;display:none}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:6px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:baseline}
+th{color:var(--muted);font-weight:500;font-size:.76rem;user-select:none;
+   position:sticky;top:0;background:var(--bg);white-space:normal}
+table.triable th{cursor:pointer}
+table.triable th:hover{color:var(--text)}
+th.actif{color:var(--accent)}
+th .fl{opacity:.5;font-size:.9em}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+td.n{white-space:nowrap}
+td .det{display:block;color:var(--muted);font-size:.74rem;white-space:normal;font-weight:400}
+td .det.bon{color:var(--ok)} td .det.moyen{color:var(--warn)} td .det.mauvais{color:var(--bad)}
+td.pour{color:var(--muted);font-size:.8rem;line-height:1.45;white-space:normal}
+td a{text-decoration:none}
+td a:hover{text-decoration:underline}
+.bon{color:var(--ok);font-weight:600}
+.moyen{color:var(--warn)}
+.mauvais{color:var(--bad);font-weight:600}
+details{margin:26px 0 0;border-top:1px solid var(--line);padding-top:14px}
+summary{cursor:pointer;color:var(--text);font-size:.92rem}
+details p,details li{color:var(--muted);font-size:.84rem;line-height:1.55}
+details b{color:var(--text)}
+
+#haut{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;
+      background:var(--panel);border:1px solid var(--line);color:var(--text);cursor:pointer;
+      font-size:1.2rem;line-height:1;display:none;align-items:center;justify-content:center;
+      box-shadow:0 2px 10px #0008;z-index:40;font-family:inherit}
+#haut:hover{border-color:var(--accent);color:var(--accent)}
+#haut.on{display:flex}
+@media(max-width:480px){#haut{right:12px;bottom:12px}}
+@media(max-width:700px){
+  table{font-size:.82rem}
+  th,td{padding:7px 3px}
+  th:nth-child(6),td:nth-child(6){display:none}
+  td.n{white-space:normal}
+  #synth th:nth-child(5),#synth td:nth-child(5){display:none}
+}
+@media(max-width:470px){
+  #princ th:nth-child(3),#princ td:nth-child(3){display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="retour" href="index.html">← toutes les collections</a>
+
+<header>
+  <h1>Quels coffrets acheter</h1>
+  <div class="sous">67 produits scellés mesurés sur 25 extensions · prix eBay France du 20/09/2026</div>
+</header>
+
+<h2>Les formats, du moins cher au plus cher par booster</h2>
+<table id="synth">
+<thead><tr><th>Format</th><th class="n">Boosters</th><th class="n">Prix médian par booster</th><th class="n">Écart au booster seul</th><th>À quoi ça sert</th></tr></thead>
+<tbody><tr>
+    <td>Demi-display<span class="det">18 boosters de l&#39;extension, rien d&#39;autre</span></td>
+    <td class="n">18</td>
+    <td class="n">7,72 €</td>
+    <td class="n moyen">−20 %</td>
+    <td class="pour">Un display coupé en deux. Même prix par booster qu&#39;un display, pour la moitié de la mise.</td>
+  </tr><tr>
+    <td>Display (présentoir)<span class="det">36 boosters de l&#39;extension, rien d&#39;autre</span></td>
+    <td class="n">36</td>
+    <td class="n">7,92 €</td>
+    <td class="n bon">−32 %</td>
+    <td class="pour">Ouvrir beaucoup, ou revendre les boosters à l&#39;unité. Le seul format où le prix par booster descend vraiment.</td>
+  </tr><tr>
+    <td>Bundle de boosters<span class="det">6 boosters, rien d&#39;autre</span></td>
+    <td class="n">6</td>
+    <td class="n">10,48 €</td>
+    <td class="n moyen">−17 %</td>
+    <td class="pour">Des boosters et rien d&#39;autre, sans payer le carton d&#39;un display. À comparer directement au prix du booster à l&#39;unité.</td>
+  </tr><tr>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9 boosters, 1 carte promo full art, 65 protège-cartes, 45 cartes Énergie, 6 dés, boîte de rangement</span></td>
+    <td class="n">9</td>
+    <td class="n">11,71 €</td>
+    <td class="n moyen">−10 %</td>
+    <td class="pour">Les protège-cartes et la boîte valent à eux seuls une quinzaine d&#39;euros. Le format le plus vendu en magasin.</td>
+  </tr><tr>
+    <td>Coffret Collection Classeur<span class="det">5 boosters, 1 classeur A4 de 21 pages à 9 cases (378 cartes)</span></td>
+    <td class="n">5</td>
+    <td class="n">12,99 €</td>
+    <td class="n moyen">−23 %</td>
+    <td class="pour">Le classeur seul vaut 15 à 25 EUR en magasin. Bon format quand on commence à ranger une collection.</td>
+  </tr><tr>
+    <td>Coffret Dresseur d&#39;Élite (Épée et Bouclier)<span class="det">8 boosters, 65 protège-cartes, 45 cartes Énergie, 6 dés, boîte de rangement</span></td>
+    <td class="n">8</td>
+    <td class="n">22,64 €</td>
+    <td class="n mauvais">+53 %</td>
+    <td class="pour">Même chose qu&#39;un ETB récent, avec un booster de moins.</td>
+  </tr></tbody>
+</table>
+
+<h2>Chaque produit, extension par extension</h2>
+<div class="filtres">
+  <label><input type="checkbox" id="fDispo"> N'afficher que ce qui est encore en rayon</label>
+  <select id="fFormat"><option value="">Tous les formats</option><option value="demidisplay18">Demi-display (18 boosters)</option><option value="display36">Display (présentoir) (36 boosters)</option><option value="bundle6">Bundle de boosters (6 boosters)</option><option value="etb9">Coffret Dresseur d&#39;Élite (ETB) (9 boosters)</option><option value="classeur5">Coffret Collection Classeur (5 boosters)</option><option value="etb8">Coffret Dresseur d&#39;Élite (Épée et Bouclier) (8 boosters)</option></select>
+  <span class="ast">Cliquez sur un titre de colonne pour trier. La colonne qui décide est
+  <b>€ par booster</b>&nbsp;: c'est le prix réel de ce qu'on achète.</span>
+</div>
+<table id="princ" class="triable">
+<thead><tr>
+  <th>Extension</th><th>Format</th><th class="n">Prix en France</th>
+  <th class="n">€ par booster</th><th class="n">vs booster seul</th>
+  <th class="n">Contenu moyen</th><th class="n">Rapport</th>
+</tr></thead>
+<tbody><tr data-dispo="fin" data-format="etb9">
+    <td><a href="c/sv10.5b.html">Foudre Noire</a><span class="det moyen">fin de vie · juil. 2025</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="105.4"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Foudre+Noire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">105 €<span class="det">9 offres →</span></a></td>
+    <td class="n" data-v="11.71">11,71 €</td>
+    <td class="n mauvais" data-v="1">−1 %<span class="det">booster seul 11,84 €</span></td>
+    <td class="n" data-v="94.86">94,86 €<span class="det">10,54 € / booster</span></td>
+    <td class="n bon" data-v="0.9">0.90</td>
+  </tr><tr data-dispo="fin" data-format="classeur5">
+    <td><a href="c/sv10.5b.html">Foudre Noire</a><span class="det moyen">fin de vie · juil. 2025</span></td>
+    <td>Coffret Collection Classeur<span class="det">5&nbsp;boosters</span></td>
+    <td class="n" data-v="65.26"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+classeur+pokemon+Foudre+Noire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">65,26 €<span class="det">8 offres →</span></a></td>
+    <td class="n" data-v="13.05">13,05 €</td>
+    <td class="n mauvais" data-v="-10">+10 %<span class="det">booster seul 11,84 €</span></td>
+    <td class="n" data-v="52.7">52,70 €<span class="det">10,54 € / booster</span></td>
+    <td class="n bon" data-v="0.81">0.81</td>
+  </tr><tr data-dispo="fin" data-format="bundle6">
+    <td><a href="c/sv10.5b.html">Foudre Noire</a><span class="det moyen">fin de vie · juil. 2025</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="80"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Foudre+Noire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">80,00 €<span class="det">7 offres →</span></a></td>
+    <td class="n" data-v="13.33">13,33 €</td>
+    <td class="n mauvais" data-v="-13">+13 %<span class="det">booster seul 11,84 €</span></td>
+    <td class="n" data-v="63.24">63,24 €<span class="det">10,54 € / booster</span></td>
+    <td class="n bon" data-v="0.79">0.79</td>
+  </tr><tr data-dispo="fin" data-format="bundle6">
+    <td><a href="c/sv10.5w.html">Flamme Blanche</a><span class="det moyen">fin de vie · juil. 2025</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="69.9"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Flamme+Blanche&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">69,90 €<span class="det">13 offres →</span></a></td>
+    <td class="n" data-v="11.65">11,65 €</td>
+    <td class="n bon" data-v="29">−29 %<span class="det">booster seul 16,42 €</span></td>
+    <td class="n" data-v="52.86">52,86 €<span class="det">8,81 € / booster</span></td>
+    <td class="n bon" data-v="0.76">0.76</td>
+  </tr><tr data-dispo="fin" data-format="etb9">
+    <td><a href="c/sv10.5w.html">Flamme Blanche</a><span class="det moyen">fin de vie · juil. 2025</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="110"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Flamme+Blanche&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">110 €<span class="det">11 offres →</span></a></td>
+    <td class="n" data-v="12.22">12,22 €</td>
+    <td class="n bon" data-v="26">−26 %<span class="det">booster seul 16,42 €</span></td>
+    <td class="n" data-v="79.29">79,29 €<span class="det">8,81 € / booster</span></td>
+    <td class="n bon" data-v="0.72">0.72</td>
+  </tr><tr data-dispo="fin" data-format="classeur5">
+    <td><a href="c/sv10.5w.html">Flamme Blanche</a><span class="det moyen">fin de vie · juil. 2025</span></td>
+    <td>Coffret Collection Classeur<span class="det">5&nbsp;boosters</span></td>
+    <td class="n" data-v="63.1"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+classeur+pokemon+Flamme+Blanche&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">63,10 €<span class="det">12 offres →</span></a></td>
+    <td class="n" data-v="12.62">12,62 €</td>
+    <td class="n moyen" data-v="23">−23 %<span class="det">booster seul 16,42 €</span></td>
+    <td class="n" data-v="44.05">44,05 €<span class="det">8,81 € / booster</span></td>
+    <td class="n bon" data-v="0.7">0.70</td>
+  </tr><tr data-dispo="rayon" data-format="display36">
+    <td><a href="c/me01.html">Méga-Évolution</a><span class="det bon">en rayon · sept. 2025</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="221.88"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+M%C3%A9ga-%C3%89volution+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">222 €<span class="det">17 offres →</span></a></td>
+    <td class="n" data-v="6.16">6,16 €</td>
+    <td class="n bon" data-v="42">−42 %<span class="det">booster seul 10,59 €</span></td>
+    <td class="n" data-v="142.92">143 €<span class="det">3,97 € / booster</span></td>
+    <td class="n bon" data-v="0.64">0.64</td>
+  </tr><tr data-dispo="fin" data-format="bundle6">
+    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det moyen">fin de vie · janv. 2025</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="71.08"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+%C3%89volutions+Prismatiques&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">71,08 €<span class="det">34 offres →</span></a></td>
+    <td class="n" data-v="11.85">11,85 €</td>
+    <td class="n bon" data-v="42">−42 %<span class="det">booster seul 20,40 €</span></td>
+    <td class="n" data-v="43.62">43,62 €<span class="det">7,27 € / booster</span></td>
+    <td class="n bon" data-v="0.61">0.61</td>
+  </tr><tr data-dispo="fin" data-format="classeur5">
+    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det moyen">fin de vie · janv. 2025</span></td>
+    <td>Coffret Collection Classeur<span class="det">5&nbsp;boosters</span></td>
+    <td class="n" data-v="64.93"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+classeur+pokemon+%C3%89volutions+Prismatiques&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">64,93 €<span class="det">16 offres →</span></a></td>
+    <td class="n" data-v="12.99">12,99 €</td>
+    <td class="n bon" data-v="36">−36 %<span class="det">booster seul 20,40 €</span></td>
+    <td class="n" data-v="36.35">36,35 €<span class="det">7,27 € / booster</span></td>
+    <td class="n bon" data-v="0.56">0.56</td>
+  </tr><tr data-dispo="rayon" data-format="demidisplay18">
+    <td><a href="c/me01.html">Méga-Évolution</a><span class="det bon">en rayon · sept. 2025</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="129.6"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+M%C3%A9ga-%C3%89volution&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">130 €<span class="det">9 offres →</span></a></td>
+    <td class="n" data-v="7.2">7,20 €</td>
+    <td class="n bon" data-v="32">−32 %<span class="det">booster seul 10,59 €</span></td>
+    <td class="n" data-v="71.46">71,46 €<span class="det">3,97 € / booster</span></td>
+    <td class="n bon" data-v="0.55">0.55</td>
+  </tr><tr data-dispo="rayon" data-format="display36">
+    <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det bon">en rayon · nov. 2025</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="346.8"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Flammes+Fantasmagoriques+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">347 €<span class="det">5 offres →</span></a></td>
+    <td class="n" data-v="9.63">9,63 €</td>
+    <td class="n bon" data-v="27">−27 %<span class="det">booster seul 13,26 €</span></td>
+    <td class="n" data-v="185.76">186 €<span class="det">5,16 € / booster</span></td>
+    <td class="n bon" data-v="0.54">0.54</td>
+  </tr><tr data-dispo="rayon" data-format="bundle6">
+    <td><a href="c/me01.html">Méga-Évolution</a><span class="det bon">en rayon · sept. 2025</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="45.08"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+M%C3%A9ga-%C3%89volution&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">45,08 €<span class="det">13 offres →</span></a></td>
+    <td class="n" data-v="7.51">7,51 €</td>
+    <td class="n bon" data-v="29">−29 %<span class="det">booster seul 10,59 €</span></td>
+    <td class="n" data-v="23.82">23,82 €<span class="det">3,97 € / booster</span></td>
+    <td class="n bon" data-v="0.53">0.53</td>
+  </tr><tr data-dispo="rayon" data-format="etb9">
+    <td><a href="c/me01.html">Méga-Évolution</a><span class="det bon">en rayon · sept. 2025</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="70"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+M%C3%A9ga-%C3%89volution&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">70,00 €<span class="det">40 offres →</span></a></td>
+    <td class="n" data-v="7.78">7,78 €</td>
+    <td class="n bon" data-v="27">−27 %<span class="det">booster seul 10,59 €</span></td>
+    <td class="n" data-v="35.73">35,73 €<span class="det">3,97 € / booster</span></td>
+    <td class="n bon" data-v="0.51">0.51</td>
+  </tr><tr data-dispo="rayon" data-format="display36">
+    <td><a href="c/me05.html">Nuit Noire</a><span class="det bon">en rayon · juil. 2026</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="206.8"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Nuit+Noire+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">207 €<span class="det">20 offres →</span></a></td>
+    <td class="n" data-v="5.74">5,74 €</td>
+    <td class="n bon" data-v="44">−44 %<span class="det">booster seul 10,21 €</span></td>
+    <td class="n" data-v="105.12">105 €<span class="det">2,92 € / booster</span></td>
+    <td class="n bon" data-v="0.51">0.51</td>
+  </tr><tr data-dispo="rayon" data-format="display36">
+    <td><a href="c/me02.5.html">Héros Transcendants</a><span class="det bon">en rayon · janv. 2026</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="448.88"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+H%C3%A9ros+Transcendants+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">449 €<span class="det">2 offres →</span></a></td>
+    <td class="n" data-v="12.47">12,47 €</td>
+    <td class="n bon" data-v="28">−28 %<span class="det">booster seul 17,43 €</span></td>
+    <td class="n" data-v="223.56">224 €<span class="det">6,21 € / booster</span></td>
+    <td class="n bon" data-v="0.5">0.50</td>
+  </tr><tr data-dispo="fin" data-format="etb9">
+    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det moyen">fin de vie · janv. 2025</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="134.28"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+%C3%89volutions+Prismatiques&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">134 €<span class="det">16 offres →</span></a></td>
+    <td class="n" data-v="14.92">14,92 €</td>
+    <td class="n bon" data-v="27">−27 %<span class="det">booster seul 20,40 €</span></td>
+    <td class="n" data-v="65.43">65,43 €<span class="det">7,27 € / booster</span></td>
+    <td class="n bon" data-v="0.49">0.49</td>
+  </tr><tr data-dispo="rayon" data-format="demidisplay18">
+    <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det bon">en rayon · nov. 2025</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="190"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+Flammes+Fantasmagoriques&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">190 €<span class="det">6 offres →</span></a></td>
+    <td class="n" data-v="10.56">10,56 €</td>
+    <td class="n moyen" data-v="20">−20 %<span class="det">booster seul 13,26 €</span></td>
+    <td class="n" data-v="92.88">92,88 €<span class="det">5,16 € / booster</span></td>
+    <td class="n bon" data-v="0.49">0.49</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/sv02.html">Évolutions à Paldea</a><span class="det mauvais">épuisée · juin 2023</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="279.78"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+%C3%89volutions+%C3%A0+Paldea+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">280 €<span class="det">6 offres →</span></a></td>
+    <td class="n" data-v="7.77">7,77 €</td>
+    <td class="n mauvais" data-v="-69">+69 %<span class="det">booster seul 4,60 €</span></td>
+    <td class="n" data-v="136.08">136 €<span class="det">3,78 € / booster</span></td>
+    <td class="n bon" data-v="0.49">0.49</td>
+  </tr><tr data-dispo="rayon" data-format="bundle6">
+    <td><a href="c/me02.5.html">Héros Transcendants</a><span class="det bon">en rayon · janv. 2026</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="80"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+H%C3%A9ros+Transcendants&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">80,00 €<span class="det">12 offres →</span></a></td>
+    <td class="n" data-v="13.33">13,33 €</td>
+    <td class="n moyen" data-v="24">−24 %<span class="det">booster seul 17,43 €</span></td>
+    <td class="n" data-v="37.26">37,26 €<span class="det">6,21 € / booster</span></td>
+    <td class="n bon" data-v="0.47">0.47</td>
+  </tr><tr data-dispo="rayon" data-format="bundle6">
+    <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det bon">en rayon · nov. 2025</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="68.17"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Flammes+Fantasmagoriques&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">68,17 €<span class="det">7 offres →</span></a></td>
+    <td class="n" data-v="11.36">11,36 €</td>
+    <td class="n moyen" data-v="14">−14 %<span class="det">booster seul 13,26 €</span></td>
+    <td class="n" data-v="30.96">30,96 €<span class="det">5,16 € / booster</span></td>
+    <td class="n bon" data-v="0.45">0.45</td>
+  </tr><tr data-dispo="epuise" data-format="bundle6">
+    <td><a href="c/sv06.5.html">Fable Nébuleuse</a><span class="det mauvais">épuisée · août 2024</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="52.9"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Fable+N%C3%A9buleuse&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">52,90 €<span class="det">4 offres →</span></a></td>
+    <td class="n" data-v="8.82">8,82 €</td>
+    <td class="n " data-v="">—</td>
+    <td class="n" data-v="23.34">23,34 €<span class="det">3,89 € / booster</span></td>
+    <td class="n bon" data-v="0.44">0.44</td>
+  </tr><tr data-dispo="rayon" data-format="display36">
+    <td><a href="c/me03.html">Équilibre Parfait</a><span class="det bon">en rayon · mars 2026</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="202.89"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+%C3%89quilibre+Parfait+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">203 €<span class="det">5 offres →</span></a></td>
+    <td class="n" data-v="5.64">5,64 €</td>
+    <td class="n bon" data-v="33">−33 %<span class="det">booster seul 8,40 €</span></td>
+    <td class="n" data-v="88.56">88,56 €<span class="det">2,46 € / booster</span></td>
+    <td class="n bon" data-v="0.44">0.44</td>
+  </tr><tr data-dispo="rayon" data-format="display36">
+    <td><a href="c/me04.html">Chaos Ascendant</a><span class="det bon">en rayon · mai 2026</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="216.8"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Chaos+Ascendant+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">217 €<span class="det">11 offres →</span></a></td>
+    <td class="n" data-v="6.02">6,02 €</td>
+    <td class="n bon" data-v="28">−28 %<span class="det">booster seul 8,38 €</span></td>
+    <td class="n" data-v="90.36">90,36 €<span class="det">2,51 € / booster</span></td>
+    <td class="n bon" data-v="0.42">0.42</td>
+  </tr><tr data-dispo="rayon" data-format="etb9">
+    <td><a href="c/me02.5.html">Héros Transcendants</a><span class="det bon">en rayon · janv. 2026</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="135.89"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+H%C3%A9ros+Transcendants&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">136 €<span class="det">20 offres →</span></a></td>
+    <td class="n" data-v="15.1">15,10 €</td>
+    <td class="n moyen" data-v="13">−13 %<span class="det">booster seul 17,43 €</span></td>
+    <td class="n" data-v="55.89">55,89 €<span class="det">6,21 € / booster</span></td>
+    <td class="n bon" data-v="0.41">0.41</td>
+  </tr><tr data-dispo="rayon" data-format="etb9">
+    <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det bon">en rayon · nov. 2025</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="114.51"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Flammes+Fantasmagoriques&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">115 €<span class="det">15 offres →</span></a></td>
+    <td class="n" data-v="12.72">12,72 €</td>
+    <td class="n mauvais" data-v="4">−4 %<span class="det">booster seul 13,26 €</span></td>
+    <td class="n" data-v="46.44">46,44 €<span class="det">5,16 € / booster</span></td>
+    <td class="n bon" data-v="0.41">0.41</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/sv05.html">Forces Temporelles</a><span class="det mauvais">épuisée · mars 2024</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="323.89"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Forces+Temporelles+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">324 €<span class="det">3 offres →</span></a></td>
+    <td class="n" data-v="9">9,00 €</td>
+    <td class="n bon" data-v="35">−35 %<span class="det">booster seul 13,88 €</span></td>
+    <td class="n" data-v="133.2">133 €<span class="det">3,70 € / booster</span></td>
+    <td class="n bon" data-v="0.41">0.41</td>
+  </tr><tr data-dispo="rayon" data-format="demidisplay18">
+    <td><a href="c/me05.html">Nuit Noire</a><span class="det bon">en rayon · juil. 2026</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="129.6"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+Nuit+Noire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">130 €<span class="det">7 offres →</span></a></td>
+    <td class="n" data-v="7.2">7,20 €</td>
+    <td class="n bon" data-v="29">−29 %<span class="det">booster seul 10,21 €</span></td>
+    <td class="n" data-v="52.56">52,56 €<span class="det">2,92 € / booster</span></td>
+    <td class="n bon" data-v="0.41">0.41</td>
+  </tr><tr data-dispo="rayon" data-format="bundle6">
+    <td><a href="c/me05.html">Nuit Noire</a><span class="det bon">en rayon · juil. 2026</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="43.4"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Nuit+Noire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">43,40 €<span class="det">15 offres →</span></a></td>
+    <td class="n" data-v="7.23">7,23 €</td>
+    <td class="n bon" data-v="29">−29 %<span class="det">booster seul 10,21 €</span></td>
+    <td class="n" data-v="17.52">17,52 €<span class="det">2,92 € / booster</span></td>
+    <td class="n bon" data-v="0.4">0.40</td>
+  </tr><tr data-dispo="epuise" data-format="etb9">
+    <td><a href="c/sv06.5.html">Fable Nébuleuse</a><span class="det mauvais">épuisée · août 2024</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="89.1"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Fable+N%C3%A9buleuse&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">89,10 €<span class="det">11 offres →</span></a></td>
+    <td class="n" data-v="9.9">9,90 €</td>
+    <td class="n " data-v="">—</td>
+    <td class="n" data-v="35.01">35,01 €<span class="det">3,89 € / booster</span></td>
+    <td class="n bon" data-v="0.39">0.39</td>
+  </tr><tr data-dispo="fin" data-format="display36">
+    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det moyen">fin de vie · janv. 2025</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="715.08"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+%C3%89volutions+Prismatiques+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">715 €<span class="det">6 offres →</span></a></td>
+    <td class="n" data-v="19.86">19,86 €</td>
+    <td class="n mauvais" data-v="3">−3 %<span class="det">booster seul 20,40 €</span></td>
+    <td class="n" data-v="261.72">262 €<span class="det">7,27 € / booster</span></td>
+    <td class="n moyen" data-v="0.37">0.37</td>
+  </tr><tr data-dispo="fin" data-format="demidisplay18">
+    <td><a href="c/sv10.html">Rivalités Destinées</a><span class="det moyen">fin de vie · mai 2025</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="163.2"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+Rivalit%C3%A9s+Destin%C3%A9es&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">163 €<span class="det">23 offres →</span></a></td>
+    <td class="n" data-v="9.07">9,07 €</td>
+    <td class="n bon" data-v="43">−43 %<span class="det">booster seul 15,81 €</span></td>
+    <td class="n" data-v="59.94">59,94 €<span class="det">3,33 € / booster</span></td>
+    <td class="n moyen" data-v="0.37">0.37</td>
+  </tr><tr data-dispo="rayon" data-format="demidisplay18">
+    <td><a href="c/me03.html">Équilibre Parfait</a><span class="det bon">en rayon · mars 2026</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="120.3"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+%C3%89quilibre+Parfait&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">120 €<span class="det">6 offres →</span></a></td>
+    <td class="n" data-v="6.68">6,68 €</td>
+    <td class="n moyen" data-v="20">−20 %<span class="det">booster seul 8,40 €</span></td>
+    <td class="n" data-v="44.28">44,28 €<span class="det">2,46 € / booster</span></td>
+    <td class="n moyen" data-v="0.37">0.37</td>
+  </tr><tr data-dispo="fin" data-format="display36">
+    <td><a href="c/sv07.html">Couronne Stellaire</a><span class="det moyen">fin de vie · sept. 2024</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="276.3"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Couronne+Stellaire+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">276 €<span class="det">3 offres →</span></a></td>
+    <td class="n" data-v="7.68">7,68 €</td>
+    <td class="n bon" data-v="47">−47 %<span class="det">booster seul 14,38 €</span></td>
+    <td class="n" data-v="100.44">100 €<span class="det">2,79 € / booster</span></td>
+    <td class="n moyen" data-v="0.36">0.36</td>
+  </tr><tr data-dispo="fin" data-format="display36">
+    <td><a href="c/sv10.html">Rivalités Destinées</a><span class="det moyen">fin de vie · mai 2025</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="339.1"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Rivalit%C3%A9s+Destin%C3%A9es+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">339 €<span class="det">30 offres →</span></a></td>
+    <td class="n" data-v="9.42">9,42 €</td>
+    <td class="n bon" data-v="40">−40 %<span class="det">booster seul 15,81 €</span></td>
+    <td class="n" data-v="119.88">120 €<span class="det">3,33 € / booster</span></td>
+    <td class="n moyen" data-v="0.35">0.35</td>
+  </tr><tr data-dispo="epuise" data-format="etb9">
+    <td><a href="c/sv06.html">Mascarade Crépusculaire</a><span class="det mauvais">épuisée · mai 2024</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="83.58"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Mascarade+Cr%C3%A9pusculaire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">83,58 €<span class="det">21 offres →</span></a></td>
+    <td class="n" data-v="9.29">9,29 €</td>
+    <td class="n moyen" data-v="23">−23 %<span class="det">booster seul 12,02 €</span></td>
+    <td class="n" data-v="29.07">29,07 €<span class="det">3,23 € / booster</span></td>
+    <td class="n moyen" data-v="0.35">0.35</td>
+  </tr><tr data-dispo="rayon" data-format="etb9">
+    <td><a href="c/me05.html">Nuit Noire</a><span class="det bon">en rayon · juil. 2026</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="76.04"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Nuit+Noire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">76,04 €<span class="det">47 offres →</span></a></td>
+    <td class="n" data-v="8.45">8,45 €</td>
+    <td class="n moyen" data-v="17">−17 %<span class="det">booster seul 10,21 €</span></td>
+    <td class="n" data-v="26.28">26,28 €<span class="det">2,92 € / booster</span></td>
+    <td class="n moyen" data-v="0.35">0.35</td>
+  </tr><tr data-dispo="rayon" data-format="bundle6">
+    <td><a href="c/me04.html">Chaos Ascendant</a><span class="det bon">en rayon · mai 2026</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="43.15"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Chaos+Ascendant&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">43,15 €<span class="det">20 offres →</span></a></td>
+    <td class="n" data-v="7.19">7,19 €</td>
+    <td class="n moyen" data-v="14">−14 %<span class="det">booster seul 8,38 €</span></td>
+    <td class="n" data-v="15.06">15,06 €<span class="det">2,51 € / booster</span></td>
+    <td class="n moyen" data-v="0.35">0.35</td>
+  </tr><tr data-dispo="rayon" data-format="bundle6">
+    <td><a href="c/me03.html">Équilibre Parfait</a><span class="det bon">en rayon · mars 2026</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="41.96"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+%C3%89quilibre+Parfait&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">41,96 €<span class="det">13 offres →</span></a></td>
+    <td class="n" data-v="6.99">6,99 €</td>
+    <td class="n moyen" data-v="17">−17 %<span class="det">booster seul 8,40 €</span></td>
+    <td class="n" data-v="14.76">14,76 €<span class="det">2,46 € / booster</span></td>
+    <td class="n moyen" data-v="0.35">0.35</td>
+  </tr><tr data-dispo="fin" data-format="display36">
+    <td><a href="c/sv08.html">Étincelles Déferlantes</a><span class="det moyen">fin de vie · nov. 2024</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="273.8"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+%C3%89tincelles+D%C3%A9ferlantes+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">274 €<span class="det">29 offres →</span></a></td>
+    <td class="n" data-v="7.61">7,61 €</td>
+    <td class="n bon" data-v="40">−40 %<span class="det">booster seul 12,67 €</span></td>
+    <td class="n" data-v="93.6">93,60 €<span class="det">2,60 € / booster</span></td>
+    <td class="n moyen" data-v="0.34">0.34</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/sv06.5.html">Fable Nébuleuse</a><span class="det mauvais">épuisée · août 2024</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="418.26"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Fable+N%C3%A9buleuse+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">418 €<span class="det">3 offres →</span></a></td>
+    <td class="n" data-v="11.62">11,62 €</td>
+    <td class="n " data-v="">—</td>
+    <td class="n" data-v="140.04">140 €<span class="det">3,89 € / booster</span></td>
+    <td class="n moyen" data-v="0.33">0.33</td>
+  </tr><tr data-dispo="epuise" data-format="etb9">
+    <td><a href="c/sv05.html">Forces Temporelles</a><span class="det mauvais">épuisée · mars 2024</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="103.08"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Forces+Temporelles&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">103 €<span class="det">3 offres →</span></a></td>
+    <td class="n" data-v="11.45">11,45 €</td>
+    <td class="n moyen" data-v="18">−18 %<span class="det">booster seul 13,88 €</span></td>
+    <td class="n" data-v="33.3">33,30 €<span class="det">3,70 € / booster</span></td>
+    <td class="n moyen" data-v="0.32">0.32</td>
+  </tr><tr data-dispo="rayon" data-format="demidisplay18">
+    <td><a href="c/me04.html">Chaos Ascendant</a><span class="det bon">en rayon · mai 2026</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="139.48"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+Chaos+Ascendant&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">139 €<span class="det">5 offres →</span></a></td>
+    <td class="n" data-v="7.75">7,75 €</td>
+    <td class="n moyen" data-v="8">−8 %<span class="det">booster seul 8,38 €</span></td>
+    <td class="n" data-v="45.18">45,18 €<span class="det">2,51 € / booster</span></td>
+    <td class="n moyen" data-v="0.32">0.32</td>
+  </tr><tr data-dispo="rayon" data-format="etb9">
+    <td><a href="c/me04.html">Chaos Ascendant</a><span class="det bon">en rayon · mai 2026</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="71.17"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Chaos+Ascendant&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">71,17 €<span class="det">47 offres →</span></a></td>
+    <td class="n" data-v="7.91">7,91 €</td>
+    <td class="n mauvais" data-v="6">−6 %<span class="det">booster seul 8,38 €</span></td>
+    <td class="n" data-v="22.59">22,59 €<span class="det">2,51 € / booster</span></td>
+    <td class="n moyen" data-v="0.32">0.32</td>
+  </tr><tr data-dispo="rayon" data-format="etb9">
+    <td><a href="c/me03.html">Équilibre Parfait</a><span class="det bon">en rayon · mars 2026</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="68.3"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+%C3%89quilibre+Parfait&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">68,30 €<span class="det">33 offres →</span></a></td>
+    <td class="n" data-v="7.59">7,59 €</td>
+    <td class="n moyen" data-v="10">−10 %<span class="det">booster seul 8,40 €</span></td>
+    <td class="n" data-v="22.14">22,14 €<span class="det">2,46 € / booster</span></td>
+    <td class="n moyen" data-v="0.32">0.32</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/sv03.html">Flammes Obsidiennes</a><span class="det mauvais">épuisée · août 2023</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="238.28"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Flammes+Obsidiennes+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">238 €<span class="det">13 offres →</span></a></td>
+    <td class="n" data-v="6.62">6,62 €</td>
+    <td class="n moyen" data-v="17">−17 %<span class="det">booster seul 7,98 €</span></td>
+    <td class="n" data-v="75.96">75,96 €<span class="det">2,11 € / booster</span></td>
+    <td class="n moyen" data-v="0.32">0.32</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/sv04.html">Faille Paradoxe</a><span class="det mauvais">épuisée · nov. 2023</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="285"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Faille+Paradoxe+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">285 €<span class="det">5 offres →</span></a></td>
+    <td class="n" data-v="7.92">7,92 €</td>
+    <td class="n bon" data-v="31">−31 %<span class="det">booster seul 11,44 €</span></td>
+    <td class="n" data-v="87.84">87,84 €<span class="det">2,44 € / booster</span></td>
+    <td class="n moyen" data-v="0.31">0.31</td>
+  </tr><tr data-dispo="fin" data-format="display36">
+    <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det moyen">fin de vie · mars 2025</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="220"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Aventures+Ensemble+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">220 €<span class="det">26 offres →</span></a></td>
+    <td class="n" data-v="6.11">6,11 €</td>
+    <td class="n bon" data-v="45">−45 %<span class="det">booster seul 11,05 €</span></td>
+    <td class="n" data-v="69.12">69,12 €<span class="det">1,92 € / booster</span></td>
+    <td class="n moyen" data-v="0.31">0.31</td>
+  </tr><tr data-dispo="fin" data-format="etb9">
+    <td><a href="c/sv07.html">Couronne Stellaire</a><span class="det moyen">fin de vie · sept. 2024</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="93.89"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Couronne+Stellaire&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">93,89 €<span class="det">5 offres →</span></a></td>
+    <td class="n" data-v="10.43">10,43 €</td>
+    <td class="n bon" data-v="27">−27 %<span class="det">booster seul 14,38 €</span></td>
+    <td class="n" data-v="25.11">25,11 €<span class="det">2,79 € / booster</span></td>
+    <td class="n moyen" data-v="0.27">0.27</td>
+  </tr><tr data-dispo="epuise" data-format="bundle6">
+    <td><a href="c/sv04.5.html">Destinées de Paldea</a><span class="det mauvais">épuisée · janv. 2024</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="97.1"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Destin%C3%A9es+de+Paldea&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">97,10 €<span class="det">7 offres →</span></a></td>
+    <td class="n" data-v="16.18">16,18 €</td>
+    <td class="n " data-v="">—</td>
+    <td class="n" data-v="23.88">23,88 €<span class="det">3,98 € / booster</span></td>
+    <td class="n mauvais" data-v="0.25">0.25</td>
+  </tr><tr data-dispo="fin" data-format="bundle6">
+    <td><a href="c/sv08.html">Étincelles Déferlantes</a><span class="det moyen">fin de vie · nov. 2024</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="62.88"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+%C3%89tincelles+D%C3%A9ferlantes&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">62,88 €<span class="det">13 offres →</span></a></td>
+    <td class="n" data-v="10.48">10,48 €</td>
+    <td class="n moyen" data-v="17">−17 %<span class="det">booster seul 12,67 €</span></td>
+    <td class="n" data-v="15.6">15,60 €<span class="det">2,60 € / booster</span></td>
+    <td class="n mauvais" data-v="0.25">0.25</td>
+  </tr><tr data-dispo="fin" data-format="demidisplay18">
+    <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det moyen">fin de vie · mars 2025</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="138.89"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+Aventures+Ensemble&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">139 €<span class="det">21 offres →</span></a></td>
+    <td class="n" data-v="7.72">7,72 €</td>
+    <td class="n bon" data-v="30">−30 %<span class="det">booster seul 11,05 €</span></td>
+    <td class="n" data-v="34.56">34,56 €<span class="det">1,92 € / booster</span></td>
+    <td class="n mauvais" data-v="0.25">0.25</td>
+  </tr><tr data-dispo="fin" data-format="demidisplay18">
+    <td><a href="c/sv08.html">Étincelles Déferlantes</a><span class="det moyen">fin de vie · nov. 2024</span></td>
+    <td>Demi-display<span class="det">18&nbsp;boosters</span></td>
+    <td class="n" data-v="199.9"><a href="https://www.ebay.fr/sch/i.html?_nkw=demi+display+pokemon+%C3%89tincelles+D%C3%A9ferlantes&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">200 €<span class="det">7 offres →</span></a></td>
+    <td class="n" data-v="11.11">11,11 €</td>
+    <td class="n moyen" data-v="12">−12 %<span class="det">booster seul 12,67 €</span></td>
+    <td class="n" data-v="46.8">46,80 €<span class="det">2,60 € / booster</span></td>
+    <td class="n mauvais" data-v="0.23">0.23</td>
+  </tr><tr data-dispo="epuise" data-format="etb9">
+    <td><a href="c/sv04.5.html">Destinées de Paldea</a><span class="det mauvais">épuisée · janv. 2024</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="163.57"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Destin%C3%A9es+de+Paldea&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">164 €<span class="det">16 offres →</span></a></td>
+    <td class="n" data-v="18.17">18,17 €</td>
+    <td class="n " data-v="">—</td>
+    <td class="n" data-v="35.82">35,82 €<span class="det">3,98 € / booster</span></td>
+    <td class="n mauvais" data-v="0.22">0.22</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/swsh11.html">Origine Perdue</a><span class="det mauvais">épuisée · sept. 2022</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="354.8"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Origine+Perdue+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">355 €<span class="det">22 offres →</span></a></td>
+    <td class="n" data-v="9.86">9,86 €</td>
+    <td class="n bon" data-v="32">−32 %<span class="det">booster seul 14,42 €</span></td>
+    <td class="n" data-v="75.96">75,96 €<span class="det">2,11 € / booster</span></td>
+    <td class="n mauvais" data-v="0.21">0.21</td>
+  </tr><tr data-dispo="fin" data-format="etb9">
+    <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det moyen">fin de vie · mars 2025</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="83.9"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Aventures+Ensemble&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">83,90 €<span class="det">44 offres →</span></a></td>
+    <td class="n" data-v="9.32">9,32 €</td>
+    <td class="n moyen" data-v="16">−16 %<span class="det">booster seul 11,05 €</span></td>
+    <td class="n" data-v="17.28">17,28 €<span class="det">1,92 € / booster</span></td>
+    <td class="n mauvais" data-v="0.21">0.21</td>
+  </tr><tr data-dispo="epuise" data-format="etb9">
+    <td><a href="c/sv04.html">Faille Paradoxe</a><span class="det mauvais">épuisée · nov. 2023</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="107.69"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Faille+Paradoxe&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">108 €<span class="det">11 offres →</span></a></td>
+    <td class="n" data-v="11.97">11,97 €</td>
+    <td class="n mauvais" data-v="-5">+5 %<span class="det">booster seul 11,44 €</span></td>
+    <td class="n" data-v="21.96">21,96 €<span class="det">2,44 € / booster</span></td>
+    <td class="n mauvais" data-v="0.2">0.20</td>
+  </tr><tr data-dispo="fin" data-format="bundle6">
+    <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det moyen">fin de vie · mars 2025</span></td>
+    <td>Bundle de boosters<span class="det">6&nbsp;boosters</span></td>
+    <td class="n" data-v="57.64"><a href="https://www.ebay.fr/sch/i.html?_nkw=bundle+boosters+pokemon+Aventures+Ensemble&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">57,64 €<span class="det">9 offres →</span></a></td>
+    <td class="n" data-v="9.61">9,61 €</td>
+    <td class="n moyen" data-v="13">−13 %<span class="det">booster seul 11,05 €</span></td>
+    <td class="n" data-v="11.52">11,52 €<span class="det">1,92 € / booster</span></td>
+    <td class="n mauvais" data-v="0.2">0.20</td>
+  </tr><tr data-dispo="fin" data-format="etb9">
+    <td><a href="c/sv10.html">Rivalités Destinées</a><span class="det moyen">fin de vie · mai 2025</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="170.68"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Rivalit%C3%A9s+Destin%C3%A9es&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">171 €<span class="det">11 offres →</span></a></td>
+    <td class="n" data-v="18.96">18,96 €</td>
+    <td class="n mauvais" data-v="-20">+20 %<span class="det">booster seul 15,81 €</span></td>
+    <td class="n" data-v="29.97">29,97 €<span class="det">3,33 € / booster</span></td>
+    <td class="n mauvais" data-v="0.18">0.18</td>
+  </tr><tr data-dispo="epuise" data-format="etb9">
+    <td><a href="c/sv02.html">Évolutions à Paldea</a><span class="det mauvais">épuisée · juin 2023</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="198.59"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+%C3%89volutions+%C3%A0+Paldea&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">199 €<span class="det">6 offres →</span></a></td>
+    <td class="n" data-v="22.07">22,07 €</td>
+    <td class="n mauvais" data-v="-380">+380 %<span class="det">booster seul 4,60 €</span></td>
+    <td class="n" data-v="34.02">34,02 €<span class="det">3,78 € / booster</span></td>
+    <td class="n mauvais" data-v="0.17">0.17</td>
+  </tr><tr data-dispo="fin" data-format="etb9">
+    <td><a href="c/sv08.html">Étincelles Déferlantes</a><span class="det moyen">fin de vie · nov. 2024</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="140.7"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+%C3%89tincelles+D%C3%A9ferlantes&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">141 €<span class="det">12 offres →</span></a></td>
+    <td class="n" data-v="15.63">15,63 €</td>
+    <td class="n mauvais" data-v="-23">+23 %<span class="det">booster seul 12,67 €</span></td>
+    <td class="n" data-v="23.4">23,40 €<span class="det">2,60 € / booster</span></td>
+    <td class="n mauvais" data-v="0.17">0.17</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/swsh12.html">Tempête Argentée</a><span class="det mauvais">épuisée · nov. 2022</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="419.5"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Temp%C3%AAte+Argent%C3%A9e+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">420 €<span class="det">8 offres →</span></a></td>
+    <td class="n" data-v="11.65">11,65 €</td>
+    <td class="n moyen" data-v="14">−14 %<span class="det">booster seul 13,57 €</span></td>
+    <td class="n" data-v="48.24">48,24 €<span class="det">1,34 € / booster</span></td>
+    <td class="n mauvais" data-v="0.12">0.12</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/swsh10.html">Astres Radieux</a><span class="det mauvais">épuisée · mai 2022</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="311.66"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Astres+Radieux+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">312 €<span class="det">15 offres →</span></a></td>
+    <td class="n" data-v="8.66">8,66 €</td>
+    <td class="n bon" data-v="40">−40 %<span class="det">booster seul 14,50 €</span></td>
+    <td class="n" data-v="37.44">37,44 €<span class="det">1,04 € / booster</span></td>
+    <td class="n mauvais" data-v="0.12">0.12</td>
+  </tr><tr data-dispo="epuise" data-format="etb9">
+    <td><a href="c/sv03.html">Flammes Obsidiennes</a><span class="det mauvais">épuisée · août 2023</span></td>
+    <td>Coffret Dresseur d&#39;Élite (ETB)<span class="det">9&nbsp;boosters</span></td>
+    <td class="n" data-v="213.29"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Flammes+Obsidiennes&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">213 €<span class="det">3 offres →</span></a></td>
+    <td class="n" data-v="23.7">23,70 €</td>
+    <td class="n mauvais" data-v="-197">+197 %<span class="det">booster seul 7,98 €</span></td>
+    <td class="n" data-v="18.99">18,99 €<span class="det">2,11 € / booster</span></td>
+    <td class="n mauvais" data-v="0.09">0.09</td>
+  </tr><tr data-dispo="epuise" data-format="display36">
+    <td><a href="c/swsh9.html">Stars Étincelantes</a><span class="det mauvais">épuisée · févr. 2022</span></td>
+    <td>Display (présentoir)<span class="det">36&nbsp;boosters</span></td>
+    <td class="n" data-v="429.7"><a href="https://www.ebay.fr/sch/i.html?_nkw=display+pokemon+Stars+%C3%89tincelantes+scelle&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">430 €<span class="det">6 offres →</span></a></td>
+    <td class="n" data-v="11.94">11,94 €</td>
+    <td class="n bon" data-v="31">−31 %<span class="det">booster seul 17,33 €</span></td>
+    <td class="n" data-v="37.8">37,80 €<span class="det">1,05 € / booster</span></td>
+    <td class="n mauvais" data-v="0.09">0.09</td>
+  </tr><tr data-dispo="epuise" data-format="etb8">
+    <td><a href="c/swsh10.html">Astres Radieux</a><span class="det mauvais">épuisée · mai 2022</span></td>
+    <td>Coffret Dresseur d&#39;Élite (Épée et Bouclier)<span class="det">8&nbsp;boosters</span></td>
+    <td class="n" data-v="181.08"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Astres+Radieux&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">181 €<span class="det">4 offres →</span></a></td>
+    <td class="n" data-v="22.64">22,64 €</td>
+    <td class="n mauvais" data-v="-56">+56 %<span class="det">booster seul 14,50 €</span></td>
+    <td class="n" data-v="8.32">8,32 €<span class="det">1,04 € / booster</span></td>
+    <td class="n mauvais" data-v="0.05">0.05</td>
+  </tr><tr data-dispo="epuise" data-format="etb8">
+    <td><a href="c/swsh9.html">Stars Étincelantes</a><span class="det mauvais">épuisée · févr. 2022</span></td>
+    <td>Coffret Dresseur d&#39;Élite (Épée et Bouclier)<span class="det">8&nbsp;boosters</span></td>
+    <td class="n" data-v="211.48"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Stars+%C3%89tincelantes&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">211 €<span class="det">3 offres →</span></a></td>
+    <td class="n" data-v="26.44">26,44 €</td>
+    <td class="n mauvais" data-v="-53">+53 %<span class="det">booster seul 17,33 €</span></td>
+    <td class="n" data-v="8.4">8,40 €<span class="det">1,05 € / booster</span></td>
+    <td class="n mauvais" data-v="0.04">0.04</td>
+  </tr><tr data-dispo="epuise" data-format="etb8">
+    <td><a href="c/swsh10.5.html">Pokémon GO</a><span class="det mauvais">épuisée · juil. 2022</span></td>
+    <td>Coffret Dresseur d&#39;Élite (Épée et Bouclier)<span class="det">8&nbsp;boosters</span></td>
+    <td class="n" data-v="156.7"><a href="https://www.ebay.fr/sch/i.html?_nkw=coffret+dresseur+elite+pokemon+Pok%C3%A9mon+GO&amp;_sacat=261044&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">157 €<span class="det">9 offres →</span></a></td>
+    <td class="n" data-v="19.59">19,59 €</td>
+    <td class="n mauvais" data-v="3">−3 %<span class="det">booster seul 20,14 €</span></td>
+    <td class="n" data-v="3.84">3,84 €<span class="det">0,48 € / booster</span></td>
+    <td class="n mauvais" data-v="0.02">0.02</td>
+  </tr></tbody>
+</table>
+<div class="vide" id="vide">Aucun produit ne correspond à ce filtre.</div>
+
+<details>
+<summary>D'où viennent ces chiffres</summary>
+<p><b>Le prix</b> est mesuré sur eBay France, port compris, sur les annonces à prix fixe
+expédiées depuis la France. Le chiffre retenu est l'offre la moins chère crédible, pas la
+moyenne&nbsp;: c'est le prix auquel on peut effectivement acheter aujourd'hui. Le compteur
+d'offres ouvre la recherche qui l'a produit.</p>
+<p><b>Le nombre de boosters</b> ne vient pas d'une mesure mais du contenu officiel du type de
+produit, saisi à la main avec sa source. Quand le titre d'une annonce annonce un autre nombre,
+c'est lui qui fait foi et l'annonce est classée ailleurs ou écartée&nbsp;: un «&nbsp;display&nbsp;»
+français désigne parfois un présentoir de mini-tins ou un demi-display de 18&nbsp;boosters, et
+compter 36 boosters dedans faisait tomber le prix par booster à un quart de sa valeur réelle.
+<b>Vérifiez l'emballage avant d'acheter</b>&nbsp;: une édition spéciale peut s'écarter du
+format standard.</p>
+<p><b>Contenu moyen</b> est la valeur marchande moyenne des cartes de toute la boîte, obtenue
+en multipliant l'espérance d'un booster de l'extension par le nombre de boosters. <b>Rapport</b>
+est cette espérance divisée par le prix payé par booster. Un rapport de 0,40 veut dire qu'on
+récupère en moyenne 40&nbsp;% de sa mise en valeur de cartes&nbsp;: c'est normal et c'est
+attendu, l'éditeur, le distributeur et le magasin vivent de la différence. Aucun produit scellé
+n'est un placement.</p>
+<p><b>Ce que ces chiffres ne disent pas</b>&nbsp;: la valeur des accessoires. Les
+65&nbsp;protège-cartes, la boîte de rangement et les dés d'un coffret dresseur d'élite, ou le
+classeur de 378&nbsp;cartes d'un coffret collection, valent une quinzaine d'euros en magasin et
+n'entrent dans aucune colonne. Si vous en avez l'usage, retirez-les mentalement du prix&nbsp;;
+sinon, ne les payez pas.</p>
+</details>
+
+</div>
+<button id="haut" type="button" aria-label="Revenir en haut de la page" title="Revenir en haut">↑</button>
+<script>
+(function(){
+  var t = document.getElementById('princ');
+  var tb = t.tBodies[0], ths = t.tHead.rows[0].cells, sens = {}, actif = -1;
+  function val(r, i){
+    var c = r.cells[i], v = c.getAttribute('data-v');
+    if (v !== null && v !== '') { var n = parseFloat(v); return isNaN(n) ? v : n; }
+    return c.textContent.trim();
+  }
+  for (var i = 0; i < ths.length; i++) (function(i){
+    ths[i].addEventListener('click', function(){
+      var d = sens[i] = (actif === i ? !sens[i] : true);
+      if (actif >= 0 && actif !== i){ ths[actif].className = ths[actif].className.replace(' actif',''); var f = ths[actif].querySelector('.fl'); if (f) f.remove(); }
+      actif = i;
+      if (ths[i].className.indexOf('actif') < 0) ths[i].className += ' actif';
+      var f2 = ths[i].querySelector('.fl');
+      if (!f2){ f2 = document.createElement('span'); f2.className = 'fl'; ths[i].appendChild(f2); }
+      f2.textContent = d ? ' \u25bc' : ' \u25b2';
+      var lg = [].slice.call(tb.rows);
+      lg.sort(function(a, b){
+        var x = val(a, i), y = val(b, i);
+        if (x === '' || x === '\u2014') return 1;
+        if (y === '' || y === '\u2014') return -1;
+        if (typeof x === 'number' && typeof y === 'number') return d ? y - x : x - y;
+        return d ? String(y).localeCompare(String(x), 'fr') : String(x).localeCompare(String(y), 'fr');
+      });
+      lg.forEach(function(r){ tb.appendChild(r); });
+    });
+  })(i);
+
+  var fd = document.getElementById('fDispo'), ff = document.getElementById('fFormat'),
+      vide = document.getElementById('vide');
+  function filtrer(){
+    var n = 0;
+    [].slice.call(tb.rows).forEach(function(r){
+      var ok = (!fd.checked || r.dataset.dispo === 'rayon')
+            && (!ff.value || r.dataset.format === ff.value);
+      r.style.display = ok ? '' : 'none';
+      if (ok) n++;
+    });
+    vide.style.display = n ? 'none' : 'block';
+  }
+  fd.addEventListener('change', filtrer);
+  ff.addEventListener('change', filtrer);
+})();
+
+(function(){
+  var b = document.getElementById('haut');
+  if (!b) return;
+  function maj(){ b.className = window.scrollY > 600 ? 'on' : ''; }
+  window.addEventListener('scroll', maj, { passive: true });
+  b.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  maj();
+})();
+</script>
+</body>
+</html>
