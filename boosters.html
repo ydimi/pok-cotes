@@ -21,6 +21,11 @@ h1{margin:0 0 4px;font-size:1.5rem}
 .cle{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);
      border-radius:0 8px 8px 0;padding:12px 14px;margin:18px 0;font-size:.9rem;line-height:1.55}
 .cle b{color:#fff}
+.filtres{margin:16px 0 2px;font-size:.88rem;color:var(--muted)}
+.filtres label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.filtres input{width:17px;height:17px;accent-color:var(--accent)}
+.filtres label:hover{color:var(--text)}
+.vide{color:var(--muted);font-size:.88rem;padding:14px 0;display:none}
 table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:6px}
 th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:baseline}
 th{color:var(--muted);font-weight:500;font-size:.76rem;cursor:pointer;user-select:none;
@@ -30,7 +35,8 @@ th.actif{color:var(--accent)}
 th .fl{opacity:.5;font-size:.9em}
 th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
 td.n{white-space:nowrap}
-td.n .det{display:block;color:var(--muted);font-size:.74rem;white-space:normal}
+td .det{display:block;color:var(--muted);font-size:.74rem;white-space:normal;font-weight:400}
+td .det.bon{color:var(--ok)} td .det.moyen{color:var(--warn)} td .det.mauvais{color:var(--bad)}
 td a{text-decoration:none}
 td a:hover{text-decoration:underline}
 .bon{color:var(--ok);font-weight:600}
@@ -52,10 +58,12 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 @media(max-width:620px){
   table{font-size:.82rem}
   th,td{padding:7px 3px}
-  th:nth-child(6),td:nth-child(6){display:none}
+  th:nth-child(7),td:nth-child(7){display:none}
+  /* La fourchette « 9,73 € – 14,19 € » tenue sur une ligne débordait de l'écran. */
+  td.n{white-space:normal}
 }
-@media(max-width:400px){
-  th:nth-child(3),td:nth-child(3){display:none}
+@media(max-width:470px){
+  th:nth-child(4),td:nth-child(4){display:none}
 }
 </style>
 </head>
@@ -76,101 +84,127 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
   marché corrigerait aussitôt.
 </div>
 
+<div class="cle" style="border-left-color:var(--ok)">
+  <b>En magasin, trois extensions au même prix&nbsp;?</b> Alors le rapport ne sert à rien —
+  il divise par un prix identique pour toutes. Triez sur <b>Contenu moyen</b> si vous
+  revendez, sur <b>Belle carte</b> si c'est pour le plaisir d'ouvrir. Le rapport ne compte que
+  lorsque les prix diffèrent, c'est-à-dire en revente.
+</div>
+
+<div class="filtres">
+  <label><input type="checkbox" id="fDispo"> N'afficher que ce qui est encore en rayon</label>
+</div>
+
 <table id="t">
   <thead><tr>
     <th data-c="0">Extension</th>
-    <th class="n" data-c="1">Booster<br>en France</th>
-    <th class="n" data-c="2">Contenu<br>moyen</th>
-    <th class="n actif" data-c="3">Rapport <span class="fl">▾</span></th>
-    <th class="n" data-c="4">Belle<br>carte</th>
-    <th class="n" data-c="5">Prix<br>international</th>
+    <th class="n" data-c="1">Sortie</th>
+    <th class="n" data-c="2">Booster<br>en France</th>
+    <th class="n" data-c="3">Contenu<br>moyen</th>
+    <th class="n actif" data-c="4">Rapport <span class="fl">▾</span></th>
+    <th class="n" data-c="5">Belle<br>carte</th>
+    <th class="n" data-c="6">Prix<br>international</th>
   </tr></thead>
-  <tbody><tr>
-    <td><a href="c/sv10.5b.html">Foudre Noire</a></td>
-    <td class="n" data-v="15.82">14,53 € – 17,11 €<span class="det">5 offres</span></td>
+  <tbody><tr data-dispo="fin">
+    <td><a href="c/sv10.5b.html">Foudre Noire</a><span class="det moyen">fin de vie</span></td>
+    <td class="n" data-v="1752796800000">juil. 2025</td>
+    <td class="n" data-v="15.82"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Foudre+Noire+EV10.5&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">14,53 € – 17,11 €<span class="det">5 offres →</span></a></td>
     <td class="n" data-v="10.54">10,54 €</td>
-    <td class="n moyen" data-v="0.67">0.67</td>
+    <td class="n bon" data-v="0.67">0.67</td>
     <td class="n bon" data-v="7.3">7.3 %<span class="det">1 sur 14</span></td>
     <td class="n" data-v="12.9">12,90 €</td>
-  </tr><tr>
-    <td><a href="c/sv10.5w.html">Flamme Blanche</a></td>
-    <td class="n" data-v="16.63">16,14 € – 17,11 €<span class="det">4 offres</span></td>
+  </tr><tr data-dispo="fin">
+    <td><a href="c/sv10.5w.html">Flamme Blanche</a><span class="det moyen">fin de vie</span></td>
+    <td class="n" data-v="1752796800000">juil. 2025</td>
+    <td class="n" data-v="16.63"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flamme+Blanche+EV10.5&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">16,14 € – 17,11 €<span class="det">4 offres →</span></a></td>
     <td class="n" data-v="8.81">8,81 €</td>
-    <td class="n moyen" data-v="0.53">0.53</td>
+    <td class="n bon" data-v="0.53">0.53</td>
     <td class="n bon" data-v="7.1">7.1 %<span class="det">1 sur 14</span></td>
     <td class="n" data-v="12.11">12,11 €</td>
-  </tr><tr>
-    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a></td>
-    <td class="n" data-v="21.49">19,98 € – 23,00 €<span class="det">4 offres</span></td>
+  </tr><tr data-dispo="fin">
+    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det moyen">fin de vie</span></td>
+    <td class="n" data-v="1737072000000">janv. 2025</td>
+    <td class="n" data-v="21.49"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89volutions+Prismatiques&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">19,98 € – 23,00 €<span class="det">4 offres →</span></a></td>
     <td class="n" data-v="7.27">7,27 €</td>
-    <td class="n mauvais" data-v="0.34">0.34</td>
+    <td class="n moyen" data-v="0.34">0.34</td>
     <td class="n bon" data-v="10.4">10.4 %<span class="det">1 sur 10</span></td>
     <td class="n" data-v="11.94">11,94 €</td>
-  </tr><tr>
-    <td><a href="c/me02.5.html">Héros Transcendants</a></td>
-    <td class="n" data-v="17.43">14,97 € – 19,90 €<span class="det">3 offres</span></td>
+  </tr><tr data-dispo="rayon">
+    <td><a href="c/me02.5.html">Héros Transcendants</a><span class="det bon">en rayon</span></td>
+    <td class="n" data-v="1769731200000">janv. 2026</td>
+    <td class="n" data-v="17.43"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+H%C3%A9ros+Transcendants+ME02.5&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">14,97 € – 19,90 €<span class="det">3 offres →</span></a></td>
     <td class="n" data-v="6.21">6,21 €</td>
-    <td class="n mauvais" data-v="0.36">0.36</td>
+    <td class="n moyen" data-v="0.36">0.36</td>
     <td class="n moyen" data-v="2.9">2.9 %<span class="det">1 sur 34</span></td>
     <td class="n" data-v="11.35">11,35 €</td>
-  </tr><tr>
-    <td><a href="c/me02.html">Flammes Fantasmagoriques</a></td>
-    <td class="n" data-v="13.26">11,44 € – 15,07 €<span class="det">7 offres</span></td>
+  </tr><tr data-dispo="rayon">
+    <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det bon">en rayon</span></td>
+    <td class="n" data-v="1763078400000">nov. 2025</td>
+    <td class="n" data-v="13.26"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flammes+Fantasmagoriques+ME02&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">11,44 € – 15,07 €<span class="det">7 offres →</span></a></td>
     <td class="n" data-v="5.16">5,16 €</td>
-    <td class="n mauvais" data-v="0.39">0.39</td>
+    <td class="n bon" data-v="0.39">0.39</td>
     <td class="n mauvais" data-v="1.2">1.2 %<span class="det">1 sur 83</span></td>
     <td class="n" data-v="10.5">10,50 €</td>
-  </tr><tr>
-    <td><a href="c/me01.html">Méga-Évolution</a></td>
-    <td class="n" data-v="15.37">12,73 € – 18,00 €<span class="det">11 offres</span></td>
+  </tr><tr data-dispo="rayon">
+    <td><a href="c/me01.html">Méga-Évolution</a><span class="det bon">en rayon</span></td>
+    <td class="n" data-v="1758844800000">sept. 2025</td>
+    <td class="n" data-v="15.37"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+M%C3%A9ga-%C3%89volution+ME01&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">12,73 € – 18,00 €<span class="det">11 offres →</span></a></td>
     <td class="n" data-v="3.97">3,97 €</td>
-    <td class="n mauvais" data-v="0.26">0.26</td>
+    <td class="n moyen" data-v="0.26">0.26</td>
     <td class="n mauvais" data-v="2.3">2.3 %<span class="det">1 sur 43</span></td>
     <td class="n" data-v="7.3">7,30 €</td>
-  </tr><tr>
-    <td><a href="c/sv10.html">Rivalités Destinées</a></td>
-    <td class="n" data-v="16.04">13,90 € – 18,18 €<span class="det">5 offres</span></td>
+  </tr><tr data-dispo="fin">
+    <td><a href="c/sv10.html">Rivalités Destinées</a><span class="det moyen">fin de vie</span></td>
+    <td class="n" data-v="1748563200000">mai 2025</td>
+    <td class="n" data-v="16.04"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Rivalit%C3%A9s+Destin%C3%A9es+EV10&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">13,90 € – 18,18 €<span class="det">5 offres →</span></a></td>
     <td class="n" data-v="3.33">3,33 €</td>
     <td class="n mauvais" data-v="0.21">0.21</td>
     <td class="n moyen" data-v="3.3">3.3 %<span class="det">1 sur 30</span></td>
     <td class="n" data-v="7.86">7,86 €</td>
-  </tr><tr>
-    <td><a href="c/me05.html">Nuit Noire</a></td>
-    <td class="n" data-v="11.99">9,99 € – 13,99 €<span class="det">5 offres</span></td>
+  </tr><tr data-dispo="rayon">
+    <td><a href="c/me05.html">Nuit Noire</a><span class="det bon">en rayon</span></td>
+    <td class="n" data-v="1784246400000">juil. 2026</td>
+    <td class="n" data-v="11.99"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Nuit+Noire+ME05&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">9,99 € – 13,99 €<span class="det">5 offres →</span></a></td>
     <td class="n" data-v="2.92">2,92 €</td>
     <td class="n mauvais" data-v="0.24">0.24</td>
     <td class="n moyen" data-v="2.7">2.7 %<span class="det">1 sur 37</span></td>
     <td class="n" data-v="5.18">5,18 €</td>
-  </tr><tr>
-    <td><a href="c/30th.html">30ᵉ Anniversaire</a></td>
+  </tr><tr data-dispo="rayon">
+    <td><a href="c/30th.html">30ᵉ Anniversaire</a><span class="det bon">en rayon</span></td>
+    <td class="n" data-v="1789516800000">sept. 2026</td>
     <td class="n" data-v="">—</td>
     <td class="n" data-v="2.86">2,86 €</td>
     <td class="n " data-v="">—</td>
     <td class="n mauvais" data-v="2">2.0 %<span class="det">1 sur 50</span></td>
     <td class="n" data-v="14.41">14,41 €</td>
-  </tr><tr>
-    <td><a href="c/me04.html">Chaos Ascendant</a></td>
-    <td class="n" data-v="10.58">9,40 € – 11,76 €<span class="det">8 offres</span></td>
+  </tr><tr data-dispo="rayon">
+    <td><a href="c/me04.html">Chaos Ascendant</a><span class="det bon">en rayon</span></td>
+    <td class="n" data-v="1779408000000">mai 2026</td>
+    <td class="n" data-v="10.58"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Chaos+Ascendant+ME04&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">9,40 € – 11,76 €<span class="det">8 offres →</span></a></td>
     <td class="n" data-v="2.51">2,51 €</td>
     <td class="n mauvais" data-v="0.24">0.24</td>
     <td class="n mauvais" data-v="2.1">2.1 %<span class="det">1 sur 48</span></td>
     <td class="n" data-v="4.64">4,64 €</td>
-  </tr><tr>
-    <td><a href="c/me03.html">Équilibre Parfait</a></td>
-    <td class="n" data-v="11.95">9,90 € – 14,00 €<span class="det">8 offres</span></td>
+  </tr><tr data-dispo="rayon">
+    <td><a href="c/me03.html">Équilibre Parfait</a><span class="det bon">en rayon</span></td>
+    <td class="n" data-v="1774569600000">mars 2026</td>
+    <td class="n" data-v="11.95"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89quilibre+Parfait+ME03&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">9,90 € – 14,00 €<span class="det">8 offres →</span></a></td>
     <td class="n" data-v="2.46">2,46 €</td>
     <td class="n mauvais" data-v="0.21">0.21</td>
     <td class="n mauvais" data-v="2.4">2.4 %<span class="det">1 sur 42</span></td>
     <td class="n" data-v="5.03">5,03 €</td>
-  </tr><tr>
-    <td><a href="c/sv09.html">Aventures Ensemble</a></td>
-    <td class="n" data-v="11.96">9,73 € – 14,19 €<span class="det">18 offres</span></td>
+  </tr><tr data-dispo="fin">
+    <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det moyen">fin de vie</span></td>
+    <td class="n" data-v="1743120000000">mars 2025</td>
+    <td class="n" data-v="11.96"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Aventures+Ensemble+EV09&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">9,73 € – 14,19 €<span class="det">18 offres →</span></a></td>
     <td class="n" data-v="1.92">1,92 €</td>
     <td class="n mauvais" data-v="0.16">0.16</td>
     <td class="n mauvais" data-v="1.6">1.6 %<span class="det">1 sur 63</span></td>
     <td class="n" data-v="7.97">7,97 €</td>
   </tr></tbody>
 </table>
+
+<div class="vide" id="vide">Aucune extension de moins d'un an dans ce relevé.</div>
 
 <h2>D'où viennent ces prix</h2>
 <div class="ou">
@@ -252,7 +286,7 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 (function(){
   "use strict";
   var t = document.getElementById('t'), tb = t.tBodies[0];
-  var sens = {}, actif = 3;
+  var sens = {}, actif = 4;
   function trier(c){
     // Les cellules portent leur valeur numérique dans data-v : trier sur le texte affiché
     // rangerait « 9,40 € » après « 14,53 € ».
@@ -280,7 +314,22 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
   [].forEach.call(t.tHead.rows[0].cells, function(th){
     th.addEventListener('click', function(){ trier(Number(th.dataset.c)); });
   });
-  trier(3);
+
+  // Filtre de disponibilité : juger une extension qu'on ne trouve plus en magasin n'aide pas
+  // quelqu'un debout devant un présentoir.
+  var f = document.getElementById('fDispo'), vide = document.getElementById('vide');
+  function filtrer(){
+    var n = 0;
+    [].forEach.call(tb.rows, function(r){
+      var ok = !f.checked || r.dataset.dispo === 'rayon';
+      r.style.display = ok ? '' : 'none';
+      if (ok) n++;
+    });
+    vide.style.display = n ? 'none' : 'block';
+  }
+  f.addEventListener('change', filtrer);
+
+  trier(4);
 })();
 </script>
 </body>
