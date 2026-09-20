@@ -19,6 +19,20 @@ header{border-bottom:1px solid var(--line);margin-bottom:6px;padding:20px 0 12px
 h1{margin:0 0 4px;font-size:1.5rem}
 .sous{color:var(--muted);font-size:.84rem}
 h2{font-size:1.08rem;margin:30px 0 4px}
+.calc{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+      padding:14px;margin:10px 0 4px}
+.calc select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);
+             border-radius:7px;padding:9px 10px;font-size:.92rem;font-family:inherit}
+.calc .px{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-size:.95rem}
+.calc input{width:140px;background:var(--bg);color:var(--text);border:1px solid var(--line);
+            border-radius:7px;padding:9px 10px;font-size:1rem;font-family:inherit;
+            font-variant-numeric:tabular-nums}
+.calc .res{margin-top:12px;font-size:.9rem;line-height:1.6;color:var(--muted);min-height:1.6em}
+.calc .res b{color:var(--text)}
+.calc .res .verdict{display:block;font-size:1.05rem;font-weight:600;margin-bottom:4px}
+.calc .res .verdict.bon{color:var(--ok)}
+.calc .res .verdict.moyen{color:var(--warn)}
+.calc .res .verdict.mauvais{color:var(--bad)}
 .filtres{margin:14px 0 2px;font-size:.88rem;color:var(--muted)}
 .filtres label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
 .filtres input{width:17px;height:17px;accent-color:var(--accent)}
@@ -80,6 +94,13 @@ details b{color:var(--text)}
   <h1>Quels coffrets acheter</h1>
   <div class="sous">68 produits scellés mesurés sur 25 extensions · prix eBay France du 20/09/2026</div>
 </header>
+
+<h2>Cette offre est-elle intéressante&nbsp;?</h2>
+<div class="calc">
+  <select id="cProd"><option value="">Choisissez le produit que vous avez devant vous</option></select>
+  <label class="px"><input id="cPrix" type="number" inputmode="decimal" min="0" step="0.01" placeholder="prix affiché"> €</label>
+  <div id="cRes" class="res"></div>
+</div>
 
 <h2>Les formats, du moins cher au plus cher par booster</h2>
 <table id="synth">
@@ -800,7 +821,51 @@ sinon, ne les payez pas.</p>
 
 </div>
 <button id="haut" type="button" aria-label="Revenir en haut de la page" title="Revenir en haut">↑</button>
+<script id="donnees" type="application/json">[["Foudre Noire","Coffret Dresseur d'Élite (ETB)",9,105.4,11.71,10.54,"etb9","sv10.5b"],["Foudre Noire","Coffret Collection Classeur",5,65.26,11.71,10.54,"classeur5","sv10.5b"],["Foudre Noire","Bundle de boosters",6,80,11.71,10.54,"bundle6","sv10.5b"],["Flamme Blanche","Bundle de boosters",6,69.9,11.65,8.81,"bundle6","sv10.5w"],["Flamme Blanche","Coffret Dresseur d'Élite (ETB)",9,110,11.65,8.81,"etb9","sv10.5w"],["Flamme Blanche","Coffret Collection Classeur",5,63.1,11.65,8.81,"classeur5","sv10.5w"],["Méga-Évolution","Display (présentoir)",36,221.88,6.16,3.97,"display36","me01"],["Évolutions Prismatiques","Bundle de boosters",6,71.08,11.85,7.27,"bundle6","sv08.5"],["Évolutions Prismatiques","Coffret Collection Classeur",5,64.93,11.85,7.27,"classeur5","sv08.5"],["Méga-Évolution","Demi-display",18,129.6,6.16,3.97,"demidisplay18","me01"],["Flammes Fantasmagoriques","Display (présentoir)",36,346.8,9.63,5.16,"display36","me02"],["Méga-Évolution","Bundle de boosters",6,45.08,6.16,3.97,"bundle6","me01"],["Évolutions Prismatiques","Boîte Surprise",4,55.69,11.85,7.27,"surprise","sv08.5"],["Méga-Évolution","Coffret Dresseur d'Élite (ETB)",9,70,6.16,3.97,"etb9","me01"],["Nuit Noire","Display (présentoir)",36,206.8,5.74,2.92,"display36","me05"],["Héros Transcendants","Display (présentoir)",36,448.88,12.47,6.21,"display36","me02.5"],["Évolutions Prismatiques","Coffret Dresseur d'Élite (ETB)",9,134.28,11.85,7.27,"etb9","sv08.5"],["Flammes Fantasmagoriques","Demi-display",18,190,9.63,5.16,"demidisplay18","me02"],["Évolutions à Paldea","Display (présentoir)",36,279.78,7.77,3.78,"display36","sv02"],["Héros Transcendants","Bundle de boosters",6,80,12.47,6.21,"bundle6","me02.5"],["Flammes Fantasmagoriques","Bundle de boosters",6,68.17,9.63,5.16,"bundle6","me02"],["Fable Nébuleuse","Bundle de boosters",6,52.9,8.82,3.89,"bundle6","sv06.5"],["Chaos Ascendant","Display (présentoir)",36,216.8,6.02,2.51,"display36","me04"],["Héros Transcendants","Coffret Dresseur d'Élite (ETB)",9,135.89,12.47,6.21,"etb9","me02.5"],["Flammes Fantasmagoriques","Coffret Dresseur d'Élite (ETB)",9,114.51,9.63,5.16,"etb9","me02"],["Forces Temporelles","Display (présentoir)",36,323.89,9,3.7,"display36","sv05"],["Nuit Noire","Demi-display",18,129.6,5.74,2.92,"demidisplay18","me05"],["Nuit Noire","Bundle de boosters",6,43.4,5.74,2.92,"bundle6","me05"],["Fable Nébuleuse","Coffret Dresseur d'Élite (ETB)",9,89.1,8.82,3.89,"etb9","sv06.5"],["Équilibre Parfait","Display (présentoir)",36,227.72,6.33,2.46,"display36","me03"],["Évolutions Prismatiques","Display (présentoir)",36,715.08,11.85,7.27,"display36","sv08.5"],["Rivalités Destinées","Demi-display",18,163.2,9.07,3.33,"demidisplay18","sv10"],["Équilibre Parfait","Demi-display",18,120.3,6.33,2.46,"demidisplay18","me03"],["Couronne Stellaire","Display (présentoir)",36,276.3,7.68,2.79,"display36","sv07"],["Rivalités Destinées","Display (présentoir)",36,339.1,9.07,3.33,"display36","sv10"],["Mascarade Crépusculaire","Coffret Dresseur d'Élite (ETB)",9,83.58,9.29,3.23,"etb9","sv06"],["Nuit Noire","Coffret Dresseur d'Élite (ETB)",9,76.04,5.74,2.92,"etb9","me05"],["Chaos Ascendant","Bundle de boosters",6,43.15,6.02,2.51,"bundle6","me04"],["Équilibre Parfait","Bundle de boosters",6,41.96,6.33,2.46,"bundle6","me03"],["Étincelles Déferlantes","Display (présentoir)",36,273.8,7.61,2.6,"display36","sv08"],["Fable Nébuleuse","Display (présentoir)",36,418.26,8.82,3.89,"display36","sv06.5"],["Forces Temporelles","Coffret Dresseur d'Élite (ETB)",9,103.08,9,3.7,"etb9","sv05"],["Chaos Ascendant","Demi-display",18,139.48,6.02,2.51,"demidisplay18","me04"],["Chaos Ascendant","Coffret Dresseur d'Élite (ETB)",9,71.17,6.02,2.51,"etb9","me04"],["Équilibre Parfait","Coffret Dresseur d'Élite (ETB)",9,68.3,6.33,2.46,"etb9","me03"],["Flammes Obsidiennes","Display (présentoir)",36,238.28,6.62,2.11,"display36","sv03"],["Faille Paradoxe","Display (présentoir)",36,285,7.92,2.44,"display36","sv04"],["Aventures Ensemble","Display (présentoir)",36,220,6.11,1.92,"display36","sv09"],["Couronne Stellaire","Coffret Dresseur d'Élite (ETB)",9,93.89,7.68,2.79,"etb9","sv07"],["Destinées de Paldea","Bundle de boosters",6,97.1,16.18,3.98,"bundle6","sv04.5"],["Étincelles Déferlantes","Bundle de boosters",6,62.88,7.61,2.6,"bundle6","sv08"],["Aventures Ensemble","Demi-display",18,138.89,6.11,1.92,"demidisplay18","sv09"],["Étincelles Déferlantes","Demi-display",18,199.9,7.61,2.6,"demidisplay18","sv08"],["Destinées de Paldea","Coffret Dresseur d'Élite (ETB)",9,163.57,16.18,3.98,"etb9","sv04.5"],["Origine Perdue","Display (présentoir)",36,354.8,9.86,2.11,"display36","swsh11"],["Aventures Ensemble","Coffret Dresseur d'Élite (ETB)",9,83.9,6.11,1.92,"etb9","sv09"],["Faille Paradoxe","Coffret Dresseur d'Élite (ETB)",9,107.69,7.92,2.44,"etb9","sv04"],["Aventures Ensemble","Bundle de boosters",6,57.64,6.11,1.92,"bundle6","sv09"],["Rivalités Destinées","Coffret Dresseur d'Élite (ETB)",9,170.68,9.07,3.33,"etb9","sv10"],["Évolutions à Paldea","Coffret Dresseur d'Élite (ETB)",9,198.59,7.77,3.78,"etb9","sv02"],["Étincelles Déferlantes","Coffret Dresseur d'Élite (ETB)",9,140.7,7.61,2.6,"etb9","sv08"],["Tempête Argentée","Display (présentoir)",36,419.5,11.65,1.34,"display36","swsh12"],["Astres Radieux","Display (présentoir)",36,310.2,8.62,1.04,"display36","swsh10"],["Flammes Obsidiennes","Coffret Dresseur d'Élite (ETB)",9,213.29,6.62,2.11,"etb9","sv03"],["Stars Étincelantes","Display (présentoir)",36,429.7,11.94,1.05,"display36","swsh9"],["Astres Radieux","Coffret Dresseur d'Élite (Épée et Bouclier)",8,181.08,8.62,1.04,"etb8","swsh10"],["Stars Étincelantes","Coffret Dresseur d'Élite (Épée et Bouclier)",8,211.48,11.94,1.05,"etb8","swsh9"],["Pokémon GO","Coffret Dresseur d'Élite (Épée et Bouclier)",8,156.7,19.59,0.48,"etb8","swsh10.5"]]</script>
 <script>
+(function(){
+  // [nomFr, type, boosters, prixEbay, meilleurParBooster, esperance, cle, setId]
+  var D = JSON.parse(document.getElementById('donnees').textContent);
+  var sel = document.getElementById('cProd'), px = document.getElementById('cPrix'),
+      res = document.getElementById('cRes');
+  D.map(function(d, i){ return [d[0] + ' — ' + d[1] + ' (' + d[2] + ' boosters)', i]; })
+   .sort(function(a, b){ return a[0].localeCompare(b[0], 'fr'); })
+   .forEach(function(o){
+     var op = document.createElement('option');
+     op.value = o[1]; op.textContent = o[0]; sel.appendChild(op);
+   });
+  var eur = function(v){ return v.toFixed(2).replace('.', ',') + ' €'; };
+  // Un écart arrondi à zéro n'est pas « −0 % » : c'est le prix du marché, et c'est ce qu'il
+  // faut lire.
+  var pct = function(v){
+    var n = Math.round(v);
+    return n === 0 ? 'exactement ce prix-là'
+         : (n > 0 ? '+' : '−') + Math.abs(n) + ' %';
+  };
+  function calculer(){
+    var i = sel.value, p = parseFloat(String(px.value).replace(',', '.'));
+    if (i === '' || !(p > 0)) { res.innerHTML = ''; return; }
+    var d = D[i], nb = d[2], pb = p / nb, ebay = d[3], best = d[4], esp = d[5];
+    var vEbay = (pb - ebay / nb) / (ebay / nb) * 100, vBest = (pb - best) / best * 100;
+    var cls, txt;
+    if (pb <= best) { cls = 'bon'; txt = 'Bonne affaire'; }
+    else if (vBest <= 15) { cls = 'moyen'; txt = 'Correct'; }
+    else if (vEbay <= 0) { cls = 'moyen'; txt = 'Correct pour ce format, mais ce format est cher'; }
+    else { cls = 'mauvais'; txt = 'Au-dessus du marché'; }
+    res.innerHTML =
+      '<span class="verdict ' + cls + '">' + txt + '</span>' +
+      '<b>' + eur(pb) + ' le booster</b> (' + eur(p) + ' ÷ ' + nb + ').<br>' +
+      'Le même produit se trouve à <b>' + eur(ebay) + '</b> sur eBay France, soit '
+        + eur(ebay / nb) + ' le booster : vous êtes à ' + pct(vEbay) + '.<br>' +
+      'Le meilleur tarif mesuré sur ' + d[0] + ', tous formats confondus, est de <b>'
+        + eur(best) + ' le booster</b> : vous êtes à ' + pct(vBest) + '.<br>' +
+      'Cartes attendues dans la boîte : <b>' + eur(esp * nb) + '</b>, soit '
+        + (esp / pb).toFixed(2).replace('.', ',') + ' € de cartes par euro dépensé.' +
+      (d[7] ? ' <a href="c/' + d[7] + '.html">Voir les cartes de cette extension</a>.' : '');
+  }
+  sel.addEventListener('change', calculer);
+  px.addEventListener('input', calculer);
+})();
 (function(){
   var t = document.getElementById('princ');
   var tb = t.tBodies[0], ths = t.tHead.rows[0].cells, sens = {}, actif = -1;
