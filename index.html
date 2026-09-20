@@ -31,6 +31,14 @@ a.col:hover{border-color:var(--accent)}
 .col .meta{color:var(--muted);font-size:.82rem;margin-top:2px}
 footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);
        color:var(--muted);font-size:.8rem}
+
+#haut{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;
+      background:var(--panel);border:1px solid var(--line);color:var(--text);cursor:pointer;
+      font-size:1.2rem;line-height:1;display:none;align-items:center;justify-content:center;
+      box-shadow:0 2px 10px #0008;z-index:40;font-family:inherit}
+#haut:hover{border-color:var(--accent);color:var(--accent)}
+#haut.on{display:flex}
+@media(max-width:480px){#haut{right:12px;bottom:12px}}
 </style>
 </head>
 <body>
@@ -898,5 +906,15 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);
   <p>Page générée automatiquement — ne pas éditer à la main.</p>
 </footer>
 </div>
+<button id="haut" type="button" aria-label="Revenir en haut de la page" title="Revenir en haut">↑</button>
+<script>
+(function(){
+  var b = document.getElementById('haut');
+  if (!b) return;
+  function maj(){ b.className = window.scrollY > 600 ? 'on' : ''; }
+  window.addEventListener('scroll', maj, { passive: true });
+  b.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  maj();
+})();</script>
 </body>
 </html>
