@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Stars Étincelantes Galerie de Dresseurs — cartes recherchées</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#2a313c;--text:#e6edf3;--muted:#8b949e;
+      --ok:#3fb950;--warn:#d29922;--bad:#f85149;--accent:#58a6ff}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+     font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.5}
+a{color:var(--accent)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px 56px}
+
+header{border-bottom:1px solid var(--line);margin-bottom:12px;padding:18px 0 12px}
+h1{margin:0 0 3px;font-size:1.4rem;line-height:1.2}
+.sous{color:var(--muted);font-size:.82rem}
+
+.barre{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:14px 0 6px}
+button.tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);
+       border-radius:999px;padding:7px 14px;font-size:.84rem;cursor:pointer;
+       font-family:inherit;min-height:38px}
+button.tab[aria-pressed="true"]{background:#1f6feb22;border-color:var(--accent);color:var(--text)}
+.filtre{flex:1 1 170px;min-width:150px;background:var(--panel);border:1px solid var(--line);
+        color:var(--text);border-radius:8px;padding:9px 12px;font-size:.9rem;
+        font-family:inherit;min-height:38px}
+.compte{color:var(--muted);font-size:.78rem;margin:2px 0 12px}
+
+.grille{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:700px){.grille{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1180px){.grille{grid-template-columns:repeat(3,1fr)}}
+
+.c{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+   padding:13px;display:flex;gap:14px;align-items:flex-start}
+/* Image nettement agrandie : c'est elle qui permet d'identifier la carte d'un coup d'œil,
+   et c'est le premier service que rend la page. */
+.c img{width:132px;height:184px;object-fit:contain;border-radius:6px;flex:0 0 132px;
+       background:#0a0d12;cursor:zoom-in}
+@media(max-width:400px){.c img{width:108px;height:151px;flex:0 0 108px}}
+.corps{flex:1;min-width:0}
+.tete{display:flex;align-items:baseline;gap:6px}
+.rang{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.78rem;flex:0 0 auto}
+.nom{font-weight:600;font-size:1.08rem;overflow-wrap:anywhere}
+.meta{color:var(--muted);font-size:.85rem;margin:2px 0 10px;overflow-wrap:anywhere}
+.meta .sec{color:#e8b563}
+
+/* Le prix, ou son absence assumée. Une seule ligne dans les deux cas. */
+/* Un prix par source, chacun cliquable vers le site qui le produit. Plutôt qu'un chiffre de
+   synthèse qu'il faudrait défendre, on pose les mesures côte à côte et on laisse juger. */
+.sources{margin:8px 0 10px;font-variant-numeric:tabular-nums}
+.sources a,.sources .muet{display:flex;align-items:baseline;gap:10px;text-decoration:none;
+      padding:4px 0;border-top:1px solid var(--line)}
+.sources a:first-child,.sources .muet:first-child{border-top:none}
+.sources a{color:var(--text)}
+/* Libellé étroit et fixe à gauche, valeur et précision empilées à droite : à 430 px, un
+   « 4 290 € – 5 500 € » sur la même ligne que sa note débordait de la carte. */
+.sources .quoi{color:var(--muted);font-size:.78rem;flex:0 0 84px;line-height:1.3}
+.sources a:hover .quoi{color:var(--accent)}
+.sources .val{flex:1;min-width:0}
+.sources .cb{font-weight:600;font-size:1rem;display:block;overflow-wrap:anywhere}
+.sources .princ .cb{font-size:1.22rem;color:#fff}
+.sources .note{color:var(--muted);font-size:.74rem;display:block;line-height:1.3}
+.sources .muet .cb{font-weight:400;color:var(--muted);font-size:.9rem}
+.sources .muet .quoi{color:var(--muted)}
+.prix{font-variant-numeric:tabular-nums;margin-bottom:9px}
+.prix .v{font-size:1.5rem;font-weight:700;color:#fff;line-height:1.2}
+.prix .sous{color:var(--muted);font-size:.8rem;display:block;margin-top:2px}
+.prix .approx{font-size:1.15rem;font-weight:600;color:var(--muted)}
+.prix .faible{color:var(--warn)}
+.nocote{color:var(--muted);font-size:.88rem;margin-bottom:9px}
+
+/* Alerte homonyme : la seule information critique qui reste toujours visible, parce que se
+   tromper de carte coûte plus cher que toute erreur d'estimation. */
+
+.liens{display:flex;gap:5px;flex-wrap:wrap}
+.liens a{font-size:.82rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;
+         padding:7px 11px;color:var(--muted);background:#0a0d12;min-height:36px;
+         display:inline-flex;align-items:center}
+.liens a:hover{color:var(--text);border-color:var(--accent)}
+
+
+
+footer{margin-top:32px;padding-top:14px;border-top:1px solid var(--line);
+       color:var(--muted);font-size:.75rem}
+footer code{background:var(--panel);padding:1px 5px;border-radius:4px}
+footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
+
+#zoom{position:fixed;inset:0;background:#000d;display:none;align-items:center;
+      justify-content:center;z-index:50;padding:18px;cursor:zoom-out}
+#zoom.on{display:flex}
+#zoom img{max-width:100%;max-height:100%;border-radius:10px}
+.vide{color:var(--muted);padding:22px 0;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Stars Étincelantes Galerie de Dresseurs</h1>
+  <div class="sous">Épée et Bouclier · 30 cartes · relevé du 20/09/2026
+    · <b>30</b> cartes estimées</div>
+</header>
+
+<div class="barre">
+  <input class="filtre" id="q" type="search" placeholder="Nom ou numéro…" autocomplete="off" enterkeyhint="search">
+</div>
+<div class="compte" id="compte"></div>
+
+<div class="grille" id="grille"></div>
+<div class="vide" id="vide" style="display:none">Aucune carte ne correspond.</div>
+
+<footer>
+  <details>
+    <summary>Comment lire cette page</summary>
+    <p>Chaque carte affiche <b>un prix par source</b>, et le nom de la source ouvre le site qui
+    le produit. Rien n'est moyenné ni synthétisé : les mesures sont posées côte à côte.</p>
+    <p><b>annonces FR</b> — ce qu'on vous demande en France, relevé sur eBay France. On s'ancre
+    sur l'annonce la moins chère crédible et on écarte tout ce qui dépasse une fois et demie ce
+    prix, ainsi que les prix d'appel dérisoires. La mention « 33/80 retenues » dit combien
+    d'annonces ont passé ce filtre.</p>
+    <p><b>ventes</b> — les transactions réellement conclues depuis la sortie du set, relevées
+    sur PriceCharting. Étendue complète, aucune vente écartée. Les ventes antérieures à la
+    sortie sont exclues : elles se font à des prix sans rapport avec le marché ouvert.</p>
+    <p><b>valeur</b> — le prix de marché TCGplayer, converti. La référence internationale.</p>
+    <p><b>Cardmarket</b> — le marché européen. Aucun chiffre : le site refuse toute requête
+    automatisée et Cloudflare bloque même un navigateur piloté. Le lien ouvre la fiche, filtrée
+    sur les cartes françaises.</p>
+    <p><b>Pour décider.</b> L'ordre est presque toujours le même : annonces françaises au-dessus
+    des ventes réelles, elles-mêmes proches de la valeur de marché. Mesuré sur 1 096 annonces,
+    les annonces françaises demandent <b>1,56 fois</b> la valeur de marché en médiane — de 1,3
+    sur les cartes à plus de 100 € à plus de 3 sur celles à moins de 10 €. Une annonce sous la
+    borne basse des annonces FR est moins chère que tout ce qui est en vente en France ; une
+    annonce sous la valeur de marché est une affaire au sens strict.</p>
+    <p>L'état de la carte n'est pas modélisé, les cartes gradées sont hors périmètre. Aucune
+    donnée n'est collectée sur Cardmarket, Leboncoin ni Vinted.</p>
+    <p>Page générée par <code>scripts/gen-collection.mjs</code> — ne pas éditer à la main.</p>
+  </details>
+</footer>
+</div>
+
+<div id="zoom"><img alt=""></div>
+
+<script type="application/json" id="donnees">[{"rang":1,"num":"TG23","nom":"Noctali VMAX","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG23","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":92.1,"marche":92.1,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Umbreon+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Noctali+VMAX+TG23+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Noctali+VMAX+TG23+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Noctali+VMAX+TG23+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264206"},"cmDirect":false},{"rang":2,"num":"TG16","nom":"Mimiqui V","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG16","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":76.64,"marche":76.64,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Mimikyu+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Mimiqui+V+TG16+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Mimiqui+V+TG16+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Mimiqui+V+TG16+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264221"},"cmDirect":false},{"rang":3,"num":"TG17","nom":"Mimiqui VMAX","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG17","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":66.04,"marche":66.04,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Mimikyu+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Mimiqui+VMAX+TG17+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Mimiqui+VMAX+TG17+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Mimiqui+VMAX+TG17+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264222"},"cmDirect":false},{"rang":4,"num":"TG14","nom":"Nymphali V","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG14","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":64,"marche":64,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Sylveon+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Nymphali+V+TG14+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Nymphali+V+TG14+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Nymphali+V+TG14+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264209"},"cmDirect":false},{"rang":5,"num":"TG22","nom":"Noctali V","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG22","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":63.63,"marche":63.63,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Umbreon+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Noctali+V+TG22+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Noctali+V+TG22+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Noctali+V+TG22+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264207"},"cmDirect":false},{"rang":6,"num":"TG15","nom":"Nymphali VMAX","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG15","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":62.22,"marche":62.22,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Sylveon+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Nymphali+VMAX+TG15+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Nymphali+VMAX+TG15+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Nymphali+VMAX+TG15+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264208"},"cmDirect":false},{"rang":7,"num":"TG01","nom":"Pyroli","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG01","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":20.12,"marche":20.12,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Flareon","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Pyroli+TG01+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Pyroli+TG01+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Pyroli+TG01+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264210"},"cmDirect":false},{"rang":8,"num":"TG02","nom":"Aquali","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG02","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":20.03,"marche":20.03,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Vaporeon","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Aquali+TG02+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Aquali+TG02+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Aquali+TG02+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264211"},"cmDirect":false},{"rang":9,"num":"TG11","nom":"Évoli","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG11","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":17.73,"marche":17.73,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Eevee","ebay":"https://www.ebay.fr/sch/i.html?_nkw=%C3%89voli+TG11+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=%C3%89voli+TG11+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=%C3%89voli+TG11+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264218"},"cmDirect":false},{"rang":10,"num":"TG04","nom":"Voltali","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG04","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":16.67,"marche":16.67,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Jolteon","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Voltali+TG04+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Voltali+TG04+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Voltali+TG04+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264213"},"cmDirect":false},{"rang":11,"num":"TG13","nom":"Fulgudog V","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG13","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":13.25,"marche":13.25,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Boltund+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Fulgudog+V+TG13+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Fulgudog+V+TG13+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Fulgudog+V+TG13+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264202"},"cmDirect":false},{"rang":12,"num":"TG05","nom":"Zekrom","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG05","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":13.06,"marche":13.06,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Zekrom","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Zekrom+TG05+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Zekrom+TG05+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Zekrom+TG05+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264205"},"cmDirect":false},{"rang":13,"num":"TG21","nom":"Shifours Mille Poings VMAX","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG21","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":10.32,"marche":10.32,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Rapid+Strike+Urshifu+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Shifours+Mille+Poings+VMAX+TG21+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Shifours+Mille+Poings+VMAX+TG21+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Shifours+Mille+Poings+VMAX+TG21+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264227"},"cmDirect":false},{"rang":14,"num":"TG19","nom":"Shifours Poing Final VMAX","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG19","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":8.27,"marche":8.27,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Single+Strike+Urshifu+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Shifours+Poing+Final+VMAX+TG19+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Shifours+Poing+Final+VMAX+TG19+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Shifours+Poing+Final+VMAX+TG19+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264225"},"cmDirect":false},{"rang":15,"num":"TG24","nom":"Prémonition de Margie","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG24","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":7.77,"marche":7.77,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Acerola's+Premonition","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Pr%C3%A9monition+de+Margie+TG24+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Pr%C3%A9monition+de+Margie+TG24+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Pr%C3%A9monition+de+Margie+TG24+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264228"},"cmDirect":false},{"rang":16,"num":"TG07","nom":"Dedenne","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG07","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":7.29,"marche":7.29,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Dedenne","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Dedenne+TG07+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Dedenne+TG07+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Dedenne+TG07+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264215"},"cmDirect":false},{"rang":17,"num":"TG20","nom":"Shifours Mille Poings V","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG20","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":5.73,"marche":5.73,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Rapid+Strike+Urshifu+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Shifours+Mille+Poings+V+TG20+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Shifours+Mille+Poings+V+TG20+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Shifours+Mille+Poings+V+TG20+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264226"},"cmDirect":false},{"rang":18,"num":"TG18","nom":"Shifours Poing Final V","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG18","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":5.61,"marche":5.61,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Single+Strike+Urshifu+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Shifours+Poing+Final+V+TG18+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Shifours+Poing+Final+V+TG18+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Shifours+Poing+Final+V+TG18+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264224"},"cmDirect":false},{"rang":19,"num":"TG26","nom":"Gloria","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG26","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":5.13,"marche":5.13,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Gloria","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Gloria+TG26+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Gloria+TG26+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Gloria+TG26+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264229"},"cmDirect":false},{"rang":20,"num":"TG29","nom":"Shifours Poing Final VMAX","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG29","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":3.6,"marche":3.6,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Single+Strike+Urshifu+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Shifours+Poing+Final+VMAX+TG29+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Shifours+Poing+Final+VMAX+TG29+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Shifours+Poing+Final+VMAX+TG29+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264232"},"cmDirect":false},{"rang":21,"num":"TG08","nom":"Charmilly","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG08","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":3.59,"marche":3.59,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Alcremie","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Charmilly+TG08+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Charmilly+TG08+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Charmilly+TG08+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264216"},"cmDirect":false},{"rang":22,"num":"TG30","nom":"Shifours Mille Poings VMAX","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG30","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":3.54,"marche":3.54,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Rapid+Strike+Urshifu+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Shifours+Mille+Poings+VMAX+TG30+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Shifours+Mille+Poings+VMAX+TG30+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Shifours+Mille+Poings+VMAX+TG30+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264234"},"cmDirect":false},{"rang":23,"num":"TG10","nom":"Démolosse","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG10","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":3.07,"marche":3.07,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Houndoom","ebay":"https://www.ebay.fr/sch/i.html?_nkw=D%C3%A9molosse+TG10+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=D%C3%A9molosse+TG10+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=D%C3%A9molosse+TG10+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264217"},"cmDirect":false},{"rang":24,"num":"TG03","nom":"Octillery","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG03","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":2.96,"marche":2.96,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Octillery","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Octillery+TG03+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Octillery+TG03+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Octillery+TG03+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264212"},"cmDirect":false},{"rang":25,"num":"TG12","nom":"Gouroutan","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG12","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":2.74,"marche":2.74,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Oranguru","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Gouroutan+TG12+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Gouroutan+TG12+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Gouroutan+TG12+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264219"},"cmDirect":false},{"rang":26,"num":"TG06","nom":"Noctunoir","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG06","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":2.44,"marche":2.44,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Dusknoir","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Noctunoir+TG06+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Noctunoir+TG06+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Noctunoir+TG06+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264214"},"cmDirect":false},{"rang":27,"num":"TG09","nom":"Migalos","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG09","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":1.91,"marche":1.91,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Ariados","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Migalos+TG09+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Migalos+TG09+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Migalos+TG09+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264204"},"cmDirect":false},{"rang":28,"num":"TG27","nom":"Mustar Style Mille Poings","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG27","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":1.83,"marche":1.83,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Rapid+Strike+Style+Mustard","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Mustar+Style+Mille+Poings+TG27+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Mustar+Style+Mille+Poings+TG27+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Mustar+Style+Mille+Poings+TG27+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264230"},"cmDirect":false},{"rang":29,"num":"TG25","nom":"Barista","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG25","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":1.78,"marche":1.78,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Caf%C3%A9+Master","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Barista+TG25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Barista+TG25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Barista+TG25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264203"},"cmDirect":false},{"rang":30,"num":"TG28","nom":"Mustar Style Poing Final","rarete":"Ultra Rare","illu":null,"img":null,"imgHD":null,"id":"swsh9tg-TG28","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":1.45,"marche":1.45,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Single+Strike+Style+Mustard","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Mustar+Style+Poing+Final+TG28+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Mustar+Style+Poing+Final+TG28+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Mustar+Style+Poing+Final+TG28+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/264231"},"cmDirect":false}]</script>
+<script>
+(function(){
+  "use strict";
+  var CARTES = JSON.parse(document.getElementById('donnees').textContent);
+  var grille = document.getElementById('grille'), vide = document.getElementById('vide');
+  var compte = document.getElementById('compte'), q = document.getElementById('q');
+
+  var eur = new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', maximumFractionDigits:0});
+  var eur2 = new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR'});
+  function euros(v){ return v == null ? '—' : (v >= 100 ? eur : eur2).format(v); }
+  function dateFr(s){ if(!s) return '—'; var d = new Date(s);
+    return isNaN(d.getTime()) ? '—' : d.toLocaleDateString('fr-FR'); }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function carteHTML(c){
+    var el = document.createElement('article');
+    el.className = 'c';
+    var e = c.est;
+    var l = c.liens;
+
+    // Une ligne par source de prix, le libellé servant de lien. L'ordre va du marché sur
+    // lequel on achète vers la valeur de référence : annonces France, puis ventes conclues,
+    // puis valeur de marché. Cardmarket ferme la marche sans chiffre — aucun script ne peut
+    // en extraire, Cloudflare bloque, il n'y a que le lien.
+    function ligne(url, quoi, valeur, note, classe){
+      var dedans = '<span class="quoi">' + esc(quoi) + '</span><span class="val">'
+                 + '<span class="cb">' + valeur + '</span>'
+                 + (note ? '<span class="note">' + esc(note) + '</span>' : '') + '</span>';
+      return url
+        ? '<a class="' + (classe || '') + '" href="' + esc(url) + '" target="_blank" rel="noopener">' + dedans + '</a>'
+        : '<span class="muet ' + (classe || '') + '">' + dedans + '</span>';
+    }
+
+    var rangs = [];
+    if (e && e.ebay)
+      rangs.push(ligne(l.ebay, 'annonces FR', euros(e.ebay.bas) + ' – ' + euros(e.ebay.haut),
+                       e.ebay.n + '/' + e.ebay.total + ' retenues', 'princ'));
+    if (e && e.ventes)
+      rangs.push(ligne(l.pricecharting, 'ventes', euros(e.ventes.bas) + ' – ' + euros(e.ventes.haut),
+                       e.ventes.n + ' vente' + (e.ventes.n > 1 ? 's' : ''), e.ebay ? '' : 'princ'));
+    if (e && e.marche != null)
+      rangs.push(ligne(l.tcgplayer, 'valeur', euros(e.marche), 'marché TCGplayer',
+                       (e.ebay || e.ventes) ? '' : 'princ'));
+    rangs.push(ligne(l.cardmarket, 'Cardmarket', '—', 'à consulter'));
+
+    var prix = rangs.length > 1
+      ? '<div class="sources">' + rangs.join('') + '</div>'
+      : '<div class="nocote">Pas d’estimation</div>' + '<div class="sources">' + rangs.join('') + '</div>';
+
+    var liens = '<div class="liens">'
+      + '<a href="' + esc(l.leboncoin) + '" target="_blank" rel="noopener">leboncoin</a>'
+      + '<a href="' + esc(l.vinted) + '" target="_blank" rel="noopener">Vinted</a>'
+      + (l.pokedexia ? '<a href="' + esc(l.pokedexia) + '" target="_blank" rel="noopener">fiche</a>' : '')
+      + '</div>';
+
+    el.innerHTML =
+      (c.img ? '<img src="' + esc(c.img) + '" data-hd="' + esc(c.imgHD || c.img) + '" alt="' + esc(c.nom) + '" loading="lazy">'
+             : '<div style="width:132px;height:184px;flex:0 0 132px"></div>')
+      + '<div class="corps">'
+      + '<div class="tete"><span class="rang">#' + c.rang + '</span><span class="nom">' + esc(c.nom) + '</span></div>'
+      + '<div class="meta">n°' + esc(c.num) + ' · ' + esc(c.rarete || 'sans rareté')
+      + (c.illu ? ' · ' + esc(c.illu) : '') + '</div>'
+      + prix + liens
+      + '</div>';
+    return el;
+  }
+
+  function rendre(){
+    // Toute la collection, toujours. Le classement met les cartes qui comptent en tête ;
+    // scinder en « top 30 » et « les 161 » obligeait à choisir avant de voir.
+    var t = q.value.trim().toLowerCase();
+    var liste = t
+      ? CARTES.filter(function(c){
+          return c.nom.toLowerCase().indexOf(t) >= 0 || String(c.num).toLowerCase().indexOf(t) >= 0; })
+      : CARTES;
+
+    grille.innerHTML = '';
+    var frag = document.createDocumentFragment();
+    liste.forEach(function(c){ frag.appendChild(carteHTML(c)); });
+    grille.appendChild(frag);
+    vide.style.display = liste.length ? 'none' : 'block';
+
+    var n = liste.filter(function(c){ return c.est; }).length;
+    compte.textContent = liste.length + ' carte' + (liste.length > 1 ? 's' : '')
+      + ' · ' + (n ? n + ' estimée' + (n > 1 ? 's' : '') : 'aucune estimation');
+  }
+
+  q.addEventListener('input', rendre);
+
+  var zoom = document.getElementById('zoom'), zoomImg = zoom.querySelector('img');
+  grille.addEventListener('click', function(e){
+    if (e.target.tagName === 'IMG' && e.target.dataset.hd){
+      zoomImg.src = e.target.dataset.hd; zoomImg.alt = e.target.alt; zoom.className = 'on'; }
+  });
+  zoom.addEventListener('click', function(){ zoom.className = ''; zoomImg.src = ''; });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && zoom.className === 'on'){ zoom.className = ''; zoomImg.src = ''; } });
+
+  rendre();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Célébrations — cartes recherchées</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#2a313c;--text:#e6edf3;--muted:#8b949e;
+      --ok:#3fb950;--warn:#d29922;--bad:#f85149;--accent:#58a6ff}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+     font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.5}
+a{color:var(--accent)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px 56px}
+
+header{border-bottom:1px solid var(--line);margin-bottom:12px;padding:18px 0 12px}
+h1{margin:0 0 3px;font-size:1.4rem;line-height:1.2}
+.sous{color:var(--muted);font-size:.82rem}
+
+.barre{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:14px 0 6px}
+button.tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);
+       border-radius:999px;padding:7px 14px;font-size:.84rem;cursor:pointer;
+       font-family:inherit;min-height:38px}
+button.tab[aria-pressed="true"]{background:#1f6feb22;border-color:var(--accent);color:var(--text)}
+.filtre{flex:1 1 170px;min-width:150px;background:var(--panel);border:1px solid var(--line);
+        color:var(--text);border-radius:8px;padding:9px 12px;font-size:.9rem;
+        font-family:inherit;min-height:38px}
+.compte{color:var(--muted);font-size:.78rem;margin:2px 0 12px}
+
+.grille{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:700px){.grille{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1180px){.grille{grid-template-columns:repeat(3,1fr)}}
+
+.c{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+   padding:13px;display:flex;gap:14px;align-items:flex-start}
+/* Image nettement agrandie : c'est elle qui permet d'identifier la carte d'un coup d'œil,
+   et c'est le premier service que rend la page. */
+.c img{width:132px;height:184px;object-fit:contain;border-radius:6px;flex:0 0 132px;
+       background:#0a0d12;cursor:zoom-in}
+@media(max-width:400px){.c img{width:108px;height:151px;flex:0 0 108px}}
+.corps{flex:1;min-width:0}
+.tete{display:flex;align-items:baseline;gap:6px}
+.rang{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.78rem;flex:0 0 auto}
+.nom{font-weight:600;font-size:1.08rem;overflow-wrap:anywhere}
+.meta{color:var(--muted);font-size:.85rem;margin:2px 0 10px;overflow-wrap:anywhere}
+.meta .sec{color:#e8b563}
+
+/* Le prix, ou son absence assumée. Une seule ligne dans les deux cas. */
+/* Un prix par source, chacun cliquable vers le site qui le produit. Plutôt qu'un chiffre de
+   synthèse qu'il faudrait défendre, on pose les mesures côte à côte et on laisse juger. */
+.sources{margin:8px 0 10px;font-variant-numeric:tabular-nums}
+.sources a,.sources .muet{display:flex;align-items:baseline;gap:10px;text-decoration:none;
+      padding:4px 0;border-top:1px solid var(--line)}
+.sources a:first-child,.sources .muet:first-child{border-top:none}
+.sources a{color:var(--text)}
+/* Libellé étroit et fixe à gauche, valeur et précision empilées à droite : à 430 px, un
+   « 4 290 € – 5 500 € » sur la même ligne que sa note débordait de la carte. */
+.sources .quoi{color:var(--muted);font-size:.78rem;flex:0 0 84px;line-height:1.3}
+.sources a:hover .quoi{color:var(--accent)}
+.sources .val{flex:1;min-width:0}
+.sources .cb{font-weight:600;font-size:1rem;display:block;overflow-wrap:anywhere}
+.sources .princ .cb{font-size:1.22rem;color:#fff}
+.sources .note{color:var(--muted);font-size:.74rem;display:block;line-height:1.3}
+.sources .muet .cb{font-weight:400;color:var(--muted);font-size:.9rem}
+.sources .muet .quoi{color:var(--muted)}
+.prix{font-variant-numeric:tabular-nums;margin-bottom:9px}
+.prix .v{font-size:1.5rem;font-weight:700;color:#fff;line-height:1.2}
+.prix .sous{color:var(--muted);font-size:.8rem;display:block;margin-top:2px}
+.prix .approx{font-size:1.15rem;font-weight:600;color:var(--muted)}
+.prix .faible{color:var(--warn)}
+.nocote{color:var(--muted);font-size:.88rem;margin-bottom:9px}
+
+/* Alerte homonyme : la seule information critique qui reste toujours visible, parce que se
+   tromper de carte coûte plus cher que toute erreur d'estimation. */
+
+.liens{display:flex;gap:5px;flex-wrap:wrap}
+.liens a{font-size:.82rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;
+         padding:7px 11px;color:var(--muted);background:#0a0d12;min-height:36px;
+         display:inline-flex;align-items:center}
+.liens a:hover{color:var(--text);border-color:var(--accent)}
+
+
+
+footer{margin-top:32px;padding-top:14px;border-top:1px solid var(--line);
+       color:var(--muted);font-size:.75rem}
+footer code{background:var(--panel);padding:1px 5px;border-radius:4px}
+footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
+
+#zoom{position:fixed;inset:0;background:#000d;display:none;align-items:center;
+      justify-content:center;z-index:50;padding:18px;cursor:zoom-out}
+#zoom.on{display:flex}
+#zoom img{max-width:100%;max-height:100%;border-radius:10px}
+.vide{color:var(--muted);padding:22px 0;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Célébrations</h1>
+  <div class="sous">Épée et Bouclier · 25 cartes · relevé du 20/09/2026
+    · <b>25</b> cartes estimées</div>
+</header>
+
+<div class="barre">
+  <input class="filtre" id="q" type="search" placeholder="Nom ou numéro…" autocomplete="off" enterkeyhint="search">
+</div>
+<div class="compte" id="compte"></div>
+
+<div class="grille" id="grille"></div>
+<div class="vide" id="vide" style="display:none">Aucune carte ne correspond.</div>
+
+<footer>
+  <details>
+    <summary>Comment lire cette page</summary>
+    <p>Chaque carte affiche <b>un prix par source</b>, et le nom de la source ouvre le site qui
+    le produit. Rien n'est moyenné ni synthétisé : les mesures sont posées côte à côte.</p>
+    <p><b>annonces FR</b> — ce qu'on vous demande en France, relevé sur eBay France. On s'ancre
+    sur l'annonce la moins chère crédible et on écarte tout ce qui dépasse une fois et demie ce
+    prix, ainsi que les prix d'appel dérisoires. La mention « 33/80 retenues » dit combien
+    d'annonces ont passé ce filtre.</p>
+    <p><b>ventes</b> — les transactions réellement conclues depuis la sortie du set, relevées
+    sur PriceCharting. Étendue complète, aucune vente écartée. Les ventes antérieures à la
+    sortie sont exclues : elles se font à des prix sans rapport avec le marché ouvert.</p>
+    <p><b>valeur</b> — le prix de marché TCGplayer, converti. La référence internationale.</p>
+    <p><b>Cardmarket</b> — le marché européen. Aucun chiffre : le site refuse toute requête
+    automatisée et Cloudflare bloque même un navigateur piloté. Le lien ouvre la fiche, filtrée
+    sur les cartes françaises.</p>
+    <p><b>Pour décider.</b> L'ordre est presque toujours le même : annonces françaises au-dessus
+    des ventes réelles, elles-mêmes proches de la valeur de marché. Mesuré sur 1 096 annonces,
+    les annonces françaises demandent <b>1,56 fois</b> la valeur de marché en médiane — de 1,3
+    sur les cartes à plus de 100 € à plus de 3 sur celles à moins de 10 €. Une annonce sous la
+    borne basse des annonces FR est moins chère que tout ce qui est en vente en France ; une
+    annonce sous la valeur de marché est une affaire au sens strict.</p>
+    <p>L'état de la carte n'est pas modélisé, les cartes gradées sont hors périmètre. Aucune
+    donnée n'est collectée sur Cardmarket, Leboncoin ni Vinted.</p>
+    <p>Page générée par <code>scripts/gen-collection.mjs</code> — ne pas éditer à la main.</p>
+  </details>
+</footer>
+</div>
+
+<div id="zoom"><img alt=""></div>
+
+<script type="application/json" id="donnees">[{"rang":1,"num":"9","nom":"Pikachu Surfeur VMAX","rarete":"Ultra Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/9/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/9/high.webp","id":"cel25-9","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":7.16,"marche":7.16,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Surfing+Pikachu+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Pikachu+Surfeur+VMAX+9%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Pikachu+Surfeur+VMAX+9%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Pikachu+Surfeur+VMAX+9%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250307"},"cmDirect":false},{"rang":2,"num":"7","nom":"Pikachu Volant VMAX","rarete":"Ultra Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/7/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/7/high.webp","id":"cel25-7","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":6.56,"marche":6.56,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Flying+Pikachu+VMAX","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Pikachu+Volant+VMAX+7%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Pikachu+Volant+VMAX+7%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Pikachu+Volant+VMAX+7%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250305"},"cmDirect":false},{"rang":3,"num":"8","nom":"Pikachu Surfeur V","rarete":"Ultra Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/8/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/8/high.webp","id":"cel25-8","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":3.96,"marche":3.96,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Surfing+Pikachu+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Pikachu+Surfeur+V+8%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Pikachu+Surfeur+V+8%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Pikachu+Surfeur+V+8%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250306"},"cmDirect":false},{"rang":4,"num":"6","nom":"Pikachu Volant V","rarete":"Ultra Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/6/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/6/high.webp","id":"cel25-6","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":3.89,"marche":3.89,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Flying+Pikachu+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Pikachu+Volant+V+6%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Pikachu+Volant+V+6%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Pikachu+Volant+V+6%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250304"},"cmDirect":false},{"rang":5,"num":"25","nom":"Mew","rarete":"Secret Rare","illu":null,"img":null,"imgHD":null,"id":"cel25-25","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":58.88,"marche":58.88,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Mew","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Mew+25%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Mew+25%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Mew+25%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250295"},"cmDirect":false},{"rang":6,"num":"24","nom":"Recherches Professorales (Professeur Chen)","rarete":"Ultra Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/24/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/24/high.webp","id":"cel25-24","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.86,"marche":0.86,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Professor's+Research+Professor+Oak","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Recherches+Professorales+Professeur+Chen+24%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Recherches+Professorales+Professeur+Chen+24%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Recherches+Professorales+Professeur+Chen+24%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250293"},"cmDirect":false},{"rang":7,"num":"5","nom":"Pikachu","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/5/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/5/high.webp","id":"cel25-5","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":5.16,"marche":5.16,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Pikachu","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Pikachu+5%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Pikachu+5%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Pikachu+5%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250303"},"cmDirect":false},{"rang":8,"num":"18","nom":"Zamazenta V","rarete":"Ultra Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/18/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/18/high.webp","id":"cel25-18","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.65,"marche":0.65,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Zamazenta+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Zamazenta+V+18%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Zamazenta+V+18%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Zamazenta+V+18%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250299"},"cmDirect":false},{"rang":9,"num":"16","nom":"Zacian V","rarete":"Ultra Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/16/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/16/high.webp","id":"cel25-16","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.61,"marche":0.61,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Zacian+V","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Zacian+V+16%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Zacian+V+16%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Zacian+V+16%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250313"},"cmDirect":false},{"rang":10,"num":"11","nom":"Mew","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/11/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/11/high.webp","id":"cel25-11","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":3.05,"marche":3.05,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Mew","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Mew+11%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Mew+11%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Mew+11%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250309"},"cmDirect":false},{"rang":11,"num":"22","nom":"Lugia","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/22/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/22/high.webp","id":"cel25-22","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.8,"marche":0.8,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Lugia","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Lugia+22%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Lugia+22%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Lugia+22%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250317"},"cmDirect":false},{"rang":12,"num":"17","nom":"Groudon","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/17/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/17/high.webp","id":"cel25-17","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.33,"marche":0.33,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Groudon","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Groudon+17%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Groudon+17%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Groudon+17%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250314"},"cmDirect":false},{"rang":13,"num":"23","nom":"Recherches Professorales (Professeur Chen)","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/23/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/23/high.webp","id":"cel25-23","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.32,"marche":0.32,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Professor's+Research+Professor+Oak","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Recherches+Professorales+Professeur+Chen+23%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Recherches+Professorales+Professeur+Chen+23%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Recherches+Professorales+Professeur+Chen+23%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250318"},"cmDirect":false},{"rang":14,"num":"15","nom":"Lunala","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/15/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/15/high.webp","id":"cel25-15","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.32,"marche":0.32,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Lunala","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Lunala+15%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Lunala+15%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Lunala+15%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250312"},"cmDirect":false},{"rang":15,"num":"13","nom":"Cosmog","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/13/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/13/high.webp","id":"cel25-13","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.3,"marche":0.3,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Cosmog","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Cosmog+13%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Cosmog+13%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Cosmog+13%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250311"},"cmDirect":false},{"rang":16,"num":"3","nom":"Kyogre","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/3/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/3/high.webp","id":"cel25-3","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.3,"marche":0.3,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Kyogre","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Kyogre+3%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Kyogre+3%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Kyogre+3%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250298"},"cmDirect":false},{"rang":17,"num":"1","nom":"Ho-Oh","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/1/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/1/high.webp","id":"cel25-1","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.3,"marche":0.3,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Ho-Oh","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Ho-Oh+1%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Ho-Oh+1%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Ho-Oh+1%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250300"},"cmDirect":false},{"rang":18,"num":"21","nom":"Solgaleo","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/21/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/21/high.webp","id":"cel25-21","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.29,"marche":0.29,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Solgaleo","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Solgaleo+21%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Solgaleo+21%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Solgaleo+21%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250316"},"cmDirect":false},{"rang":19,"num":"12","nom":"Xerneas","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/12/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/12/high.webp","id":"cel25-12","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.29,"marche":0.29,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Xerneas","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Xerneas+12%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Xerneas+12%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Xerneas+12%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250310"},"cmDirect":false},{"rang":20,"num":"10","nom":"Zekrom","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/10/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/10/high.webp","id":"cel25-10","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.29,"marche":0.29,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Zekrom","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Zekrom+10%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Zekrom+10%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Zekrom+10%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250308"},"cmDirect":false},{"rang":21,"num":"2","nom":"Reshiram","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/2/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/2/high.webp","id":"cel25-2","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.27,"marche":0.27,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Reshiram","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Reshiram+2%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Reshiram+2%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Reshiram+2%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250301"},"cmDirect":false},{"rang":22,"num":"20","nom":"Dialga","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/20/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/20/high.webp","id":"cel25-20","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.26,"marche":0.26,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Dialga","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Dialga+20%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Dialga+20%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Dialga+20%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250296"},"cmDirect":false},{"rang":23,"num":"19","nom":"Yveltal","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/19/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/19/high.webp","id":"cel25-19","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.24,"marche":0.24,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Yveltal","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Yveltal+19%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Yveltal+19%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Yveltal+19%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250315"},"cmDirect":false},{"rang":24,"num":"14","nom":"Cosmovum","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/14/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/14/high.webp","id":"cel25-14","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.24,"marche":0.24,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Cosmoem","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Cosmovum+14%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Cosmovum+14%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Cosmovum+14%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250297"},"cmDirect":false},{"rang":25,"num":"4","nom":"Palkia","rarete":"Holo Rare","illu":null,"img":"https://assets.tcgdex.net/fr/swsh/cel25/4/low.webp","imgHD":"https://assets.tcgdex.net/fr/swsh/cel25/4/high.webp","id":"cel25-4","est":{"source":"tcgplayer","bas":null,"haut":null,"valeur":0.24,"marche":0.24,"ventes":null,"releveLe":"2026-09-20"},"liens":{"cardmarket":"https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Palkia","ebay":"https://www.ebay.fr/sch/i.html?_nkw=Palkia+4%2F25+pokemon\u0026_sop=10","leboncoin":"https://www.leboncoin.fr/recherche?text=Palkia+4%2F25+pokemon\u0026sort=time","vinted":"https://www.vinted.fr/catalog?search_text=Palkia+4%2F25+pokemon\u0026order=newest_first\u0026price_from=10\u0026currency=EUR","tcgplayer":"https://www.tcgplayer.com/product/250302"},"cmDirect":false}]</script>
+<script>
+(function(){
+  "use strict";
+  var CARTES = JSON.parse(document.getElementById('donnees').textContent);
+  var grille = document.getElementById('grille'), vide = document.getElementById('vide');
+  var compte = document.getElementById('compte'), q = document.getElementById('q');
+
+  var eur = new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR', maximumFractionDigits:0});
+  var eur2 = new Intl.NumberFormat('fr-FR', {style:'currency', currency:'EUR'});
+  function euros(v){ return v == null ? '—' : (v >= 100 ? eur : eur2).format(v); }
+  function dateFr(s){ if(!s) return '—'; var d = new Date(s);
+    return isNaN(d.getTime()) ? '—' : d.toLocaleDateString('fr-FR'); }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function carteHTML(c){
+    var el = document.createElement('article');
+    el.className = 'c';
+    var e = c.est;
+    var l = c.liens;
+
+    // Une ligne par source de prix, le libellé servant de lien. L'ordre va du marché sur
+    // lequel on achète vers la valeur de référence : annonces France, puis ventes conclues,
+    // puis valeur de marché. Cardmarket ferme la marche sans chiffre — aucun script ne peut
+    // en extraire, Cloudflare bloque, il n'y a que le lien.
+    function ligne(url, quoi, valeur, note, classe){
+      var dedans = '<span class="quoi">' + esc(quoi) + '</span><span class="val">'
+                 + '<span class="cb">' + valeur + '</span>'
+                 + (note ? '<span class="note">' + esc(note) + '</span>' : '') + '</span>';
+      return url
+        ? '<a class="' + (classe || '') + '" href="' + esc(url) + '" target="_blank" rel="noopener">' + dedans + '</a>'
+        : '<span class="muet ' + (classe || '') + '">' + dedans + '</span>';
+    }
+
+    var rangs = [];
+    if (e && e.ebay)
+      rangs.push(ligne(l.ebay, 'annonces FR', euros(e.ebay.bas) + ' – ' + euros(e.ebay.haut),
+                       e.ebay.n + '/' + e.ebay.total + ' retenues', 'princ'));
+    if (e && e.ventes)
+      rangs.push(ligne(l.pricecharting, 'ventes', euros(e.ventes.bas) + ' – ' + euros(e.ventes.haut),
+                       e.ventes.n + ' vente' + (e.ventes.n > 1 ? 's' : ''), e.ebay ? '' : 'princ'));
+    if (e && e.marche != null)
+      rangs.push(ligne(l.tcgplayer, 'valeur', euros(e.marche), 'marché TCGplayer',
+                       (e.ebay || e.ventes) ? '' : 'princ'));
+    rangs.push(ligne(l.cardmarket, 'Cardmarket', '—', 'à consulter'));
+
+    var prix = rangs.length > 1
+      ? '<div class="sources">' + rangs.join('') + '</div>'
+      : '<div class="nocote">Pas d’estimation</div>' + '<div class="sources">' + rangs.join('') + '</div>';
+
+    var liens = '<div class="liens">'
+      + '<a href="' + esc(l.leboncoin) + '" target="_blank" rel="noopener">leboncoin</a>'
+      + '<a href="' + esc(l.vinted) + '" target="_blank" rel="noopener">Vinted</a>'
+      + (l.pokedexia ? '<a href="' + esc(l.pokedexia) + '" target="_blank" rel="noopener">fiche</a>' : '')
+      + '</div>';
+
+    el.innerHTML =
+      (c.img ? '<img src="' + esc(c.img) + '" data-hd="' + esc(c.imgHD || c.img) + '" alt="' + esc(c.nom) + '" loading="lazy">'
+             : '<div style="width:132px;height:184px;flex:0 0 132px"></div>')
+      + '<div class="corps">'
+      + '<div class="tete"><span class="rang">#' + c.rang + '</span><span class="nom">' + esc(c.nom) + '</span></div>'
+      + '<div class="meta">n°' + esc(c.num) + ' · ' + esc(c.rarete || 'sans rareté')
+      + (c.illu ? ' · ' + esc(c.illu) : '') + '</div>'
+      + prix + liens
+      + '</div>';
+    return el;
+  }
+
+  function rendre(){
+    // Toute la collection, toujours. Le classement met les cartes qui comptent en tête ;
+    // scinder en « top 30 » et « les 161 » obligeait à choisir avant de voir.
+    var t = q.value.trim().toLowerCase();
+    var liste = t
+      ? CARTES.filter(function(c){
+          return c.nom.toLowerCase().indexOf(t) >= 0 || String(c.num).toLowerCase().indexOf(t) >= 0; })
+      : CARTES;
+
+    grille.innerHTML = '';
+    var frag = document.createDocumentFragment();
+    liste.forEach(function(c){ frag.appendChild(carteHTML(c)); });
+    grille.appendChild(frag);
+    vide.style.display = liste.length ? 'none' : 'block';
+
+    var n = liste.filter(function(c){ return c.est; }).length;
+    compte.textContent = liste.length + ' carte' + (liste.length > 1 ? 's' : '')
+      + ' · ' + (n ? n + ' estimée' + (n > 1 ? 's' : '') : 'aucune estimation');
+  }
+
+  q.addEventListener('input', rendre);
+
+  var zoom = document.getElementById('zoom'), zoomImg = zoom.querySelector('img');
+  grille.addEventListener('click', function(e){
+    if (e.target.tagName === 'IMG' && e.target.dataset.hd){
+      zoomImg.src = e.target.dataset.hd; zoomImg.alt = e.target.alt; zoom.className = 'on'; }
+  });
+  zoom.addEventListener('click', function(){ zoom.className = ''; zoomImg.src = ''; });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && zoom.className === 'on'){ zoom.className = ''; zoomImg.src = ''; } });
+
+  rendre();
+})();
+</script>
+</body>
+</html>
