@@ -23,6 +23,11 @@ h2{font-size:1.08rem;margin:30px 0 4px}
       padding:14px;margin:10px 0 4px}
 .calc select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);
              border-radius:7px;padding:9px 10px;font-size:.92rem;font-family:inherit}
+.calc #cLibre{margin-top:9px;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+/* Un display explicite l'emporte sur l'attribut hidden : il faut le redire. */
+.calc #cLibre[hidden]{display:none}
+.calc #cLibre select{flex:1 1 220px;width:auto}
+.calc #cLibre .px{margin-top:0}
 .calc .px{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-size:.95rem}
 .calc input{width:140px;background:var(--bg);color:var(--text);border:1px solid var(--line);
             border-radius:7px;padding:9px 10px;font-size:1rem;font-family:inherit;
@@ -97,7 +102,14 @@ details b{color:var(--text)}
 
 <h2>Cette offre est-elle intéressante&nbsp;?</h2>
 <div class="calc">
-  <select id="cProd"><option value="">Choisissez le produit que vous avez devant vous</option></select>
+  <select id="cProd">
+    <option value="">Choisissez le produit que vous avez devant vous</option>
+    <option value="libre">Autre produit — je lis l'extension et le nombre de boosters sur la boîte</option>
+  </select>
+  <div id="cLibre" hidden>
+    <select id="cExt"><option value="">Quelle extension&nbsp;?</option></select>
+    <label class="px"><input id="cNb" type="number" inputmode="numeric" min="1" max="60" step="1" placeholder="nb de boosters"> boosters</label>
+  </div>
   <label class="px"><input id="cPrix" type="number" inputmode="decimal" min="0" step="0.01" placeholder="prix affiché"> €</label>
   <div id="cRes" class="res"></div>
 </div>
@@ -822,12 +834,19 @@ sinon, ne les payez pas.</p>
 </div>
 <button id="haut" type="button" aria-label="Revenir en haut de la page" title="Revenir en haut">↑</button>
 <script id="donnees" type="application/json">[["Foudre Noire","Coffret Dresseur d'Élite (ETB)",9,105.4,11.71,7.66,"etb9","sv10.5b"],["Méga-Évolution","Display (présentoir)",36,221.88,6.16,3.96,"display36","me01"],["Foudre Noire","Coffret Collection Classeur",5,65.26,11.71,7.66,"classeur5","sv10.5b"],["Foudre Noire","Bundle de boosters",6,80,11.71,7.66,"bundle6","sv10.5b"],["Flamme Blanche","Bundle de boosters",6,69.9,11.65,6.68,"bundle6","sv10.5w"],["Flamme Blanche","Coffret Dresseur d'Élite (ETB)",9,110,11.65,6.68,"etb9","sv10.5w"],["Méga-Évolution","Demi-display",18,129.6,6.16,3.96,"demidisplay18","me01"],["Flamme Blanche","Coffret Collection Classeur",5,63.1,11.65,6.68,"classeur5","sv10.5w"],["Flammes Fantasmagoriques","Display (présentoir)",36,346.8,9.63,5.12,"display36","me02"],["Méga-Évolution","Bundle de boosters",6,45.08,6.16,3.96,"bundle6","me01"],["Méga-Évolution","Coffret Dresseur d'Élite (ETB)",9,70,6.16,3.96,"etb9","me01"],["Héros Transcendants","Display (présentoir)",36,448.88,12.47,6.2,"display36","me02.5"],["Nuit Noire","Display (présentoir)",36,206.8,5.74,2.89,"display36","me05"],["Évolutions à Paldea","Display (présentoir)",36,279.78,7.77,3.77,"display36","sv02"],["Flammes Fantasmagoriques","Demi-display",18,190,9.63,5.12,"demidisplay18","me02"],["Héros Transcendants","Bundle de boosters",6,80,12.47,6.2,"bundle6","me02.5"],["Flammes Fantasmagoriques","Bundle de boosters",6,68.17,9.63,5.12,"bundle6","me02"],["Fable Nébuleuse","Bundle de boosters",6,52.9,8.82,3.9,"bundle6","sv06.5"],["Chaos Ascendant","Display (présentoir)",36,216.8,6.02,2.51,"display36","me04"],["Héros Transcendants","Coffret Dresseur d'Élite (ETB)",9,135.89,12.47,6.2,"etb9","me02.5"],["Forces Temporelles","Display (présentoir)",36,323.89,9,3.7,"display36","sv05"],["Flammes Fantasmagoriques","Coffret Dresseur d'Élite (ETB)",9,114.51,9.63,5.12,"etb9","me02"],["Nuit Noire","Demi-display",18,129.6,5.74,2.89,"demidisplay18","me05"],["Nuit Noire","Bundle de boosters",6,43.4,5.74,2.89,"bundle6","me05"],["Fable Nébuleuse","Coffret Dresseur d'Élite (ETB)",9,89.1,8.82,3.9,"etb9","sv06.5"],["Équilibre Parfait","Display (présentoir)",36,227.72,6.33,2.45,"display36","me03"],["Rivalités Destinées","Demi-display",18,163.2,9.07,3.34,"demidisplay18","sv10"],["Équilibre Parfait","Demi-display",18,120.3,6.33,2.45,"demidisplay18","me03"],["Couronne Stellaire","Display (présentoir)",36,276.3,7.68,2.79,"display36","sv07"],["Rivalités Destinées","Display (présentoir)",36,339.1,9.07,3.34,"display36","sv10"],["Mascarade Crépusculaire","Coffret Dresseur d'Élite (ETB)",9,83.58,9.29,3.23,"etb9","sv06"],["Chaos Ascendant","Bundle de boosters",6,43.15,6.02,2.51,"bundle6","me04"],["Équilibre Parfait","Bundle de boosters",6,41.96,6.33,2.45,"bundle6","me03"],["Fable Nébuleuse","Display (présentoir)",36,418.26,8.82,3.9,"display36","sv06.5"],["Nuit Noire","Coffret Dresseur d'Élite (ETB)",9,76.04,5.74,2.89,"etb9","me05"],["Étincelles Déferlantes","Display (présentoir)",36,273.8,7.61,2.59,"display36","sv08"],["Évolutions Prismatiques","Bundle de boosters",6,71.08,11.85,3.84,"bundle6","sv08.5"],["Forces Temporelles","Coffret Dresseur d'Élite (ETB)",9,103.08,9,3.7,"etb9","sv05"],["Chaos Ascendant","Demi-display",18,139.48,6.02,2.51,"demidisplay18","me04"],["Chaos Ascendant","Coffret Dresseur d'Élite (ETB)",9,71.17,6.02,2.51,"etb9","me04"],["Équilibre Parfait","Coffret Dresseur d'Élite (ETB)",9,68.3,6.33,2.45,"etb9","me03"],["Flammes Obsidiennes","Display (présentoir)",36,238.28,6.62,2.12,"display36","sv03"],["Faille Paradoxe","Display (présentoir)",36,285,7.92,2.44,"display36","sv04"],["Aventures Ensemble","Display (présentoir)",36,220,6.11,1.92,"display36","sv09"],["Évolutions Prismatiques","Coffret Collection Classeur",5,64.93,11.85,3.84,"classeur5","sv08.5"],["Évolutions Prismatiques","Boîte Surprise",4,55.69,11.85,3.84,"surprise","sv08.5"],["Couronne Stellaire","Coffret Dresseur d'Élite (ETB)",9,93.89,7.68,2.79,"etb9","sv07"],["Évolutions Prismatiques","Coffret Dresseur d'Élite (ETB)",9,134.28,11.85,3.84,"etb9","sv08.5"],["Destinées de Paldea","Bundle de boosters",6,97.1,16.18,3.98,"bundle6","sv04.5"],["Étincelles Déferlantes","Bundle de boosters",6,62.88,7.61,2.59,"bundle6","sv08"],["Aventures Ensemble","Demi-display",18,138.89,6.11,1.92,"demidisplay18","sv09"],["Étincelles Déferlantes","Demi-display",18,199.9,7.61,2.59,"demidisplay18","sv08"],["Destinées de Paldea","Coffret Dresseur d'Élite (ETB)",9,163.57,16.18,3.98,"etb9","sv04.5"],["Origine Perdue","Display (présentoir)",36,354.8,9.86,2.11,"display36","swsh11"],["Aventures Ensemble","Coffret Dresseur d'Élite (ETB)",9,83.9,6.11,1.92,"etb9","sv09"],["Faille Paradoxe","Coffret Dresseur d'Élite (ETB)",9,107.69,7.92,2.44,"etb9","sv04"],["Aventures Ensemble","Bundle de boosters",6,57.64,6.11,1.92,"bundle6","sv09"],["Évolutions Prismatiques","Display (présentoir)",36,715.08,11.85,3.84,"display36","sv08.5"],["Rivalités Destinées","Coffret Dresseur d'Élite (ETB)",9,170.68,9.07,3.34,"etb9","sv10"],["Évolutions à Paldea","Coffret Dresseur d'Élite (ETB)",9,198.59,7.77,3.77,"etb9","sv02"],["Étincelles Déferlantes","Coffret Dresseur d'Élite (ETB)",9,140.7,7.61,2.59,"etb9","sv08"],["Tempête Argentée","Display (présentoir)",36,419.5,11.65,1.34,"display36","swsh12"],["Astres Radieux","Display (présentoir)",36,310.2,8.62,1.04,"display36","swsh10"],["Flammes Obsidiennes","Coffret Dresseur d'Élite (ETB)",9,213.29,6.62,2.12,"etb9","sv03"],["Stars Étincelantes","Display (présentoir)",36,429.7,11.94,1.05,"display36","swsh9"],["Astres Radieux","Coffret Dresseur d'Élite (Épée et Bouclier)",8,181.08,8.62,1.04,"etb8","swsh10"],["Stars Étincelantes","Coffret Dresseur d'Élite (Épée et Bouclier)",8,211.48,11.94,1.05,"etb8","swsh9"],["Pokémon GO","Coffret Dresseur d'Élite (Épée et Bouclier)",8,156.7,19.59,0.48,"etb8","swsh10.5"]]</script>
+<script id="extensions" type="application/json">[["30ᵉ Anniversaire",2.81,null,""],["Astres Radieux",1.04,8.62,"swsh10"],["Astres Radieux Galerie de Dresseurs",1,null,""],["Aventures Ensemble",1.92,6.11,"sv09"],["Chaos Ascendant",2.51,6.02,"me04"],["Couronne Stellaire",2.79,7.68,"sv07"],["Destinées de Paldea",3.98,16.18,"sv04.5"],["Équilibre Parfait",2.45,6.33,"me03"],["Étincelles Déferlantes",2.59,7.61,"sv08"],["Évolutions à Paldea",3.77,7.77,"sv02"],["Évolutions Prismatiques",3.84,11.85,"sv08.5"],["Fable Nébuleuse",3.9,8.82,"sv06.5"],["Faille Paradoxe",2.44,7.92,"sv04"],["Flamme Blanche",6.68,11.65,"sv10.5w"],["Flammes Fantasmagoriques",5.12,9.63,"me02"],["Flammes Obsidiennes",2.12,6.62,"sv03"],["Forces Temporelles",3.7,9,"sv05"],["Foudre Noire",7.66,11.71,"sv10.5b"],["Héros Transcendants",6.2,12.47,"me02.5"],["Mascarade Crépusculaire",3.23,9.29,"sv06"],["Méga-Évolution",3.96,6.16,"me01"],["Nuit Noire",2.89,5.74,"me05"],["Origine Perdue",2.11,9.86,"swsh11"],["Origine Perdue Galerie de Dresseurs",1.34,null,""],["Pokémon GO",0.48,19.59,"swsh10.5"],["Rivalités Destinées",3.34,9.07,"sv10"],["Stars Étincelantes",1.05,11.94,"swsh9"],["Stars Étincelantes Galerie de Dresseurs",1.61,null,""],["Tempête Argentée",1.34,11.65,"swsh12"],["Tempête Argentée Galerie de Dresseurs",1.14,null,""],["Zénith Suprême",0.57,null,""],["Zénith Suprême Galerie Galaroise",1.66,null,""]]</script>
 <script>
 (function(){
   // [nomFr, type, boosters, prixEbay, meilleurParBooster, esperance, cle, setId]
   var D = JSON.parse(document.getElementById('donnees').textContent);
+  var E = JSON.parse(document.getElementById('extensions').textContent);
   var sel = document.getElementById('cProd'), px = document.getElementById('cPrix'),
-      res = document.getElementById('cRes');
+      res = document.getElementById('cRes'), libre = document.getElementById('cLibre'),
+      ext = document.getElementById('cExt'), nbLibre = document.getElementById('cNb');
+  E.forEach(function(e, i){
+    var op = document.createElement('option');
+    op.value = i; op.textContent = e[0]; ext.appendChild(op);
+  });
   D.map(function(d, i){ return [d[0] + ' — ' + d[1] + ' (' + d[2] + ' boosters)', i]; })
    .sort(function(a, b){ return a[0].localeCompare(b[0], 'fr'); })
    .forEach(function(o){
@@ -844,27 +863,50 @@ sinon, ne les payez pas.</p>
   };
   function calculer(){
     var i = sel.value, p = parseFloat(String(px.value).replace(',', '.'));
+    libre.hidden = (i !== 'libre');
     if (i === '' || !(p > 0)) { res.innerHTML = ''; return; }
-    var d = D[i], nb = d[2], pb = p / nb, ebay = d[3], best = d[4], esp = d[5];
-    var vEbay = (pb - ebay / nb) / (ebay / nb) * 100, vBest = (pb - best) / best * 100;
+
+    var nom, nb, ebay = null, best, esp, setId;
+    if (i === 'libre') {
+      var e = E[ext.value], n = parseInt(nbLibre.value, 10);
+      if (!e || !(n > 0)) {
+        res.innerHTML = '<span class="verdict moyen">Il manque l’extension ou le nombre de '
+          + 'boosters</span>Les deux sont écrits sur la boîte. Sans eux, le prix affiché ne veut rien dire.';
+        return;
+      }
+      nom = e[0]; esp = e[1]; best = e[2]; setId = e[3]; nb = n;
+    } else {
+      var d = D[i];
+      nom = d[0]; nb = d[2]; ebay = d[3]; best = d[4]; esp = d[5]; setId = d[7];
+    }
+    var pb = p / nb, vBest = best ? (pb - best) / best * 100 : null;
     var cls, txt;
-    if (pb <= best) { cls = 'bon'; txt = 'Bonne affaire'; }
+    if (best == null) { cls = 'moyen'; txt = 'Aucune boîte mesurée sur cette extension'; }
+    else if (pb <= best) { cls = 'bon'; txt = 'Bonne affaire'; }
     else if (vBest <= 15) { cls = 'moyen'; txt = 'Correct'; }
-    else if (vEbay <= 0) { cls = 'moyen'; txt = 'Correct pour ce format, mais ce format est cher'; }
     else { cls = 'mauvais'; txt = 'Au-dessus du marché'; }
-    res.innerHTML =
-      '<span class="verdict ' + cls + '">' + txt + '</span>' +
-      '<b>' + eur(pb) + ' le booster</b> (' + eur(p) + ' ÷ ' + nb + ').<br>' +
-      'Le même produit se trouve à <b>' + eur(ebay) + '</b> sur eBay France, soit '
-        + eur(ebay / nb) + ' le booster : vous êtes à ' + pct(vEbay) + '.<br>' +
-      'Le meilleur tarif mesuré sur ' + d[0] + ', tous formats confondus, est de <b>'
-        + eur(best) + ' le booster</b> : vous êtes à ' + pct(vBest) + '.<br>' +
-      'Cartes attendues dans la boîte : <b>' + eur(esp * nb) + '</b>, soit '
-        + (esp / pb).toFixed(2).replace('.', ',') + ' € de cartes par euro dépensé.' +
-      (d[7] ? ' <a href="c/' + d[7] + '.html">Voir les cartes de cette extension</a>.' : '');
+
+    var h = '<span class="verdict ' + cls + '">' + txt + '</span>'
+      + '<b>' + eur(pb) + ' le booster</b> (' + eur(p) + ' ÷ ' + nb + ').<br>';
+    if (ebay != null) {
+      h += 'Le même produit se trouve à <b>' + eur(ebay) + '</b> sur eBay France, soit '
+         + eur(ebay / nb) + ' le booster : vous êtes à ' + pct((pb - ebay / nb) / (ebay / nb) * 100) + '.<br>';
+    }
+    if (best != null) {
+      h += 'Le meilleur tarif mesuré sur ' + nom + ', tous formats confondus, est de <b>'
+         + eur(best) + ' le booster</b> : vous êtes à ' + pct(vBest) + '.<br>';
+    }
+    h += 'Cartes attendues dans la boîte : <b>' + eur(esp * nb) + '</b>, soit '
+       + (esp / pb).toFixed(2).replace('.', ',') + ' € de cartes par euro dépensé.'
+       + (setId ? ' <a href="c/' + setId + '.html">Voir les cartes de cette extension</a>.' : '')
+       + '<br>Les cartes promo, la figurine et les accessoires ne sont comptés nulle part&nbsp;: '
+       + 'à vous de juger ce qu’ils valent pour vous.';
+    res.innerHTML = h;
   }
-  sel.addEventListener('change', calculer);
-  px.addEventListener('input', calculer);
+  [sel, px, ext, nbLibre].forEach(function(el){
+    el.addEventListener('change', calculer);
+    el.addEventListener('input', calculer);
+  });
 })();
 (function(){
   var t = document.getElementById('princ');
