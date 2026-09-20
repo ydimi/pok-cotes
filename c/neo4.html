@@ -14,6 +14,8 @@ body{margin:0;background:var(--bg);color:var(--text);
      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.5}
 a{color:var(--accent)}
 .wrap{max-width:1200px;margin:0 auto;padding:0 16px 56px}
+.retour{display:inline-block;margin:16px 0 0;font-size:.88rem;text-decoration:none}
+.retour:hover{text-decoration:underline}
 
 header{border-bottom:1px solid var(--line);margin-bottom:12px;padding:18px 0 12px}
 h1{margin:0 0 3px;font-size:1.4rem;line-height:1.2}
@@ -98,6 +100,8 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
 <body>
 <div class="wrap">
 
+<a class="retour" href="../index.html">← toutes les collections</a>
+
 <header>
   <h1>Neo Destiny</h1>
   <div class="sous">Neo · 113 cartes · relevé du 20/09/2026
@@ -181,10 +185,11 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
     var rangs = [];
     if (e && e.ebay)
       rangs.push(ligne(l.ebay, 'annonces FR', euros(e.ebay.bas) + ' – ' + euros(e.ebay.haut),
-                       e.ebay.n + '/' + e.ebay.total + ' retenues', 'princ'));
+                       e.ebay.n + ' retenues sur ' + e.ebay.total + ' →', 'princ'));
     if (e && e.ventes)
       rangs.push(ligne(l.pricecharting, 'ventes', euros(e.ventes.bas) + ' – ' + euros(e.ventes.haut),
-                       e.ventes.n + ' vente' + (e.ventes.n > 1 ? 's' : ''), e.ebay ? '' : 'princ'));
+                       e.ventes.n + ' vente' + (e.ventes.n > 1 ? 's' : '') + (l.pricecharting ? ' →' : ''),
+                       e.ebay ? '' : 'princ'));
     if (e && e.marche != null)
       rangs.push(ligne(l.tcgplayer, 'valeur', euros(e.marche), 'marché TCGplayer',
                        (e.ebay || e.ventes) ? '' : 'princ'));
