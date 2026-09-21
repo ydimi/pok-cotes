@@ -142,8 +142,10 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
     automatisée et Cloudflare bloque même un navigateur piloté. Le lien ouvre la fiche, filtrée
     sur les cartes françaises.</p>
     <p><b>Pour décider.</b> L'ordre est presque toujours le même : annonces françaises au-dessus
-    des ventes réelles, elles-mêmes proches de la valeur de marché. Mesuré sur 1 096 annonces,
-    les annonces françaises demandent <b>1,56 fois</b> la valeur de marché en médiane — de 1,3
+    des ventes réelles, elles-mêmes proches de la valeur de marché. Mesuré contre 34 cotes
+    Cardmarket relevées à la main, les annonces françaises demandent <b>1,17 fois</b> la
+    tendance Cardmarket en médiane, quand les ventes conclues sont à 0,97 et la valeur de
+    marché à 0,93. C'est pour cela que la valeur affichée n'est plus celle des annonces — de 1,3
     sur les cartes à plus de 100 € à plus de 3 sur celles à moins de 10 €. Une annonce sous la
     borne basse des annonces FR est moins chère que tout ce qui est en vente en France ; une
     annonce sous la valeur de marché est une affaire au sens strict.</p>
@@ -182,10 +184,16 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
     var e = c.est;
     var l = c.liens;
 
-    // Une ligne par source de prix, le libellé servant de lien. L'ordre va du marché sur
-    // lequel on achète vers la valeur de référence : annonces France, puis ventes conclues,
-    // puis valeur de marché. Cardmarket ferme la marche sans chiffre — aucun script ne peut
-    // en extraire, Cloudflare bloque, il n'y a que le lien.
+    // Une ligne par source de prix, le libellé servant de lien. L'ordre va de la VALEUR DE
+    // RÉFÉRENCE vers les annonces : ventes conclues, valeur de marché, puis ce qu'on demande
+    // en France. C'est l'inverse de l'ordre d'origine, et le relevé Cardmarket manuel du
+    // 21/09/2026 explique pourquoi : sur 34 cartes, les annonces françaises sortent 17 % au
+    // -dessus de la tendance Cardmarket là où les ventes conclues sont à 0,97 et le marché
+    // TCGplayer à 0,93. Mettre les annonces en tête revenait à dire qu'une carte vaut ce que
+    // le vendeur français le plus cher en demande.
+    //
+    // La ligne « princ » est celle de la source effectivement retenue, pas la première.
+    // Cardmarket ferme la marche sans chiffre — Cloudflare bloque, il n'y a que le lien.
     function ligne(url, quoi, valeur, note, classe){
       var dedans = '<span class="quoi">' + esc(quoi) + '</span><span class="val">'
                  + '<span class="cb">' + valeur + '</span>'
@@ -196,16 +204,18 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
     }
 
     var rangs = [];
-    if (e && e.ebay)
-      rangs.push(ligne(l.ebay, 'annonces FR', euros(e.ebay.bas) + ' – ' + euros(e.ebay.haut),
-                       e.ebay.n + ' retenues sur ' + e.ebay.total + ' →', 'princ'));
+    var src = e ? e.source : null;
     if (e && e.ventes)
       rangs.push(ligne(l.pricecharting, 'ventes', euros(e.ventes.bas) + ' – ' + euros(e.ventes.haut),
                        e.ventes.n + ' vente' + (e.ventes.n > 1 ? 's' : '') + (l.pricecharting ? ' →' : ''),
-                       e.ebay ? '' : 'princ'));
+                       src === 'ventes' ? 'princ' : ''));
     if (e && e.marche != null)
       rangs.push(ligne(l.tcgplayer, 'valeur', euros(e.marche), 'marché TCGplayer',
-                       (e.ebay || e.ventes) ? '' : 'princ'));
+                       src === 'tcgplayer' ? 'princ' : ''));
+    if (e && e.ebay)
+      rangs.push(ligne(l.ebay, 'annonces FR', euros(e.ebay.bas) + ' – ' + euros(e.ebay.haut),
+                       e.ebay.n + ' retenues sur ' + e.ebay.total + ' →',
+                       src === 'ebay-fr' ? 'princ' : ''));
     rangs.push(ligne(l.cardmarket, 'Cardmarket', '—', 'à consulter'));
 
     var prix = rangs.length > 1
