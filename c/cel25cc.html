@@ -205,6 +205,21 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
 
     var rangs = [];
     var src = e ? e.source : null;
+
+    // L'ORDRE SUIT LA HIÉRARCHIE, de la référence la plus solide à la moins solide :
+    // Cardmarket relevé à la main, puis ventes conclues, puis marché, puis annonces
+    // françaises. Ces dernières ferment la marche parce qu'elles décrivent ce qu'on VOUS
+    // DEMANDE, pas ce que la carte vaut — mesuré 17 % au-dessus de Cardmarket.
+    if (e && e.cardmarket && e.cardmarket.trend > 0) {
+      rangs.push(ligne(l.cardmarket, 'Cardmarket', euros(e.cardmarket.trend),
+                       'tendance' + (e.cardmarket.avg30 ? ', 30 j ' + euros(e.cardmarket.avg30) : '')
+                       + ' · relevé le ' + esc(e.cardmarket.releveLe),
+                       src === 'cardmarket' ? 'princ' : ''));
+    } else if (e && e.cardmarket && e.cardmarket.low > 0) {
+      rangs.push(ligne(l.cardmarket, 'Cardmarket', 'dès ' + euros(e.cardmarket.low),
+                       'aucune moyenne de ventes · ' + e.cardmarket.nbOffres
+                       + ' offres · relevé le ' + esc(e.cardmarket.releveLe), ''));
+    }
     if (e && e.ventes)
       rangs.push(ligne(l.pricecharting, 'ventes', euros(e.ventes.bas) + ' – ' + euros(e.ventes.haut),
                        e.ventes.n + ' vente' + (e.ventes.n > 1 ? 's' : '') + (l.pricecharting ? ' →' : ''),
@@ -216,7 +231,8 @@ footer details summary{cursor:pointer;color:var(--text);margin-bottom:6px}
       rangs.push(ligne(l.ebay, 'annonces FR', euros(e.ebay.bas) + ' – ' + euros(e.ebay.haut),
                        e.ebay.n + ' retenues sur ' + e.ebay.total + ' →',
                        src === 'ebay-fr' ? 'princ' : ''));
-    rangs.push(ligne(l.cardmarket, 'Cardmarket', '—', 'à consulter'));
+    if (!(e && e.cardmarket))
+      rangs.push(ligne(l.cardmarket, 'Cardmarket', '—', 'à consulter'));
 
     var prix = rangs.length > 1
       ? '<div class="sources">' + rangs.join('') + '</div>'
