@@ -23,6 +23,10 @@ h1{margin:0 0 4px;font-size:1.5rem}
 .cle b{color:#fff}
 .filtres{margin:16px 0 2px;font-size:.88rem;color:var(--muted)}
 .filtres label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.filtres label.px{margin-left:18px;cursor:default}
+.filtres input[type=number]{width:74px;background:var(--panel);color:var(--text);
+  border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-size:.9rem;
+  font-family:inherit;font-variant-numeric:tabular-nums}
 .filtres input{width:17px;height:17px;accent-color:var(--accent)}
 .filtres label:hover{color:var(--text)}
 .filtres .ast{display:block;margin-top:6px;font-size:.8rem;line-height:1.45}
@@ -69,13 +73,14 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 @media(max-width:620px){
   table{font-size:.82rem}
   th,td{padding:7px 3px}
-  th:nth-child(8),td:nth-child(8){display:none}
   th:nth-child(4),td:nth-child(4){display:none}
+  th:nth-child(6),td:nth-child(6){display:none}
   /* La fourchette « 9,73 € – 14,19 € » tenue sur une ligne débordait de l'écran. */
   td.n{white-space:normal}
 }
 @media(max-width:470px){
-  th:nth-child(7),td:nth-child(7){display:none}
+  th:nth-child(2),td:nth-child(2){display:none}
+  th:nth-child(5),td:nth-child(5){display:none}
 }
 </style>
 </head>
@@ -91,8 +96,12 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 
 <div class="filtres">
   <label><input type="checkbox" id="fDispo"> N'afficher que ce qui est encore en rayon</label>
-  <span class="ast">Cliquez sur un titre de colonne pour trier. À prix égal en magasin, seules
-  comptent les colonnes <b>Contenu moyen</b> et <b>Belle carte</b>.</span>
+  <label class="px">Prix du booster en magasin&nbsp;:
+    <input id="pxMag" type="number" inputmode="decimal" min="0.5" max="60" step="0.5" value="8"> €</label>
+  <span class="ast">Cliquez sur un titre de colonne pour trier. Les deux dernières colonnes
+  répondent à deux questions différentes&nbsp;: <b>ouvrir</b> — combien coûte une carte à
+  20&nbsp;€ ou plus à ce prix-là ; <b>revendre</b> — ce que rapporte le même booster revendu
+  scellé sur eBay France.</span>
 </div>
 
 <table id="t">
@@ -104,9 +113,10 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <th class="n" data-c="4">Ne pas<br>dépasser</th>
     <th class="n actif" data-c="5">Rapport <span class="fl">▾</span></th>
     <th class="n" data-c="6">Belle<br>carte</th>
-    <th class="n" data-c="7">Prix<br>international</th>
+    <th class="n" data-c="7">Pour ouvrir<br>€ / belle carte</th>
+    <th class="n" data-c="8">Pour revendre<br>marge scellée</th>
   </tr></thead>
-  <tbody><tr data-dispo="fin">
+  <tbody><tr data-dispo="fin" data-pl="5.3" data-fr="11.84">
     <td><a href="c/sv10.5b.html">Foudre Noire</a><span class="det moyen">fin de vie</span></td>
     <td class="n" data-v="1752796800000">juil. 2025</td>
     <td class="n" data-v="11.84"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Foudre+Noire&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">10,68 € – 12,99 €<span class="det">3 offres →</span></a></td>
@@ -114,8 +124,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="12.6">12,60 €<span class="det bon">booster seul 11,84 €</span></td>
     <td class="n bon" data-v="0.64">0.64</td>
     <td class="n bon" data-v="5.3">5.3 %<span class="det">1 sur 19</span></td>
-    <td class="n" data-v="12.9">12,90 €</td>
-  </tr><tr data-dispo="fin">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="fin" data-pl="5" data-fr="16.42">
     <td><a href="c/sv10.5w.html">Flamme Blanche</a><span class="det moyen">fin de vie</span></td>
     <td class="n" data-v="1752796800000">juil. 2025</td>
     <td class="n" data-v="16.42"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flamme+Blanche&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">15,72 € – 17,11 €<span class="det">5 offres →</span></a></td>
@@ -123,8 +134,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="11">11,00 €<span class="det mauvais">booster seul 16,42 €</span></td>
     <td class="n bon" data-v="0.4">0.40</td>
     <td class="n bon" data-v="5">5.0 %<span class="det">1 sur 20</span></td>
-    <td class="n" data-v="12.09">12,09 €</td>
-  </tr><tr data-dispo="rayon">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="rayon" data-pl="" data-fr="17.43">
     <td><a href="c/me02.5.html">Héros Transcendants</a><span class="det bon">en rayon</span></td>
     <td class="n" data-v="1769731200000">janv. 2026</td>
     <td class="n" data-v="17.43"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+H%C3%A9ros+Transcendants&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">14,97 € – 19,90 €<span class="det">10 offres →</span></a></td>
@@ -132,8 +144,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v=""><span class="det">modèle incomplet</span></td>
     <td class="n " data-v="">—<span class="det">Mega Attack Rare (7 cartes) : aucun taux publié</span></td>
     <td class="n moyen" data-v="2.9">2.9 %<span class="det">1 sur 34</span></td>
-    <td class="n" data-v="11.68">11,68 €</td>
-  </tr><tr data-dispo="rayon">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="rayon" data-pl="1.2" data-fr="13.26">
     <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det bon">en rayon</span></td>
     <td class="n" data-v="1763078400000">nov. 2025</td>
     <td class="n" data-v="13.26"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flammes+Fantasmagoriques&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">11,44 € – 15,07 €<span class="det">12 offres →</span></a></td>
@@ -141,8 +154,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="8.5">8,50 €<span class="det mauvais">booster seul 13,26 €</span></td>
     <td class="n bon" data-v="0.39">0.39</td>
     <td class="n mauvais" data-v="1.2">1.2 %<span class="det">1 sur 83</span></td>
-    <td class="n" data-v="10.21">10,21 €</td>
-  </tr><tr data-dispo="rayon">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="rayon" data-pl="2.3" data-fr="10.59">
     <td><a href="c/me01.html">Méga-Évolution</a><span class="det bon">en rayon</span></td>
     <td class="n" data-v="1758844800000">sept. 2025</td>
     <td class="n" data-v="10.59"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+M%C3%A9ga-%C3%89volution&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">8,50 € – 12,68 €<span class="det">18 offres →</span></a></td>
@@ -150,8 +164,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="6.6">6,60 €<span class="det mauvais">booster seul 10,59 €</span></td>
     <td class="n moyen" data-v="0.37">0.37</td>
     <td class="n mauvais" data-v="2.3">2.3 %<span class="det">1 sur 43</span></td>
-    <td class="n" data-v="7.3">7,30 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="1.5" data-fr="">
     <td><a href="c/sv04.5.html">Destinées de Paldea</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1706227200000">janv. 2024</td>
     <td class="n" data-v="">—</td>
@@ -159,8 +174,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="6.6">6,60 €</td>
     <td class="n " data-v="">—</td>
     <td class="n mauvais" data-v="1.5">1.5 %<span class="det">1 sur 67</span></td>
-    <td class="n" data-v="21.86">21,86 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="7" data-fr="">
     <td><a href="c/sv06.5.html">Fable Nébuleuse</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1722556800000">août 2024</td>
     <td class="n" data-v="">—</td>
@@ -168,8 +184,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="6.5">6,50 €</td>
     <td class="n " data-v="">—</td>
     <td class="n bon" data-v="7">7.0 %<span class="det">1 sur 14</span></td>
-    <td class="n" data-v="12.93">12,93 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="4" data-fr="4.6">
     <td><a href="c/sv02.html">Évolutions à Paldea</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1686268800000">juin 2023</td>
     <td class="n" data-v="4.6"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89volutions+%C3%A0+Paldea&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3,93 € – 5,27 €<span class="det">4 offres →</span></a></td>
@@ -177,8 +194,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="6.3">6,30 €<span class="det bon">booster seul 4,60 €</span></td>
     <td class="n bon" data-v="0.82">0.82</td>
     <td class="n moyen" data-v="4">4.0 %<span class="det">1 sur 25</span></td>
-    <td class="n" data-v="13.62">13,62 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="6.3" data-fr="13.88">
     <td><a href="c/sv05.html">Forces Temporelles</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1711065600000">mars 2024</td>
     <td class="n" data-v="13.88"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Forces+Temporelles&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">12,79 € – 14,97 €<span class="det">4 offres →</span></a></td>
@@ -186,8 +204,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="6.2">6,20 €<span class="det mauvais">booster seul 13,88 €</span></td>
     <td class="n moyen" data-v="0.27">0.27</td>
     <td class="n bon" data-v="6.3">6.3 %<span class="det">1 sur 16</span></td>
-    <td class="n" data-v="8.39">8,39 €</td>
-  </tr><tr data-dispo="fin">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="fin" data-pl="2.3" data-fr="20.4">
     <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det moyen">fin de vie</span></td>
     <td class="n" data-v="1737072000000">janv. 2025</td>
     <td class="n" data-v="20.4"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89volutions+Prismatiques&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">17,80 € – 23,00 €<span class="det">6 offres →</span></a></td>
@@ -195,8 +214,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="6">6,00 €<span class="det mauvais">booster seul 20,40 €</span></td>
     <td class="n mauvais" data-v="0.18">0.18</td>
     <td class="n mauvais" data-v="2.3">2.3 %<span class="det">1 sur 43</span></td>
-    <td class="n" data-v="11.76">11,76 €</td>
-  </tr><tr data-dispo="fin">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="fin" data-pl="3.3" data-fr="15.81">
     <td><a href="c/sv10.html">Rivalités Destinées</a><span class="det moyen">fin de vie</span></td>
     <td class="n" data-v="1748563200000">mai 2025</td>
     <td class="n" data-v="15.81"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Rivalit%C3%A9s+Destin%C3%A9es&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">12,68 € – 18,93 €<span class="det">17 offres →</span></a></td>
@@ -204,8 +224,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="5.6">5,60 €<span class="det mauvais">booster seul 15,81 €</span></td>
     <td class="n mauvais" data-v="0.21">0.21</td>
     <td class="n moyen" data-v="3.3">3.3 %<span class="det">1 sur 30</span></td>
-    <td class="n" data-v="7.9">7,90 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="2.8" data-fr="12.02">
     <td><a href="c/sv06.html">Mascarade Crépusculaire</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1716508800000">mai 2024</td>
     <td class="n" data-v="12.02"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Mascarade+Cr%C3%A9pusculaire&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">9,90 € – 14,13 €<span class="det">10 offres →</span></a></td>
@@ -213,8 +234,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="5.4">5,40 €<span class="det mauvais">booster seul 12,02 €</span></td>
     <td class="n moyen" data-v="0.27">0.27</td>
     <td class="n moyen" data-v="2.8">2.8 %<span class="det">1 sur 36</span></td>
-    <td class="n" data-v="7.95">7,95 €</td>
-  </tr><tr data-dispo="rayon">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="rayon" data-pl="2.7" data-fr="10.21">
     <td><a href="c/me05.html">Nuit Noire</a><span class="det bon">en rayon</span></td>
     <td class="n" data-v="1784246400000">juil. 2026</td>
     <td class="n" data-v="10.21"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Nuit+Noire&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">8,66 € – 11,76 €<span class="det">13 offres →</span></a></td>
@@ -222,8 +244,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="4.8">4,80 €<span class="det mauvais">booster seul 10,21 €</span></td>
     <td class="n moyen" data-v="0.28">0.28</td>
     <td class="n moyen" data-v="2.7">2.7 %<span class="det">1 sur 37</span></td>
-    <td class="n" data-v="5.32">5,32 €</td>
-  </tr><tr data-dispo="rayon">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="rayon" data-pl="" data-fr="">
     <td><a href="c/30th.html">30ᵉ Anniversaire</a><span class="det bon">en rayon</span></td>
     <td class="n" data-v="1789516800000">sept. 2026</td>
     <td class="n" data-v="">—</td>
@@ -231,8 +254,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v=""><span class="det">modèle incomplet</span></td>
     <td class="n " data-v="">—<span class="det">Futuristic Rare (2 cartes), Pikachu Rare (30 cartes), RBG Rare (3 cartes) : aucun taux publié</span></td>
     <td class="n mauvais" data-v="2.4">2.4 %<span class="det">1 sur 42</span></td>
-    <td class="n" data-v="15">15,00 €</td>
-  </tr><tr data-dispo="fin">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="fin" data-pl="2.3" data-fr="14.38">
     <td><a href="c/sv07.html">Couronne Stellaire</a><span class="det moyen">fin de vie</span></td>
     <td class="n" data-v="1726185600000">sept. 2024</td>
     <td class="n" data-v="14.38"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Couronne+Stellaire&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">12,26 € – 16,49 €<span class="det">10 offres →</span></a></td>
@@ -240,8 +264,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="4.7">4,70 €<span class="det mauvais">booster seul 14,38 €</span></td>
     <td class="n mauvais" data-v="0.19">0.19</td>
     <td class="n mauvais" data-v="2.3">2.3 %<span class="det">1 sur 43</span></td>
-    <td class="n" data-v="9.26">9,26 €</td>
-  </tr><tr data-dispo="fin">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="fin" data-pl="2.5" data-fr="12.67">
     <td><a href="c/sv08.html">Étincelles Déferlantes</a><span class="det moyen">fin de vie</span></td>
     <td class="n" data-v="1731024000000">nov. 2024</td>
     <td class="n" data-v="12.67"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89tincelles+D%C3%A9ferlantes&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">10,37 € – 14,97 €<span class="det">6 offres →</span></a></td>
@@ -249,8 +274,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="4.3">4,30 €<span class="det mauvais">booster seul 12,67 €</span></td>
     <td class="n mauvais" data-v="0.2">0.20</td>
     <td class="n moyen" data-v="2.5">2.5 %<span class="det">1 sur 40</span></td>
-    <td class="n" data-v="10.44">10,44 €</td>
-  </tr><tr data-dispo="rayon">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="rayon" data-pl="2.1" data-fr="8.38">
     <td><a href="c/me04.html">Chaos Ascendant</a><span class="det bon">en rayon</span></td>
     <td class="n" data-v="1779408000000">mai 2026</td>
     <td class="n" data-v="8.38"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Chaos+Ascendant&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6,90 € – 9,85 €<span class="det">9 offres →</span></a></td>
@@ -258,8 +284,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="4.2">4,20 €<span class="det mauvais">booster seul 8,38 €</span></td>
     <td class="n moyen" data-v="0.3">0.30</td>
     <td class="n mauvais" data-v="2.1">2.1 %<span class="det">1 sur 48</span></td>
-    <td class="n" data-v="4.77">4,77 €</td>
-  </tr><tr data-dispo="rayon">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="rayon" data-pl="2.4" data-fr="8.4">
     <td><a href="c/me03.html">Équilibre Parfait</a><span class="det bon">en rayon</span></td>
     <td class="n" data-v="1774569600000">mars 2026</td>
     <td class="n" data-v="8.4"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89quilibre+Parfait&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6,90 € – 9,90 €<span class="det">8 offres →</span></a></td>
@@ -267,8 +294,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="4.1">4,10 €<span class="det mauvais">booster seul 8,40 €</span></td>
     <td class="n moyen" data-v="0.29">0.29</td>
     <td class="n mauvais" data-v="2.4">2.4 %<span class="det">1 sur 42</span></td>
-    <td class="n" data-v="5.03">5,03 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="3.6" data-fr="11.44">
     <td><a href="c/sv04.html">Faille Paradoxe</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1698969600000">nov. 2023</td>
     <td class="n" data-v="11.44"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Faille+Paradoxe&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">9,30 € – 13,57 €<span class="det">16 offres →</span></a></td>
@@ -276,8 +304,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="4.1">4,10 €<span class="det mauvais">booster seul 11,44 €</span></td>
     <td class="n mauvais" data-v="0.21">0.21</td>
     <td class="n moyen" data-v="3.6">3.6 %<span class="det">1 sur 28</span></td>
-    <td class="n" data-v="7.28">7,28 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="2.8" data-fr="">
     <td><a href="c/swsh12.5gg.html">Zénith Suprême Galerie Galaroise</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1674172800000">janv. 2023</td>
     <td class="n" data-v="">—</td>
@@ -285,8 +314,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="4">4,00 €</td>
     <td class="n " data-v="">—</td>
     <td class="n moyen" data-v="2.8">2.8 %<span class="det">1 sur 36</span></td>
-    <td class="n" data-v="">—</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="0.6" data-fr="14.42">
     <td><a href="c/swsh11.html">Origine Perdue</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1662681600000">sept. 2022</td>
     <td class="n" data-v="14.42"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Origine+Perdue&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">11,85 € – 16,99 €<span class="det">10 offres →</span></a></td>
@@ -294,8 +324,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="3.8">3,80 €<span class="det mauvais">booster seul 14,42 €</span></td>
     <td class="n mauvais" data-v="0.16">0.16</td>
     <td class="n mauvais" data-v="0.6">0.6 %<span class="det">1 sur 167</span></td>
-    <td class="n" data-v="16.85">16,85 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="2.7" data-fr="7.98">
     <td><a href="c/sv03.html">Flammes Obsidiennes</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1691712000000">août 2023</td>
     <td class="n" data-v="7.98"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flammes+Obsidiennes&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6,45 € – 9,50 €<span class="det">6 offres →</span></a></td>
@@ -303,8 +334,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="3.5">3,50 €<span class="det mauvais">booster seul 7,98 €</span></td>
     <td class="n moyen" data-v="0.27">0.27</td>
     <td class="n moyen" data-v="2.7">2.7 %<span class="det">1 sur 37</span></td>
-    <td class="n" data-v="11.54">11,54 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="0.6" data-fr="20.14">
     <td><a href="c/swsh10.5.html">Pokémon GO</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1656633600000">juil. 2022</td>
     <td class="n" data-v="20.14"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Pok%C3%A9mon+GO+EB10.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">17,30 € – 22,98 €<span class="det">5 offres →</span></a></td>
@@ -312,8 +344,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="3.4">3,40 €<span class="det mauvais">booster seul 20,14 €</span></td>
     <td class="n mauvais" data-v="0.1">0.10</td>
     <td class="n mauvais" data-v="0.6">0.6 %<span class="det">1 sur 167</span></td>
-    <td class="n" data-v="12.41">12,41 €</td>
-  </tr><tr data-dispo="fin">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="fin" data-pl="1.6" data-fr="11.05">
     <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det moyen">fin de vie</span></td>
     <td class="n" data-v="1743120000000">mars 2025</td>
     <td class="n" data-v="11.05"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Aventures+Ensemble&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">8,90 € – 13,19 €<span class="det">14 offres →</span></a></td>
@@ -321,8 +354,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="3.2">3,20 €<span class="det mauvais">booster seul 11,05 €</span></td>
     <td class="n mauvais" data-v="0.17">0.17</td>
     <td class="n mauvais" data-v="1.6">1.6 %<span class="det">1 sur 63</span></td>
-    <td class="n" data-v="7.97">7,97 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="1.9" data-fr="">
     <td><a href="c/swsh9tg.html">Stars Étincelantes Galerie de Dresseurs</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1645747200000">févr. 2022</td>
     <td class="n" data-v="">—</td>
@@ -330,8 +364,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="2.7">2,70 €</td>
     <td class="n " data-v="">—</td>
     <td class="n mauvais" data-v="1.9">1.9 %<span class="det">1 sur 53</span></td>
-    <td class="n" data-v="">—</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="2.1" data-fr="">
     <td><a href="c/swsh11tg.html">Origine Perdue Galerie de Dresseurs</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1662681600000">sept. 2022</td>
     <td class="n" data-v="">—</td>
@@ -339,8 +374,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="2.5">2,50 €</td>
     <td class="n " data-v="">—</td>
     <td class="n mauvais" data-v="2.1">2.1 %<span class="det">1 sur 48</span></td>
-    <td class="n" data-v="">—</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="0.6" data-fr="13.57">
     <td><a href="c/swsh12.html">Tempête Argentée</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1668124800000">nov. 2022</td>
     <td class="n" data-v="13.57"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Temp%C3%AAte+Argent%C3%A9e&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">11,19 € – 15,95 €<span class="det">10 offres →</span></a></td>
@@ -348,8 +384,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="2.4">2,40 €<span class="det mauvais">booster seul 13,57 €</span></td>
     <td class="n mauvais" data-v="0.11">0.11</td>
     <td class="n mauvais" data-v="0.6">0.6 %<span class="det">1 sur 167</span></td>
-    <td class="n" data-v="13.25">13,25 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="1.1" data-fr="">
     <td><a href="c/swsh12tg.html">Tempête Argentée Galerie de Dresseurs</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1668124800000">nov. 2022</td>
     <td class="n" data-v="">—</td>
@@ -357,8 +394,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="2">2,00 €</td>
     <td class="n " data-v="">—</td>
     <td class="n mauvais" data-v="1.1">1.1 %<span class="det">1 sur 91</span></td>
-    <td class="n" data-v="">—</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="1" data-fr="14.5">
     <td><a href="c/swsh10.html">Astres Radieux</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1653609600000">mai 2022</td>
     <td class="n" data-v="14.5"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Astres+Radieux&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">11,72 € – 17,28 €<span class="det">21 offres →</span></a></td>
@@ -366,8 +404,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="1.9">1,90 €<span class="det mauvais">booster seul 14,50 €</span></td>
     <td class="n mauvais" data-v="0.08">0.08</td>
     <td class="n mauvais" data-v="1">1.0 %<span class="det">1 sur 100</span></td>
-    <td class="n" data-v="9.33">9,33 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="0.7" data-fr="17.33">
     <td><a href="c/swsh9.html">Stars Étincelantes</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1645747200000">févr. 2022</td>
     <td class="n" data-v="17.33"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Stars+%C3%89tincelantes&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">13,95 € – 20,71 €<span class="det">20 offres →</span></a></td>
@@ -375,8 +414,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="1.9">1,90 €<span class="det mauvais">booster seul 17,33 €</span></td>
     <td class="n mauvais" data-v="0.07">0.07</td>
     <td class="n mauvais" data-v="0.7">0.7 %<span class="det">1 sur 143</span></td>
-    <td class="n" data-v="14.55">14,55 €</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="0.6" data-fr="">
     <td><a href="c/swsh10tg.html">Astres Radieux Galerie de Dresseurs</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1653609600000">mai 2022</td>
     <td class="n" data-v="">—</td>
@@ -384,8 +424,9 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="1.7">1,70 €</td>
     <td class="n " data-v="">—</td>
     <td class="n mauvais" data-v="0.6">0.6 %<span class="det">1 sur 167</span></td>
-    <td class="n" data-v="">—</td>
-  </tr><tr data-dispo="epuise">
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
+  </tr><tr data-dispo="epuise" data-pl="0.5" data-fr="35.39">
     <td><a href="c/swsh12.5.html">Zénith Suprême</a><span class="det mauvais">épuisée</span></td>
     <td class="n" data-v="1674172800000">janv. 2023</td>
     <td class="n" data-v="35.39"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Z%C3%A9nith+Supr%C3%AAme&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">31,89 € – 38,90 €<span class="det">5 offres →</span></a></td>
@@ -393,7 +434,8 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     <td class="n plaf" data-v="1.6">1,60 €<span class="det mauvais">booster seul 35,39 €</span></td>
     <td class="n mauvais" data-v="0.03">0.03</td>
     <td class="n mauvais" data-v="0.5">0.5 %<span class="det">1 sur 200</span></td>
-    <td class="n" data-v="22.1">22,10 €</td>
+    <td class="n ouvrir" data-v=""></td>
+    <td class="n revendre" data-v=""></td>
   </tr></tbody>
 </table>
 
@@ -522,6 +564,37 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
     vide.style.display = n ? 'none' : 'block';
   }
   f.addEventListener('change', filtrer);
+
+  // LES DEUX OBJECTIFS SE CALCULENT DANS LA PAGE, parce qu'ils dépendent du prix qu'on paie.
+  // « Ouvrir » : à 8 € le booster sur une extension où une carte à 20 € sort une fois sur 19,
+  // la belle carte revient à 152 €. « Revendre » : le même booster scellé se revend 11,84 €
+  // sur eBay France, soit +48 %. Le premier chiffre décide d'un cadeau, le second d'un achat.
+  var pxMag = document.getElementById('pxMag');
+  function eur(v){ return v.toFixed(v >= 100 ? 0 : 2).replace('.', ',') + ' €'; }
+  function objectifs(){
+    var px = parseFloat(String(pxMag.value).replace(',', '.'));
+    [].forEach.call(tb.rows, function(r){
+      var pl = parseFloat(r.dataset.pl), fr = parseFloat(r.dataset.fr);
+      var co = r.cells[7], cr = r.cells[8];
+      if (!(px > 0) || !(pl > 0)) { co.textContent = '—'; co.dataset.v = ''; co.className = 'n ouvrir'; }
+      else {
+        var pb = px / (pl / 100);
+        co.dataset.v = pb;
+        co.textContent = eur(pb);
+        co.className = 'n ouvrir ' + (pb <= 200 ? 'bon' : pb <= 500 ? 'moyen' : 'mauvais');
+      }
+      if (!(px > 0) || !(fr > 0)) { cr.textContent = '—'; cr.dataset.v = ''; cr.className = 'n revendre'; }
+      else {
+        var m = (fr - px) / px * 100;
+        cr.dataset.v = m;
+        cr.innerHTML = (m > 0 ? '+' : '') + Math.round(m) + ' %'
+          + '<span class="det">revendu ' + eur(fr) + '</span>';
+        cr.className = 'n revendre ' + (m >= 40 ? 'bon' : m >= 15 ? 'moyen' : 'mauvais');
+      }
+    });
+  }
+  pxMag.addEventListener('input', objectifs);
+  objectifs();
 
   trier(5);   // Rapport — l'index suit la position de la colonne, pas son data-c
 })();
