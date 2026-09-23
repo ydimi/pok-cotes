@@ -23,11 +23,19 @@ h1{margin:0 0 4px;font-size:1.5rem}
 .cle{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);
      border-radius:0 8px 8px 0;padding:12px 14px;margin:18px 0;font-size:.9rem;line-height:1.55}
 .cle b{color:#fff}
-.filtres{margin:16px 0 2px;font-size:.88rem;color:var(--muted)}
-.filtres label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+/* LA BARRE DE FILTRES EST UNE GRILLE SOUPLE, pas une suite d'éléments en ligne. Avec des
+   marges à gauche et un retour à la ligne naturel, la deuxième liste déroulante retombait
+   décalée sous la première et rien ne s'alignait. Ici les contrôles se répartissent, passent
+   à la ligne ensemble et gardent le même interligne. */
+.filtres{margin:16px 0 2px;font-size:.88rem;color:var(--muted);
+         display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.filtres label{display:inline-flex;align-items:center;gap:8px;cursor:pointer;flex:0 0 auto}
 .filtres input{width:17px;height:17px;accent-color:var(--accent)}
+.filtres select{background:var(--panel);color:var(--text);border:1px solid var(--line);
+                border-radius:6px;padding:6px 9px;font-size:.88rem;font-family:inherit;
+                flex:0 1 auto;max-width:min(100%,20rem);min-width:11rem}
 .filtres label:hover{color:var(--text)}
-.filtres .ast{display:block;margin-top:6px;font-size:.8rem;line-height:1.45}
+.filtres .ast{flex:1 0 100%;margin-top:2px;font-size:.8rem;line-height:1.45}
 .filtres .ast b{color:var(--text)}
 .vide{color:var(--muted);font-size:.88rem;padding:14px 0;display:none}
 table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:6px}
@@ -42,9 +50,8 @@ td.n{white-space:nowrap}
 td .det{display:block;color:var(--muted);font-size:.74rem;white-space:normal;font-weight:400}
 td .det.bon{color:var(--ok)} td .det.moyen{color:var(--warn)} td .det.mauvais{color:var(--bad)}
 td.plaf{font-weight:600;color:var(--accent)}
-/* LE VERDICT. La pastille se lit à un mètre, la phrase juste en dessous dit pourquoi, et le
-   pavé dépliable porte les nombres avec leur source — sans quoi la pastille serait un oracle. */
-td.v{cursor:pointer;vertical-align:top;min-width:9.5rem}
+/* LE VERDICT. La pastille se lit à un mètre, la phrase dit pourquoi, et le panneau de détail
+   (CSS_POP) porte les nombres avec leur source. */
 td.v .pa{display:flex;gap:4px;align-items:center;height:1.25rem}
 td.v .pa i{width:11px;height:11px;flex:0 0 11px;border-radius:50%;
            border:1.5px solid currentColor;box-sizing:border-box}
@@ -52,16 +59,6 @@ td.v .pa i.on{background:currentColor}
 td.v .pa.bon{color:var(--ok)} td.v .pa.moyen{color:var(--warn)}
 td.v .pa.mauvais{color:var(--bad)} td.v .pa.neutre{color:var(--muted)}
 td.v .det{margin-top:2px}
-td.v .pop{display:none;margin-top:8px;padding:9px 11px;background:#0b0e13;border:1px solid var(--line);
-          border-radius:7px;font-size:.78rem;line-height:1.5;color:var(--muted);white-space:normal}
-td.v.ouvert .pop{display:block}
-td.v .pop ul{margin:0;padding-left:16px}
-td.v .pop li{margin:3px 0}
-td.v .pop b{color:var(--text);font-weight:600}
-td.v .pop p{margin:8px 0 0}
-td.v::after{content:'détail ▾';display:block;margin-top:4px;font-size:.7rem;color:var(--muted);opacity:.65}
-td.v.ouvert::after{content:'détail ▴'}
-td.v:not(:has(.pop))::after{content:''}
 td a{text-decoration:none}
 td a:hover{text-decoration:underline}
 .bon{color:var(--ok);font-weight:600}
@@ -88,8 +85,11 @@ details code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size
 #haut:hover{border-color:var(--accent);color:var(--accent)}
 #haut.on{display:flex}
 @media(max-width:480px){#haut{right:12px;bottom:12px}}
+td.v.rev{text-align:right}
+td.v.rev .pa{justify-content:flex-end}
 td.v.rev .px{display:block;font-size:1.02rem;font-weight:600;color:var(--text);line-height:1.25;
              font-variant-numeric:tabular-nums}
+td.v.rev .det[title]{cursor:help}
 td.v.rev .px.vide{color:var(--muted);font-weight:400}
 td.v.rev .det{margin-top:2px}
 td.px .v,td.s .v{display:block;font-variant-numeric:tabular-nums;line-height:1.25}
@@ -99,7 +99,20 @@ td.s{min-width:4.6rem}
 td.s .v.muet{color:var(--muted);font-weight:400}
 td.px a{text-decoration:none}
 td.px a:hover{text-decoration:underline}
-th.s{white-space:nowrap}
+th.s{white-space:nowrap;cursor:help}
+td.v{cursor:pointer;vertical-align:top}
+td.v .pop{position:fixed;z-index:60;display:none;width:min(23rem,calc(100vw - 24px));
+          background:#0b0e13;border:1px solid var(--line);border-radius:8px;
+          padding:10px 13px;font-size:.8rem;line-height:1.55;color:var(--muted);
+          box-shadow:0 10px 30px #000c;white-space:normal;text-align:left}
+td.v.ouvert .pop{display:block}
+td.v .pop ul{margin:0;padding-left:15px}
+td.v .pop li{margin:3px 0}
+td.v .pop b{color:var(--text);font-weight:600}
+td.v .pop p{margin:7px 0 0}
+td.v::after{content:'détail ▾';display:block;margin-top:4px;font-size:.7rem;color:var(--muted);opacity:.6}
+td.v.ouvert::after{content:'détail ▴'}
+td.v:not(:has(.pop))::after{content:''}
 /* Douze colonnes ne tiennent pas sur un téléphone, et c'est là qu'on consulte la page. On
    retire d'abord ce qui se déduit ou se retrouve ailleurs, en gardant le prix qu'on paie, le
    prix auquel ça part, et les deux seuils qui font acheter. */
@@ -136,6 +149,7 @@ th.s{white-space:nowrap}
 
 <div class="filtres">
   <label><input type="checkbox" id="fDispo"> N'afficher que ce qui est encore en rayon</label>
+  <select id="fExt" aria-label="Filtrer par extension"><option value="">Toutes les extensions</option><option value="30ᵉ Anniversaire">30ᵉ Anniversaire</option><option value="Astres Radieux">Astres Radieux</option><option value="Astres Radieux Galerie de Dresseurs">Astres Radieux Galerie de Dresseurs</option><option value="Aventures Ensemble">Aventures Ensemble</option><option value="Chaos Ascendant">Chaos Ascendant</option><option value="Couronne Stellaire">Couronne Stellaire</option><option value="Destinées de Paldea">Destinées de Paldea</option><option value="Équilibre Parfait">Équilibre Parfait</option><option value="Étincelles Déferlantes">Étincelles Déferlantes</option><option value="Évolutions à Paldea">Évolutions à Paldea</option><option value="Évolutions Prismatiques">Évolutions Prismatiques</option><option value="Fable Nébuleuse">Fable Nébuleuse</option><option value="Faille Paradoxe">Faille Paradoxe</option><option value="Flamme Blanche">Flamme Blanche</option><option value="Flammes Fantasmagoriques">Flammes Fantasmagoriques</option><option value="Flammes Obsidiennes">Flammes Obsidiennes</option><option value="Forces Temporelles">Forces Temporelles</option><option value="Foudre Noire">Foudre Noire</option><option value="Héros Transcendants">Héros Transcendants</option><option value="Mascarade Crépusculaire">Mascarade Crépusculaire</option><option value="Méga-Évolution">Méga-Évolution</option><option value="Nuit Noire">Nuit Noire</option><option value="Origine Perdue">Origine Perdue</option><option value="Origine Perdue Galerie de Dresseurs">Origine Perdue Galerie de Dresseurs</option><option value="Pokémon GO">Pokémon GO</option><option value="Rivalités Destinées">Rivalités Destinées</option><option value="Stars Étincelantes">Stars Étincelantes</option><option value="Stars Étincelantes Galerie de Dresseurs">Stars Étincelantes Galerie de Dresseurs</option><option value="Tempête Argentée">Tempête Argentée</option><option value="Tempête Argentée Galerie de Dresseurs">Tempête Argentée Galerie de Dresseurs</option><option value="Zénith Suprême">Zénith Suprême</option><option value="Zénith Suprême Galerie Galaroise">Zénith Suprême Galerie Galaroise</option></select>
   <span class="ast"><b>À ouvrir</b>&nbsp;: la chance qu'un booster rende son prix en rayon.
   Trois prix, jamais mélangés. <b>En rayon</b>, ce qu'on peut payer
   aujourd'hui, avec l'enseigne cliquable. <b>Se revend</b>, le prix auquel ça part vraiment,
@@ -149,26 +163,26 @@ th.s{white-space:nowrap}
   <!-- Largeurs déclarées : sans elles le navigateur répartit au prorata du contenu et une
        phrase de verdict finit par s'afficher un mot par ligne dans une colonne de 90 px. -->
   <colgroup>
-    <col style="width:13%"><col style="width:13%"><col style="width:11%"><col style="width:14%">
-    <col style="width:11%"><col style="width:7%"><col style="width:6%">
-    <col style="width:5%"><col style="width:5%"><col style="width:5%"><col style="width:5%"><col style="width:5%">
+    <col style="width:14%"><col style="width:12%"><col style="width:12%"><col style="width:10%">
+    <col style="width:12%"><col style="width:7%"><col style="width:6%">
+    <col style="width:5.4%"><col style="width:5.4%"><col style="width:5.4%"><col style="width:5.4%"><col style="width:5.4%">
   </colgroup>
   <thead><tr>
     <th data-c="0">Extension</th>
     <th class="actif" data-c="1">À ouvrir <span class="fl">▾</span></th>
     <th class="n" data-c="2">Prix<br>en rayon</th>
-    <th data-c="3">Se revend</th>
+    <th class="n" data-c="3">Se revend</th>
     <th class="n" data-c="4">Annonces<br>France</th>
     <th class="n" data-c="5">Contenu<br>moyen</th>
     <th class="n" data-c="6">Rapport</th>
-    <th class="n s">&gt; 2,00 €</th><th class="n s">&gt; 5,00 €</th><th class="n s">&gt; 10,00 €</th><th class="n s">&gt; 20,00 €</th><th class="n s">&gt; 50,00 €</th>
+    <th class="n s" title="Cartes valant 2 € ou plus. Les colonnes se recouvrent : une carte à 30 € est comptée dans toutes celles dont le seuil est inférieur ou égal à 30 €.">2 €+</th><th class="n s" title="Cartes valant 5 € ou plus. Les colonnes se recouvrent : une carte à 30 € est comptée dans toutes celles dont le seuil est inférieur ou égal à 30 €.">5 €+</th><th class="n s" title="Cartes valant 10 € ou plus. Les colonnes se recouvrent : une carte à 30 € est comptée dans toutes celles dont le seuil est inférieur ou égal à 30 €.">10 €+</th><th class="n s" title="Cartes valant 20 € ou plus. Les colonnes se recouvrent : une carte à 30 € est comptée dans toutes celles dont le seuil est inférieur ou égal à 30 €.">20 €+</th><th class="n s" title="Cartes valant 50 € ou plus. Les colonnes se recouvrent : une carte à 30 € est comptée dans toutes celles dont le seuil est inférieur ou égal à 30 €.">50 €+</th>
   </tr></thead>
-  <tbody><tr data-dispo="rayon">
-    <td><a href="c/30th.html">30ᵉ Anniversaire</a><span class="det">sept. 2026</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 4 en stock sur 28 suivis</span></td>
+  <tbody><tr data-dispo="rayon" data-ext="30ᵉ Anniversaire">
+    <td><a href="c/30th.html">30ᵉ Anniversaire</a><span class="det">sept. 2026</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 4/28</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">pas vendu à l&#39;unité</span></td>
-    <td class="v rev" data-v="14.73"><span class="px">14,73 €</span><span class="det">5 ventes · 14,72 € à 14,77 €</span><span class="det">plus en rayon</span><div class="pop"><ul><li><b>Médiane</b> 14,73 € sur 5 ventes conclues</li><li><b>Fourchette</b> 14,72 € à 14,77 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="21.6"><span class="v">21,60 € – 22,67 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+30e+Anniversaire+30&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 offres →</a></span></td>
+    <td class="n v rev" data-v="14.73"><span class="px">14,73 €</span><span class="det">5 ventes</span><div class="pop"><ul><li><b>Médiane</b> 14,73 € sur 5 ventes conclues</li><li><b>Fourchette</b> 14,72 € à 14,77 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="21.6"><span class="v">21,60 € – 22,67 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+30e+Anniversaire+30&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 annonces →</a></span></td>
     <td class="n" data-v="9.24">≥ 9,24 €</td>
     <td class="n " data-v="">—<span class="det" title="RBG Rare (3 cartes) : aucun taux de tirage publié, le contenu moyen est donc sous-évalué d'un montant inconnu">plancher</span></td>
     <td class="n s" data-v="59.19"><span class="v">59,2 %</span><span class="det">1 sur 2</span></td>
@@ -176,11 +190,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="17.05"><span class="v">17,1 %</span><span class="det">1 sur 6</span></td>
     <td class="n s" data-v="7.79"><span class="v">7,8 %</span><span class="det">1 sur 13</span></td>
     <td class="n s" data-v="5.09"><span class="v">5,1 %</span><span class="det">1 sur 20</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/sv04.5.html">Destinées de Paldea</a><span class="det">janv. 2024</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 31 suivis</span></td>
+  </tr><tr data-dispo="fin" data-ext="Destinées de Paldea">
+    <td><a href="c/sv04.5.html">Destinées de Paldea</a><span class="det">janv. 2024</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/31</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">plus en rayon</span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="5.37">5,37 €</td>
     <td class="n " data-v="">—</td>
@@ -189,12 +203,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="7.47"><span class="v">7,5 %</span><span class="det">1 sur 13</span></td>
     <td class="n s" data-v="3.38"><span class="v">3,4 %</span><span class="det">1 sur 30</span></td>
     <td class="n s" data-v="0.85"><span class="v">0,8 %</span><span class="det">1 sur 118</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv10.5b.html">Foudre Noire</a><span class="det">juil. 2025</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 7 en stock sur 38 suivis</span></td>
-    <td class="v" data-v="17.714666666666666"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 6 rend ses 7,95 €</span><div class="pop"><ul><li><b>Chance</b> 17,7 % des boosters — 1 sur 6</li><li><b>Prix retenu</b> 7,95 € — philibert, PapyMonitor</li><li><b>Réserve</b> sous-évalué : Black White Rare sans taux publié</li></ul></div></td>
-    <td class="n px" data-v="7.95"><span class="v">7,95 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.philibertnet.com/fr/pokemon/180424-pokemon-black-bolt-booster-8800286278023.html" target="_blank" rel="noopener">philibert →</a></span></td>
-    <td class="v rev" data-v="13.16"><span class="px">13,16 €</span><span class="det">60 ventes · 4,32 € à 30,51 €</span><span class="det bon">× 1,66 au prix rayon</span><div class="pop"><ul><li><b>Médiane</b> 13,16 € sur 60 ventes conclues</li><li><b>Fourchette</b> 4,32 € à 30,51 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="10.68"><span class="v">10,68 € – 17,11 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Foudre+Noire+EV10.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">4 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Foudre Noire">
+    <td><a href="c/sv10.5b.html">Foudre Noire</a><span class="det">juil. 2025</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 7/38</span></td>
+    <td class="v" data-v="17.714666666666666"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 6 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 17,7 % des boosters — 1 sur 6</li><li><b>Prix retenu</b> 7,95 € — philibert, PapyMonitor</li><li><b>Réserve</b> sous-évalué : Black White Rare sans taux publié</li></ul></div></td>
+    <td class="n px" data-v="7.95"><span class="v">7,95 €</span><span class="det"><a href="https://www.philibertnet.com/fr/pokemon/180424-pokemon-black-bolt-booster-8800286278023.html" target="_blank" rel="noopener">philibert →</a></span></td>
+    <td class="n v rev" data-v="13.16"><span class="px">13,16 €</span><span class="det bon" title="13,16 € de revente ÷ 7,95 € en rayon">× 1,66</span><div class="pop"><ul><li><b>Médiane</b> 13,16 € sur 60 ventes conclues</li><li><b>Fourchette</b> 4,32 € à 30,51 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="10.68"><span class="v">10,68 € – 17,11 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Foudre+Noire+EV10.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">4 annonces →</a></span></td>
     <td class="n" data-v="5.18">≥ 5,18 €</td>
     <td class="n bon" data-v="0.65">≥ 0,65<span class="det" title="Black White Rare (2 cartes) : aucun taux de tirage publié, le contenu moyen est donc sous-évalué d'un montant inconnu">plancher</span></td>
     <td class="n s" data-v="24.64"><span class="v">24,6 %</span><span class="det">1 sur 4</span></td>
@@ -202,12 +216,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="15.38"><span class="v">15,4 %</span><span class="det">1 sur 7</span></td>
     <td class="n s" data-v="6.89"><span class="v">6,9 %</span><span class="det">1 sur 15</span></td>
     <td class="n s" data-v="1.29"><span class="v">1,3 %</span><span class="det">1 sur 78</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/me02.5.html">Héros Transcendants</a><span class="det">janv. 2026</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 14 en stock sur 53 suivis</span></td>
-    <td class="v" data-v="3.65"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 27 rend ses 14,90 €</span><div class="pop"><ul><li><b>Chance</b> 3,6 % des boosters — 1 sur 27</li><li><b>Prix retenu</b> 14,90 € — DestockTCG, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="14.9"><span class="v">14,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.destocktcg.fr/product/booster-me2-5-heros-transcendants-pokemon-fr-mega-evolution-me02-5-1260" target="_blank" rel="noopener">DestockTCG →</a></span></td>
-    <td class="v rev" data-v="12.45"><span class="px">12,45 €</span><span class="det">48 ventes · 3,48 € à 34,86 €</span><span class="det mauvais">× 0,84 au prix rayon</span><div class="pop"><ul><li><b>Médiane</b> 12,45 € sur 48 ventes conclues</li><li><b>Fourchette</b> 3,48 € à 34,86 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="14.97"><span class="v">14,97 € – 19,90 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+H%C3%A9ros+Transcendants+ME02.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Héros Transcendants">
+    <td><a href="c/me02.5.html">Héros Transcendants</a><span class="det">janv. 2026</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 14/53</span></td>
+    <td class="v" data-v="3.65"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 27 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 3,6 % des boosters — 1 sur 27</li><li><b>Prix retenu</b> 14,90 € — DestockTCG, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="14.9"><span class="v">14,90 €</span><span class="det"><a href="https://www.destocktcg.fr/product/booster-me2-5-heros-transcendants-pokemon-fr-mega-evolution-me02-5-1260" target="_blank" rel="noopener">DestockTCG →</a></span></td>
+    <td class="n v rev" data-v="12.45"><span class="px">12,45 €</span><span class="det mauvais" title="12,45 € de revente ÷ 14,90 € en rayon">× 0,84</span><div class="pop"><ul><li><b>Médiane</b> 12,45 € sur 48 ventes conclues</li><li><b>Fourchette</b> 3,48 € à 34,86 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="14.97"><span class="v">14,97 € – 19,90 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+H%C3%A9ros+Transcendants+ME02.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 annonces →</a></span></td>
     <td class="n" data-v="5.11">5,11 €</td>
     <td class="n moyen" data-v="0.34">0,34</td>
     <td class="n s" data-v="17.39"><span class="v">17,4 %</span><span class="det">1 sur 6</span></td>
@@ -215,12 +229,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="4.14"><span class="v">4,1 %</span><span class="det">1 sur 24</span></td>
     <td class="n s" data-v="3.29"><span class="v">3,3 %</span><span class="det">1 sur 30</span></td>
     <td class="n s" data-v="1.51"><span class="v">1,5 %</span><span class="det">1 sur 66</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv10.5w.html">Flamme Blanche</a><span class="det">juil. 2025</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 12 en stock sur 39 suivis</span></td>
-    <td class="v" data-v="10.6854"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 9 rend ses 14,90 €</span><div class="pop"><ul><li><b>Chance</b> 10,7 % des boosters — 1 sur 9</li><li><b>Prix retenu</b> 14,90 € — UltraJeux, Cardz.gg</li><li><b>Réserve</b> sous-évalué : Black White Rare sans taux publié</li></ul></div></td>
-    <td class="n px" data-v="14.9"><span class="v">14,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.ultrajeux.com/produit-30752-booster-francais-pokemon-ev105-ecarlate-et-violet-flamme-blanche-0000000000000.html" target="_blank" rel="noopener">UltraJeux →</a></span></td>
-    <td class="v rev" data-v="11.98"><span class="px">11,98 €</span><span class="det">60 ventes · 4,12 € à 27,90 €</span><span class="det mauvais">× 0,80 au prix rayon</span><span class="det">le rayon se vide · 2 sur 8</span><div class="pop"><ul><li><b>Médiane</b> 11,98 € sur 60 ventes conclues</li><li><b>Fourchette</b> 4,12 € à 27,90 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="16.14"><span class="v">16,14 € – 17,11 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flamme+Blanche+EV10.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Flamme Blanche">
+    <td><a href="c/sv10.5w.html">Flamme Blanche</a><span class="det">juil. 2025</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 12/39</span></td>
+    <td class="v" data-v="10.6854"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 9 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 10,7 % des boosters — 1 sur 9</li><li><b>Prix retenu</b> 14,90 € — UltraJeux, Cardz.gg</li><li><b>Réserve</b> sous-évalué : Black White Rare sans taux publié</li></ul></div></td>
+    <td class="n px" data-v="14.9"><span class="v">14,90 €</span><span class="det"><a href="https://www.ultrajeux.com/produit-30752-booster-francais-pokemon-ev105-ecarlate-et-violet-flamme-blanche-0000000000000.html" target="_blank" rel="noopener">UltraJeux →</a></span></td>
+    <td class="n v rev" data-v="11.98"><span class="px">11,98 €</span><span class="det mauvais" title="11,98 € de revente ÷ 14,90 € en rayon">× 0,80</span><div class="pop"><ul><li><b>Médiane</b> 11,98 € sur 60 ventes conclues</li><li><b>Fourchette</b> 4,12 € à 27,90 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="16.14"><span class="v">16,14 € – 17,11 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flamme+Blanche+EV10.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 annonces →</a></span></td>
     <td class="n" data-v="4.78">≥ 4,78 €</td>
     <td class="n moyen" data-v="0.32">≥ 0,32<span class="det" title="Black White Rare (2 cartes) : aucun taux de tirage publié, le contenu moyen est donc sous-évalué d'un montant inconnu">plancher</span></td>
     <td class="n s" data-v="24.57"><span class="v">24,6 %</span><span class="det">1 sur 4</span></td>
@@ -228,11 +242,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="15.85"><span class="v">15,8 %</span><span class="det">1 sur 6</span></td>
     <td class="n s" data-v="6.44"><span class="v">6,4 %</span><span class="det">1 sur 16</span></td>
     <td class="n s" data-v="1.28"><span class="v">1,3 %</span><span class="det">1 sur 78</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv06.5.html">Fable Nébuleuse</a><span class="det">août 2024</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 15 en stock sur 34 suivis</span></td>
-    <td class="v" data-v="12.073333333333334"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 8 rend ses 7,90 €</span><div class="pop"><ul><li><b>Chance</b> 12,1 % des boosters — 1 sur 8</li><li><b>Prix retenu</b> 7,90 € — HamaCards, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="7.9"><span class="v">7,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.hamacards.com/produit/booster-pokemon-fable-nebuleuse-ev65/" target="_blank" rel="noopener">HamaCards →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+  </tr><tr data-dispo="rayon" data-ext="Fable Nébuleuse">
+    <td><a href="c/sv06.5.html">Fable Nébuleuse</a><span class="det">août 2024</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 15/34</span></td>
+    <td class="v" data-v="12.073333333333334"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 8 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 12,1 % des boosters — 1 sur 8</li><li><b>Prix retenu</b> 7,90 € — HamaCards, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="7.9"><span class="v">7,90 €</span><span class="det"><a href="https://www.hamacards.com/produit/booster-pokemon-fable-nebuleuse-ev65/" target="_blank" rel="noopener">HamaCards →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="3.88">3,88 €</td>
     <td class="n bon" data-v="0.49">0,49</td>
@@ -241,12 +255,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="11.88"><span class="v">11,9 %</span><span class="det">1 sur 8</span></td>
     <td class="n s" data-v="7.04"><span class="v">7,0 %</span><span class="det">1 sur 14</span></td>
     <td class="n s" data-v="0.71"><span class="v">0,7 %</span><span class="det">1 sur 141</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/sv02.html">Évolutions à Paldea</a><span class="det">juin 2023</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 1 en stock sur 18 suivis</span></td>
-    <td class="v" data-v="9.75"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 10 rend ses 9,00 €</span><div class="pop"><ul><li><b>Chance</b> 9,8 % des boosters — 1 sur 10</li><li><b>Prix retenu</b> 9,00 € — parkage, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="9"><span class="v">9,00 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.parkage.com/fr/995723" target="_blank" rel="noopener">parkage →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="11.87"><span class="v">11,87 € – 16,04 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89volutions+%C3%A0+Paldea+EV02&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">8 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Évolutions à Paldea">
+    <td><a href="c/sv02.html">Évolutions à Paldea</a><span class="det">juin 2023</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 1/18</span></td>
+    <td class="v" data-v="9.75"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 10 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 9,8 % des boosters — 1 sur 10</li><li><b>Prix retenu</b> 9,00 € — parkage, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="9"><span class="v">9,00 €</span><span class="det"><a href="https://www.parkage.com/fr/995723" target="_blank" rel="noopener">parkage →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="11.87"><span class="v">11,87 € – 16,04 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89volutions+%C3%A0+Paldea+EV02&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">8 annonces →</a></span></td>
     <td class="n" data-v="3.77">3,77 €</td>
     <td class="n bon" data-v="0.42">0,42</td>
     <td class="n s" data-v="16.61"><span class="v">16,6 %</span><span class="det">1 sur 6</span></td>
@@ -254,12 +268,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="8.59"><span class="v">8,6 %</span><span class="det">1 sur 12</span></td>
     <td class="n s" data-v="4.03"><span class="v">4,0 %</span><span class="det">1 sur 25</span></td>
     <td class="n s" data-v="1.16"><span class="v">1,2 %</span><span class="det">1 sur 86</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/sv05.html">Forces Temporelles</a><span class="det">mars 2024</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 1 en stock sur 13 suivis</span></td>
-    <td class="v" data-v="10.2325"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 10 rend ses 9,90 €</span><div class="pop"><ul><li><b>Chance</b> 10,2 % des boosters — 1 sur 10</li><li><b>Prix retenu</b> 9,90 € — hikaru distribution, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="9.9"><span class="v">9,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://hikarudistribution.com/products/blister-forces-temporelles-ev05-francais" target="_blank" rel="noopener">hikaru distribution →</a></span></td>
-    <td class="v rev" data-v="10.03"><span class="px">10,03 €</span><span class="det">50 ventes · 2,57 € à 48,82 €</span><span class="det mauvais">× 1,01 au prix rayon</span><span class="det">le rayon se vide · 1 sur 4</span><div class="pop"><ul><li><b>Médiane</b> 10,03 € sur 50 ventes conclues</li><li><b>Fourchette</b> 2,57 € à 48,82 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="10.8"><span class="v">10,80 € – 14,97 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Forces+Temporelles+EV05&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Forces Temporelles">
+    <td><a href="c/sv05.html">Forces Temporelles</a><span class="det">mars 2024</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 1/13</span></td>
+    <td class="v" data-v="10.2325"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 10 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 10,2 % des boosters — 1 sur 10</li><li><b>Prix retenu</b> 9,90 € — hikaru distribution, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="9.9"><span class="v">9,90 €</span><span class="det"><a href="https://hikarudistribution.com/products/blister-forces-temporelles-ev05-francais" target="_blank" rel="noopener">hikaru distribution →</a></span></td>
+    <td class="n v rev" data-v="10.03"><span class="px">10,03 €</span><span class="det mauvais" title="10,03 € de revente ÷ 9,90 € en rayon">× 1,01</span><div class="pop"><ul><li><b>Médiane</b> 10,03 € sur 50 ventes conclues</li><li><b>Fourchette</b> 2,57 € à 48,82 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="10.8"><span class="v">10,80 € – 14,97 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Forces+Temporelles+EV05&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6 annonces →</a></span></td>
     <td class="n" data-v="3.7">3,70 €</td>
     <td class="n moyen" data-v="0.37">0,37</td>
     <td class="n s" data-v="19.32"><span class="v">19,3 %</span><span class="det">1 sur 5</span></td>
@@ -267,12 +281,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="10.15"><span class="v">10,2 %</span><span class="det">1 sur 10</span></td>
     <td class="n s" data-v="6.32"><span class="v">6,3 %</span><span class="det">1 sur 16</span></td>
     <td class="n s" data-v="1.15"><span class="v">1,1 %</span><span class="det">1 sur 87</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det">janv. 2025</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 8 en stock sur 41 suivis</span></td>
-    <td class="v" data-v="2.4202000000000004"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 41 rend ses 17,90 €</span><div class="pop"><ul><li><b>Chance</b> 2,4 % des boosters — 1 sur 41</li><li><b>Prix retenu</b> 17,90 € — UltraJeux, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="17.9"><span class="v">17,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.ultrajeux.com/produit-29252-booster-francais-pokemon-ev85-ecarlate-et-violet-evolutions-prismatiques-0000000000000.html" target="_blank" rel="noopener">UltraJeux →</a></span></td>
-    <td class="v rev" data-v="12.42"><span class="px">12,42 €</span><span class="det">52 ventes · 3,15 € à 31,38 €</span><span class="det mauvais">× 0,69 au prix rayon</span><span class="det">le rayon se vide · 2 sur 8</span><div class="pop"><ul><li><b>Médiane</b> 12,42 € sur 52 ventes conclues</li><li><b>Fourchette</b> 3,15 € à 31,38 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="17.8"><span class="v">17,80 € – 23,00 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89volutions+Prismatiques&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Évolutions Prismatiques">
+    <td><a href="c/sv08.5.html">Évolutions Prismatiques</a><span class="det">janv. 2025</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 8/41</span></td>
+    <td class="v" data-v="2.4202000000000004"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 41 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 2,4 % des boosters — 1 sur 41</li><li><b>Prix retenu</b> 17,90 € — UltraJeux, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="17.9"><span class="v">17,90 €</span><span class="det"><a href="https://www.ultrajeux.com/produit-29252-booster-francais-pokemon-ev85-ecarlate-et-violet-evolutions-prismatiques-0000000000000.html" target="_blank" rel="noopener">UltraJeux →</a></span></td>
+    <td class="n v rev" data-v="12.42"><span class="px">12,42 €</span><span class="det mauvais" title="12,42 € de revente ÷ 17,90 € en rayon">× 0,69</span><div class="pop"><ul><li><b>Médiane</b> 12,42 € sur 52 ventes conclues</li><li><b>Fourchette</b> 3,15 € à 31,38 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="17.8"><span class="v">17,80 € – 23,00 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89volutions+Prismatiques&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6 annonces →</a></span></td>
     <td class="n" data-v="3.62">3,62 €</td>
     <td class="n mauvais" data-v="0.2">0,20</td>
     <td class="n s" data-v="12.9"><span class="v">12,9 %</span><span class="det">1 sur 8</span></td>
@@ -280,12 +294,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="3.16"><span class="v">3,2 %</span><span class="det">1 sur 32</span></td>
     <td class="n s" data-v="2.29"><span class="v">2,3 %</span><span class="det">1 sur 44</span></td>
     <td class="n s" data-v="1.09"><span class="v">1,1 %</span><span class="det">1 sur 92</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det">nov. 2025</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 6 en stock sur 47 suivis</span></td>
-    <td class="v" data-v="3.27"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 31 rend ses 9,90 €</span><div class="pop"><ul><li><b>Chance</b> 3,3 % des boosters — 1 sur 31</li><li><b>Prix retenu</b> 9,90 € — investcollect, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="9.9"><span class="v">9,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://investcollect.com/eshop/p/booster-pokemon-flammes-fantasmagoriques-me02-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
-    <td class="v rev" data-v="10.03"><span class="px">10,03 €</span><span class="det">48 ventes · 2,62 € à 18,74 €</span><span class="det mauvais">× 1,01 au prix rayon</span><span class="det">le rayon se vide · 2 sur 11</span><div class="pop"><ul><li><b>Médiane</b> 10,03 € sur 48 ventes conclues</li><li><b>Fourchette</b> 2,62 € à 18,74 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="11.76"><span class="v">11,76 € – 15,07 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flammes+Fantasmagoriques+ME02&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Flammes Fantasmagoriques">
+    <td><a href="c/me02.html">Flammes Fantasmagoriques</a><span class="det">nov. 2025</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 6/47</span></td>
+    <td class="v" data-v="3.27"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 31 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 3,3 % des boosters — 1 sur 31</li><li><b>Prix retenu</b> 9,90 € — investcollect, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="9.9"><span class="v">9,90 €</span><span class="det"><a href="https://investcollect.com/eshop/p/booster-pokemon-flammes-fantasmagoriques-me02-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
+    <td class="n v rev" data-v="10.03"><span class="px">10,03 €</span><span class="det mauvais" title="10,03 € de revente ÷ 9,90 € en rayon">× 1,01</span><div class="pop"><ul><li><b>Médiane</b> 10,03 € sur 48 ventes conclues</li><li><b>Fourchette</b> 2,62 € à 18,74 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="11.76"><span class="v">11,76 € – 15,07 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flammes+Fantasmagoriques+ME02&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 annonces →</a></span></td>
     <td class="n" data-v="3.56">3,56 €</td>
     <td class="n moyen" data-v="0.36">0,36</td>
     <td class="n s" data-v="15.09"><span class="v">15,1 %</span><span class="det">1 sur 7</span></td>
@@ -293,12 +307,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="3.27"><span class="v">3,3 %</span><span class="det">1 sur 31</span></td>
     <td class="n s" data-v="0.28"><span class="v">0,3 %</span><span class="det">1 sur 357</span></td>
     <td class="n s" data-v="0.28"><span class="v">0,3 %</span><span class="det">1 sur 357</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv10.html">Rivalités Destinées</a><span class="det">mai 2025</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 9 en stock sur 54 suivis</span></td>
-    <td class="v" data-v="5.355433333333333"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 19 rend ses 7,99 €</span><div class="pop"><ul><li><b>Chance</b> 5,4 % des boosters — 1 sur 19</li><li><b>Prix retenu</b> 7,99 € — king jouet, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="7.99"><span class="v">7,99 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.king-jouet.com/jeu-jouet/ref-985666.htm" target="_blank" rel="noopener">king jouet →</a></span></td>
-    <td class="v rev" data-v="8.06"><span class="px">8,06 €</span><span class="det">54 ventes · 2,31 € à 13,92 €</span><span class="det mauvais">× 1,01 au prix rayon</span><span class="det">le rayon se vide · 4 sur 18</span><div class="pop"><ul><li><b>Médiane</b> 8,06 € sur 54 ventes conclues</li><li><b>Fourchette</b> 2,31 € à 13,92 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="13.9"><span class="v">13,90 € – 18,18 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Rivalit%C3%A9s+Destin%C3%A9es+EV10&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Rivalités Destinées">
+    <td><a href="c/sv10.html">Rivalités Destinées</a><span class="det">mai 2025</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 9/54</span></td>
+    <td class="v" data-v="5.355433333333333"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 19 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 5,4 % des boosters — 1 sur 19</li><li><b>Prix retenu</b> 7,99 € — king jouet, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="7.99"><span class="v">7,99 €</span><span class="det"><a href="https://www.king-jouet.com/jeu-jouet/ref-985666.htm" target="_blank" rel="noopener">king jouet →</a></span></td>
+    <td class="n v rev" data-v="8.06"><span class="px">8,06 €</span><span class="det mauvais" title="8,06 € de revente ÷ 7,99 € en rayon">× 1,01</span><div class="pop"><ul><li><b>Médiane</b> 8,06 € sur 54 ventes conclues</li><li><b>Fourchette</b> 2,31 € à 13,92 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="13.9"><span class="v">13,90 € – 18,18 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Rivalit%C3%A9s+Destin%C3%A9es+EV10&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 annonces →</a></span></td>
     <td class="n" data-v="3.33">3,33 €</td>
     <td class="n bon" data-v="0.42">0,42</td>
     <td class="n s" data-v="14.09"><span class="v">14,1 %</span><span class="det">1 sur 7</span></td>
@@ -306,12 +320,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="3.98"><span class="v">4,0 %</span><span class="det">1 sur 25</span></td>
     <td class="n s" data-v="2.53"><span class="v">2,5 %</span><span class="det">1 sur 40</span></td>
     <td class="n s" data-v="0.91"><span class="v">0,9 %</span><span class="det">1 sur 110</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/sv06.html">Mascarade Crépusculaire</a><span class="det">mai 2024</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 14 suivis</span></td>
-    <td class="v" data-v="7.179"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 14 rend ses 8,90 €</span><div class="pop"><ul><li><b>Chance</b> 7,2 % des boosters — 1 sur 14</li><li><b>Prix retenu</b> 8,90 € — investcollect, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="8.9"><span class="v">8,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://investcollect.com/eshop/p/booster-pokemon-mascarade-crepusculaire-ev6-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="11.33"><span class="v">11,33 € – 12,83 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Mascarade+Cr%C3%A9pusculaire+EV06&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Mascarade Crépusculaire">
+    <td><a href="c/sv06.html">Mascarade Crépusculaire</a><span class="det">mai 2024</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/14</span></td>
+    <td class="v" data-v="7.179"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 14 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 7,2 % des boosters — 1 sur 14</li><li><b>Prix retenu</b> 8,90 € — investcollect, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="8.9"><span class="v">8,90 €</span><span class="det"><a href="https://investcollect.com/eshop/p/booster-pokemon-mascarade-crepusculaire-ev6-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="11.33"><span class="v">11,33 € – 12,83 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Mascarade+Cr%C3%A9pusculaire+EV06&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">6 annonces →</a></span></td>
     <td class="n" data-v="3.2">3,20 €</td>
     <td class="n moyen" data-v="0.36">0,36</td>
     <td class="n s" data-v="21.88"><span class="v">21,9 %</span><span class="det">1 sur 5</span></td>
@@ -319,12 +333,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="7.08"><span class="v">7,1 %</span><span class="det">1 sur 14</span></td>
     <td class="n s" data-v="2.84"><span class="v">2,8 %</span><span class="det">1 sur 35</span></td>
     <td class="n s" data-v="0.75"><span class="v">0,8 %</span><span class="det">1 sur 133</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/sv07.html">Couronne Stellaire</a><span class="det">sept. 2024</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 18 suivis</span></td>
-    <td class="v" data-v="5.782"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 17 rend ses 8,90 €</span><div class="pop"><ul><li><b>Chance</b> 5,8 % des boosters — 1 sur 17</li><li><b>Prix retenu</b> 8,90 € — investcollect, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="8.9"><span class="v">8,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://investcollect.com/eshop/p/booster-pokemon-couronne-stellaire-ev7-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="12.94"><span class="v">12,94 € – 13,90 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Couronne+Stellaire+EV07&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Couronne Stellaire">
+    <td><a href="c/sv07.html">Couronne Stellaire</a><span class="det">sept. 2024</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/18</span></td>
+    <td class="v" data-v="5.782"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 17 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 5,8 % des boosters — 1 sur 17</li><li><b>Prix retenu</b> 8,90 € — investcollect, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="8.9"><span class="v">8,90 €</span><span class="det"><a href="https://investcollect.com/eshop/p/booster-pokemon-couronne-stellaire-ev7-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="12.94"><span class="v">12,94 € – 13,90 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Couronne+Stellaire+EV07&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 annonces →</a></span></td>
     <td class="n" data-v="2.78">2,78 €</td>
     <td class="n moyen" data-v="0.31">0,31</td>
     <td class="n s" data-v="16.56"><span class="v">16,6 %</span><span class="det">1 sur 6</span></td>
@@ -332,12 +346,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="5.43"><span class="v">5,4 %</span><span class="det">1 sur 18</span></td>
     <td class="n s" data-v="2.26"><span class="v">2,3 %</span><span class="det">1 sur 44</span></td>
     <td class="n s" data-v="1.61"><span class="v">1,6 %</span><span class="det">1 sur 62</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv08.html">Étincelles Déferlantes</a><span class="det">nov. 2024</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 10 en stock sur 52 suivis</span></td>
-    <td class="v" data-v="5.921666666666666"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 17 rend ses 7,50 €</span><div class="pop"><ul><li><b>Chance</b> 5,9 % des boosters — 1 sur 17</li><li><b>Prix retenu</b> 7,50 € — Cards Hunter, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="7.5"><span class="v">7,50 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.cardshunter.fr/produit/booster-pokemon-etincelles-deferlantes-ev-08-illustration-aleatoire/" target="_blank" rel="noopener">Cards Hunter →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="14.97"><span class="v">14,97 € – 20,28 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89tincelles+D%C3%A9ferlantes+EV08&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Étincelles Déferlantes">
+    <td><a href="c/sv08.html">Étincelles Déferlantes</a><span class="det">nov. 2024</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 10/52</span></td>
+    <td class="v" data-v="5.921666666666666"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 17 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 5,9 % des boosters — 1 sur 17</li><li><b>Prix retenu</b> 7,50 € — Cards Hunter, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="7.5"><span class="v">7,50 €</span><span class="det"><a href="https://www.cardshunter.fr/produit/booster-pokemon-etincelles-deferlantes-ev-08-illustration-aleatoire/" target="_blank" rel="noopener">Cards Hunter →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="14.97"><span class="v">14,97 € – 20,28 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89tincelles+D%C3%A9ferlantes+EV08&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 annonces →</a></span></td>
     <td class="n" data-v="2.59">2,59 €</td>
     <td class="n moyen" data-v="0.35">0,35</td>
     <td class="n s" data-v="17.61"><span class="v">17,6 %</span><span class="det">1 sur 6</span></td>
@@ -345,12 +359,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="3.56"><span class="v">3,6 %</span><span class="det">1 sur 28</span></td>
     <td class="n s" data-v="2.48"><span class="v">2,5 %</span><span class="det">1 sur 40</span></td>
     <td class="n s" data-v="0.66"><span class="v">0,7 %</span><span class="det">1 sur 152</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/sv04.html">Faille Paradoxe</a><span class="det">nov. 2023</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 20 suivis</span></td>
-    <td class="v" data-v="7.5805"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 13 rend ses 8,90 €</span><div class="pop"><ul><li><b>Chance</b> 7,6 % des boosters — 1 sur 13</li><li><b>Prix retenu</b> 8,90 € — investcollect, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="8.9"><span class="v">8,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://investcollect.com/eshop/p/booster-pokemon-faille-paradoxe-ev4-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="9.72"><span class="v">9,72 € – 11,76 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Faille+Paradoxe+EV04&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">8 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Faille Paradoxe">
+    <td><a href="c/sv04.html">Faille Paradoxe</a><span class="det">nov. 2023</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/20</span></td>
+    <td class="v" data-v="7.5805"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 13 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 7,6 % des boosters — 1 sur 13</li><li><b>Prix retenu</b> 8,90 € — investcollect, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="8.9"><span class="v">8,90 €</span><span class="det"><a href="https://investcollect.com/eshop/p/booster-pokemon-faille-paradoxe-ev4-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="9.72"><span class="v">9,72 € – 11,76 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Faille+Paradoxe+EV04&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">8 annonces →</a></span></td>
     <td class="n" data-v="2.44">2,44 €</td>
     <td class="n moyen" data-v="0.27">0,27</td>
     <td class="n s" data-v="16.03"><span class="v">16,0 %</span><span class="det">1 sur 6</span></td>
@@ -358,11 +372,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="6.97"><span class="v">7,0 %</span><span class="det">1 sur 14</span></td>
     <td class="n s" data-v="3.59"><span class="v">3,6 %</span><span class="det">1 sur 28</span></td>
     <td class="n s" data-v="0.49"><span class="v">0,5 %</span><span class="det">1 sur 204</span></td>
-  </tr><tr data-dispo="">
-    <td><a href="c/swsh12.5gg.html">Zénith Suprême Galerie Galaroise</a><span class="det">janv. 2023</span><span class="det " title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">—</span></td>
+  </tr><tr data-dispo="" data-ext="Zénith Suprême Galerie Galaroise">
+    <td><a href="c/swsh12.5gg.html">Zénith Suprême Galerie Galaroise</a><span class="det">janv. 2023</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">plus en rayon</span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="2.42">2,42 €</td>
     <td class="n " data-v="">—</td>
@@ -371,12 +385,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="4.58"><span class="v">4,6 %</span><span class="det">1 sur 22</span></td>
     <td class="n s" data-v="2.64"><span class="v">2,6 %</span><span class="det">1 sur 38</span></td>
     <td class="n s" data-v="1.31"><span class="v">1,3 %</span><span class="det">1 sur 76</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/swsh11.html">Origine Perdue</a><span class="det">sept. 2022</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 18 suivis</span></td>
-    <td class="v" data-v="0.956"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 105 rend ses 14,00 €</span><div class="pop"><ul><li><b>Chance</b> 1,0 % des boosters — 1 sur 105</li><li><b>Prix retenu</b> 14,00 € — parkage, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="14"><span class="v">14,00 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.parkage.com/fr/971426" target="_blank" rel="noopener">parkage →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="12.94"><span class="v">12,94 € – 19,36 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Origine+Perdue+EB11&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">20 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Origine Perdue">
+    <td><a href="c/swsh11.html">Origine Perdue</a><span class="det">sept. 2022</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/18</span></td>
+    <td class="v" data-v="0.956"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 105 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 1,0 % des boosters — 1 sur 105</li><li><b>Prix retenu</b> 14,00 € — parkage, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="14"><span class="v">14,00 €</span><span class="det"><a href="https://www.parkage.com/fr/971426" target="_blank" rel="noopener">parkage →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="12.94"><span class="v">12,94 € – 19,36 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Origine+Perdue+EB11&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">20 annonces →</a></span></td>
     <td class="n" data-v="2.31">2,31 €</td>
     <td class="n mauvais" data-v="0.17">0,17</td>
     <td class="n s" data-v="7.6"><span class="v">7,6 %</span><span class="det">1 sur 13</span></td>
@@ -384,12 +398,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="0.98"><span class="v">1,0 %</span><span class="det">1 sur 102</span></td>
     <td class="n s" data-v="0.57"><span class="v">0,6 %</span><span class="det">1 sur 175</span></td>
     <td class="n s" data-v="0.36"><span class="v">0,4 %</span><span class="det">1 sur 278</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv03.html">Flammes Obsidiennes</a><span class="det">août 2023</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 10 en stock sur 23 suivis</span></td>
-    <td class="v" data-v="7.246666666666666"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 14 rend ses 7,00 €</span><div class="pop"><ul><li><b>Chance</b> 7,2 % des boosters — 1 sur 14</li><li><b>Prix retenu</b> 7,00 € — parkage, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="7"><span class="v">7,00 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.parkage.com/fr/1005423" target="_blank" rel="noopener">parkage →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="10.79"><span class="v">10,79 € – 14,54 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flammes+Obsidiennes+EV03&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">28 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Flammes Obsidiennes">
+    <td><a href="c/sv03.html">Flammes Obsidiennes</a><span class="det">août 2023</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 10/23</span></td>
+    <td class="v" data-v="7.246666666666666"><span class="pa bon"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="det">1 booster sur 14 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 7,2 % des boosters — 1 sur 14</li><li><b>Prix retenu</b> 7,00 € — parkage, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="7"><span class="v">7,00 €</span><span class="det"><a href="https://www.parkage.com/fr/1005423" target="_blank" rel="noopener">parkage →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="10.79"><span class="v">10,79 € – 14,54 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Flammes+Obsidiennes+EV03&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">28 annonces →</a></span></td>
     <td class="n" data-v="2.1">2,10 €</td>
     <td class="n moyen" data-v="0.3">0,30</td>
     <td class="n s" data-v="14.3"><span class="v">14,3 %</span><span class="det">1 sur 7</span></td>
@@ -397,12 +411,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="6.44"><span class="v">6,4 %</span><span class="det">1 sur 16</span></td>
     <td class="n s" data-v="1.98"><span class="v">2,0 %</span><span class="det">1 sur 51</span></td>
     <td class="n s" data-v="0.33"><span class="v">0,3 %</span><span class="det">1 sur 303</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/me01.html">Méga-Évolution</a><span class="det">sept. 2025</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 19 en stock sur 65 suivis</span></td>
-    <td class="v" data-v="4.608333333333333"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 22 rend ses 7,50 €</span><div class="pop"><ul><li><b>Chance</b> 4,6 % des boosters — 1 sur 22</li><li><b>Prix retenu</b> 7,50 € — Cards Hunter, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="7.5"><span class="v">7,50 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.cardshunter.fr/produit/booster-pokemon-mega-evolution-me01-illustration-aleatoire/" target="_blank" rel="noopener">Cards Hunter →</a></span></td>
-    <td class="v rev" data-v="6.99"><span class="px">6,99 €</span><span class="det">60 ventes · 2,58 € à 12,20 €</span><span class="det mauvais">× 0,93 au prix rayon</span><div class="pop"><ul><li><b>Médiane</b> 6,99 € sur 60 ventes conclues</li><li><b>Fourchette</b> 2,58 € à 12,20 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="14.49"><span class="v">14,49 € – 16,80 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+M%C3%A9ga-%C3%89volution+ME01&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">10 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Méga-Évolution">
+    <td><a href="c/me01.html">Méga-Évolution</a><span class="det">sept. 2025</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 19/65</span></td>
+    <td class="v" data-v="4.608333333333333"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 22 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 4,6 % des boosters — 1 sur 22</li><li><b>Prix retenu</b> 7,50 € — Cards Hunter, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="7.5"><span class="v">7,50 €</span><span class="det"><a href="https://www.cardshunter.fr/produit/booster-pokemon-mega-evolution-me01-illustration-aleatoire/" target="_blank" rel="noopener">Cards Hunter →</a></span></td>
+    <td class="n v rev" data-v="6.99"><span class="px">6,99 €</span><span class="det mauvais" title="6,99 € de revente ÷ 7,50 € en rayon">× 0,93</span><div class="pop"><ul><li><b>Médiane</b> 6,99 € sur 60 ventes conclues</li><li><b>Fourchette</b> 2,58 € à 12,20 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="14.49"><span class="v">14,49 € – 16,80 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+M%C3%A9ga-%C3%89volution+ME01&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">10 annonces →</a></span></td>
     <td class="n" data-v="2.07">2,07 €</td>
     <td class="n moyen" data-v="0.28">0,28</td>
     <td class="n s" data-v="15.97"><span class="v">16,0 %</span><span class="det">1 sur 6</span></td>
@@ -410,11 +424,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="3.72"><span class="v">3,7 %</span><span class="det">1 sur 27</span></td>
     <td class="n s" data-v="0.87"><span class="v">0,9 %</span><span class="det">1 sur 115</span></td>
     <td class="n s" data-v="0.57"><span class="v">0,6 %</span><span class="det">1 sur 175</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/swsh10.5.html">Pokémon GO</a><span class="det">juil. 2022</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 1 en stock sur 3 suivis</span></td>
+  </tr><tr data-dispo="fin" data-ext="Pokémon GO">
+    <td><a href="c/swsh10.5.html">Pokémon GO</a><span class="det">juil. 2022</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 1/3</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">plus en rayon</span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="2.05">2,05 €</td>
     <td class="n " data-v="">—</td>
@@ -423,12 +437,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="2.14"><span class="v">2,1 %</span><span class="det">1 sur 47</span></td>
     <td class="n s" data-v="0.61"><span class="v">0,6 %</span><span class="det">1 sur 164</span></td>
     <td class="n s" data-v="0.47"><span class="v">0,5 %</span><span class="det">1 sur 213</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/me05.html">Nuit Noire</a><span class="det">juil. 2026</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 53 en stock sur 86 suivis</span></td>
-    <td class="v" data-v="3.8609999999999998"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 26 rend ses 5,90 €</span><div class="pop"><ul><li><b>Chance</b> 3,9 % des boosters — 1 sur 26</li><li><b>Prix retenu</b> 5,90 € — hikaru distribution, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="5.9"><span class="v">5,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://hikarudistribution.com/products/booster-pokemon-nuit-noire-me05" target="_blank" rel="noopener">hikaru distribution →</a></span></td>
-    <td class="v rev" data-v="5.62"><span class="px">5,62 €</span><span class="det">38 ventes · 2,35 € à 12,64 €</span><span class="det mauvais">× 0,95 au prix rayon</span><div class="pop"><ul><li><b>Médiane</b> 5,62 € sur 38 ventes conclues</li><li><b>Fourchette</b> 2,35 € à 12,64 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="9.99"><span class="v">9,99 € – 11,76 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Nuit+Noire+ME05&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">4 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Nuit Noire">
+    <td><a href="c/me05.html">Nuit Noire</a><span class="det">juil. 2026</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 53/86</span></td>
+    <td class="v" data-v="3.8609999999999998"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 26 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 3,9 % des boosters — 1 sur 26</li><li><b>Prix retenu</b> 5,90 € — hikaru distribution, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="5.9"><span class="v">5,90 €</span><span class="det"><a href="https://hikarudistribution.com/products/booster-pokemon-nuit-noire-me05" target="_blank" rel="noopener">hikaru distribution →</a></span></td>
+    <td class="n v rev" data-v="5.62"><span class="px">5,62 €</span><span class="det mauvais" title="5,62 € de revente ÷ 5,90 € en rayon">× 0,95</span><div class="pop"><ul><li><b>Médiane</b> 5,62 € sur 38 ventes conclues</li><li><b>Fourchette</b> 2,35 € à 12,64 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="9.99"><span class="v">9,99 € – 11,76 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Nuit+Noire+ME05&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">4 annonces →</a></span></td>
     <td class="n" data-v="2">2,00 €</td>
     <td class="n moyen" data-v="0.34">0,34</td>
     <td class="n s" data-v="11.13"><span class="v">11,1 %</span><span class="det">1 sur 9</span></td>
@@ -436,12 +450,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="1.07"><span class="v">1,1 %</span><span class="det">1 sur 93</span></td>
     <td class="n s" data-v="1.07"><span class="v">1,1 %</span><span class="det">1 sur 93</span></td>
     <td class="n s" data-v="0.41"><span class="v">0,4 %</span><span class="det">1 sur 244</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det">mars 2025</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 29 en stock sur 68 suivis</span></td>
-    <td class="v" data-v="5.4350000000000005"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 18 rend ses 6,50 €</span><div class="pop"><ul><li><b>Chance</b> 5,4 % des boosters — 1 sur 18</li><li><b>Prix retenu</b> 6,50 € — Au Démon du Jeu, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="6.5"><span class="v">6,50 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.audemondujeu.com/article,pokemon-ev09-booster-aventures-ensemble-unite-8-12-12188.html" target="_blank" rel="noopener">Au Démon du Jeu →</a></span></td>
-    <td class="v rev" data-v="5.88"><span class="px">5,88 €</span><span class="det">58 ventes · 2,17 € à 10,46 €</span><span class="det mauvais">× 0,90 au prix rayon</span><div class="pop"><ul><li><b>Médiane</b> 5,88 € sur 58 ventes conclues</li><li><b>Fourchette</b> 2,17 € à 10,46 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="8.12"><span class="v">8,12 € – 11,09 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Aventures+Ensemble+EV09&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">7 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Aventures Ensemble">
+    <td><a href="c/sv09.html">Aventures Ensemble</a><span class="det">mars 2025</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 29/68</span></td>
+    <td class="v" data-v="5.4350000000000005"><span class="pa moyen"><i class="on"></i><i class="on"></i><i></i></span><span class="det">1 booster sur 18 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 5,4 % des boosters — 1 sur 18</li><li><b>Prix retenu</b> 6,50 € — Au Démon du Jeu, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="6.5"><span class="v">6,50 €</span><span class="det"><a href="https://www.audemondujeu.com/article,pokemon-ev09-booster-aventures-ensemble-unite-8-12-12188.html" target="_blank" rel="noopener">Au Démon du Jeu →</a></span></td>
+    <td class="n v rev" data-v="5.88"><span class="px">5,88 €</span><span class="det mauvais" title="5,88 € de revente ÷ 6,50 € en rayon">× 0,90</span><div class="pop"><ul><li><b>Médiane</b> 5,88 € sur 58 ventes conclues</li><li><b>Fourchette</b> 2,17 € à 10,46 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="8.12"><span class="v">8,12 € – 11,09 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Aventures+Ensemble+EV09&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">7 annonces →</a></span></td>
     <td class="n" data-v="1.9">1,90 €</td>
     <td class="n moyen" data-v="0.29">0,29</td>
     <td class="n s" data-v="12.29"><span class="v">12,3 %</span><span class="det">1 sur 8</span></td>
@@ -449,12 +463,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="4.75"><span class="v">4,8 %</span><span class="det">1 sur 21</span></td>
     <td class="n s" data-v="1.63"><span class="v">1,6 %</span><span class="det">1 sur 61</span></td>
     <td class="n s" data-v="0.33"><span class="v">0,3 %</span><span class="det">1 sur 303</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/me03.html">Équilibre Parfait</a><span class="det">mars 2026</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 45 en stock sur 71 suivis</span></td>
-    <td class="v" data-v="3.7169999999999996"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 27 rend ses 5,90 €</span><div class="pop"><ul><li><b>Chance</b> 3,7 % des boosters — 1 sur 27</li><li><b>Prix retenu</b> 5,90 € — Cards Hunter, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="5.9"><span class="v">5,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.cardshunter.fr/produit/booster-pokemon-equilibre-parfait-me-3-illustration-aleatoire/" target="_blank" rel="noopener">Cards Hunter →</a></span></td>
-    <td class="v rev" data-v="5.32"><span class="px">5,32 €</span><span class="det">48 ventes · 1,74 € à 10,90 €</span><span class="det mauvais">× 0,90 au prix rayon</span><div class="pop"><ul><li><b>Médiane</b> 5,32 € sur 48 ventes conclues</li><li><b>Fourchette</b> 1,74 € à 10,90 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="9.9"><span class="v">9,90 € – 14,00 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89quilibre+Parfait+ME03&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">7 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Équilibre Parfait">
+    <td><a href="c/me03.html">Équilibre Parfait</a><span class="det">mars 2026</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 45/71</span></td>
+    <td class="v" data-v="3.7169999999999996"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 27 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 3,7 % des boosters — 1 sur 27</li><li><b>Prix retenu</b> 5,90 € — Cards Hunter, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="5.9"><span class="v">5,90 €</span><span class="det"><a href="https://www.cardshunter.fr/produit/booster-pokemon-equilibre-parfait-me-3-illustration-aleatoire/" target="_blank" rel="noopener">Cards Hunter →</a></span></td>
+    <td class="n v rev" data-v="5.32"><span class="px">5,32 €</span><span class="det mauvais" title="5,32 € de revente ÷ 5,90 € en rayon">× 0,90</span><div class="pop"><ul><li><b>Médiane</b> 5,32 € sur 48 ventes conclues</li><li><b>Fourchette</b> 1,74 € à 10,90 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="9.9"><span class="v">9,90 € – 14,00 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+%C3%89quilibre+Parfait+ME03&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">7 annonces →</a></span></td>
     <td class="n" data-v="1.75">1,75 €</td>
     <td class="n moyen" data-v="0.3">0,30</td>
     <td class="n s" data-v="9.74"><span class="v">9,7 %</span><span class="det">1 sur 10</span></td>
@@ -462,11 +476,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="2.54"><span class="v">2,5 %</span><span class="det">1 sur 39</span></td>
     <td class="n s" data-v="0.9"><span class="v">0,9 %</span><span class="det">1 sur 111</span></td>
     <td class="n s" data-v="0.24"><span class="v">0,2 %</span><span class="det">1 sur 417</span></td>
-  </tr><tr data-dispo="">
-    <td><a href="c/swsh9tg.html">Stars Étincelantes Galerie de Dresseurs</a><span class="det">févr. 2022</span><span class="det " title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">—</span></td>
+  </tr><tr data-dispo="" data-ext="Stars Étincelantes Galerie de Dresseurs">
+    <td><a href="c/swsh9tg.html">Stars Étincelantes Galerie de Dresseurs</a><span class="det">févr. 2022</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">plus en rayon</span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="1.61">1,61 €</td>
     <td class="n " data-v="">—</td>
@@ -475,12 +489,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="3.47"><span class="v">3,5 %</span><span class="det">1 sur 29</span></td>
     <td class="n s" data-v="1.6"><span class="v">1,6 %</span><span class="det">1 sur 63</span></td>
     <td class="n s" data-v="1.6"><span class="v">1,6 %</span><span class="det">1 sur 63</span></td>
-  </tr><tr data-dispo="rayon">
-    <td><a href="c/me04.html">Chaos Ascendant</a><span class="det">mai 2026</span><span class="det bon" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon · 51 en stock sur 75 suivis</span></td>
-    <td class="v" data-v="2.035"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 49 rend ses 6,50 €</span><div class="pop"><ul><li><b>Chance</b> 2,0 % des boosters — 1 sur 49</li><li><b>Prix retenu</b> 6,50 € — DracauGames, Cardz.gg</li></ul></div></td>
-    <td class="n px" data-v="6.5"><span class="v">6,50 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.dracaugames.com/products/pokemon-booster-me04-mega-evolution-chaos-ascendant" target="_blank" rel="noopener">DracauGames →</a></span></td>
-    <td class="v rev" data-v="5.21"><span class="px">5,21 €</span><span class="det">47 ventes · 2,02 € à 7,85 €</span><span class="det mauvais">× 0,80 au prix rayon</span><div class="pop"><ul><li><b>Médiane</b> 5,21 € sur 47 ventes conclues</li><li><b>Fourchette</b> 2,02 € à 7,85 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
-    <td class="n px" data-v="9.48"><span class="v">9,48 € – 11,76 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Chaos+Ascendant+ME04&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 offres →</a></span></td>
+  </tr><tr data-dispo="rayon" data-ext="Chaos Ascendant">
+    <td><a href="c/me04.html">Chaos Ascendant</a><span class="det">mai 2026</span><span class="det bon" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">en rayon 51/75</span></td>
+    <td class="v" data-v="2.035"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 49 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 2,0 % des boosters — 1 sur 49</li><li><b>Prix retenu</b> 6,50 € — DracauGames, Cardz.gg</li></ul></div></td>
+    <td class="n px" data-v="6.5"><span class="v">6,50 €</span><span class="det"><a href="https://www.dracaugames.com/products/pokemon-booster-me04-mega-evolution-chaos-ascendant" target="_blank" rel="noopener">DracauGames →</a></span></td>
+    <td class="n v rev" data-v="5.21"><span class="px">5,21 €</span><span class="det mauvais" title="5,21 € de revente ÷ 6,50 € en rayon">× 0,80</span><div class="pop"><ul><li><b>Médiane</b> 5,21 € sur 47 ventes conclues</li><li><b>Fourchette</b> 2,02 € à 7,85 €</li><li><b>Marché</b> américain, PriceCharting — brut de frais</li></ul></div></td>
+    <td class="n px" data-v="9.48"><span class="v">9,48 € – 11,76 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Chaos+Ascendant+ME04&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">5 annonces →</a></span></td>
     <td class="n" data-v="1.59">1,59 €</td>
     <td class="n mauvais" data-v="0.24">0,24</td>
     <td class="n s" data-v="10.83"><span class="v">10,8 %</span><span class="det">1 sur 9</span></td>
@@ -488,12 +502,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="1.07"><span class="v">1,1 %</span><span class="det">1 sur 93</span></td>
     <td class="n s" data-v="0.74"><span class="v">0,7 %</span><span class="det">1 sur 135</span></td>
     <td class="n s" data-v="0.24"><span class="v">0,2 %</span><span class="det">1 sur 417</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/swsh12.html">Tempête Argentée</a><span class="det">nov. 2022</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 1 en stock sur 17 suivis</span></td>
-    <td class="v" data-v="0.57"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 175 rend ses 20,00 €</span><div class="pop"><ul><li><b>Chance</b> 0,6 % des boosters — 1 sur 175</li><li><b>Prix retenu</b> 20,00 € — parkage, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="20"><span class="v">20,00 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://www.parkage.com/fr/988010" target="_blank" rel="noopener">parkage →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="14.95"><span class="v">14,95 € – 20,30 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Temp%C3%AAte+Argent%C3%A9e+EB12&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">12 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Tempête Argentée">
+    <td><a href="c/swsh12.html">Tempête Argentée</a><span class="det">nov. 2022</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 1/17</span></td>
+    <td class="v" data-v="0.57"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 175 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 0,6 % des boosters — 1 sur 175</li><li><b>Prix retenu</b> 20,00 € — parkage, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="20"><span class="v">20,00 €</span><span class="det"><a href="https://www.parkage.com/fr/988010" target="_blank" rel="noopener">parkage →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="14.95"><span class="v">14,95 € – 20,30 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Temp%C3%AAte+Argent%C3%A9e+EB12&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">12 annonces →</a></span></td>
     <td class="n" data-v="1.45">1,45 €</td>
     <td class="n mauvais" data-v="0.07">0,07</td>
     <td class="n s" data-v="4.92"><span class="v">4,9 %</span><span class="det">1 sur 20</span></td>
@@ -501,11 +515,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="1.09"><span class="v">1,1 %</span><span class="det">1 sur 92</span></td>
     <td class="n s" data-v="0.57"><span class="v">0,6 %</span><span class="det">1 sur 175</span></td>
     <td class="n s" data-v="0.17"><span class="v">0,2 %</span><span class="det">1 sur 588</span></td>
-  </tr><tr data-dispo="">
-    <td><a href="c/swsh11tg.html">Origine Perdue Galerie de Dresseurs</a><span class="det">sept. 2022</span><span class="det " title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">—</span></td>
+  </tr><tr data-dispo="" data-ext="Origine Perdue Galerie de Dresseurs">
+    <td><a href="c/swsh11tg.html">Origine Perdue Galerie de Dresseurs</a><span class="det">sept. 2022</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">plus en rayon</span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="1.46">1,46 €</td>
     <td class="n " data-v="">—</td>
@@ -514,11 +528,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="3.77"><span class="v">3,8 %</span><span class="det">1 sur 27</span></td>
     <td class="n s" data-v="2.39"><span class="v">2,4 %</span><span class="det">1 sur 42</span></td>
     <td class="n s" data-v="0.55"><span class="v">0,6 %</span><span class="det">1 sur 182</span></td>
-  </tr><tr data-dispo="">
-    <td><a href="c/swsh12tg.html">Tempête Argentée Galerie de Dresseurs</a><span class="det">nov. 2022</span><span class="det " title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">—</span></td>
+  </tr><tr data-dispo="" data-ext="Tempête Argentée Galerie de Dresseurs">
+    <td><a href="c/swsh12tg.html">Tempête Argentée Galerie de Dresseurs</a><span class="det">nov. 2022</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">plus en rayon</span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="1.2">1,20 €</td>
     <td class="n " data-v="">—</td>
@@ -527,12 +541,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="2.8"><span class="v">2,8 %</span><span class="det">1 sur 36</span></td>
     <td class="n s" data-v="1.09"><span class="v">1,1 %</span><span class="det">1 sur 92</span></td>
     <td class="n s" data-v="0.29"><span class="v">0,3 %</span><span class="det">1 sur 345</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/swsh10.html">Astres Radieux</a><span class="det">mai 2022</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 9 suivis</span></td>
-    <td class="v" data-v="1.032"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 97 rend ses 11,90 €</span><div class="pop"><ul><li><b>Chance</b> 1,0 % des boosters — 1 sur 97</li><li><b>Prix retenu</b> 11,90 € — investcollect, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="11.9"><span class="v">11,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://investcollect.com/eshop/p/booster-pokemon-astres-radieux-eb10-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="12.94"><span class="v">12,94 € – 17,28 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Astres+Radieux+EB10&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">16 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Astres Radieux">
+    <td><a href="c/swsh10.html">Astres Radieux</a><span class="det">mai 2022</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/9</span></td>
+    <td class="v" data-v="1.032"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 97 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 1,0 % des boosters — 1 sur 97</li><li><b>Prix retenu</b> 11,90 € — investcollect, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="11.9"><span class="v">11,90 €</span><span class="det"><a href="https://investcollect.com/eshop/p/booster-pokemon-astres-radieux-eb10-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="12.94"><span class="v">12,94 € – 17,28 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Astres+Radieux+EB10&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">16 annonces →</a></span></td>
     <td class="n" data-v="1.13">1,13 €</td>
     <td class="n mauvais" data-v="0.09">0,09</td>
     <td class="n s" data-v="5.04"><span class="v">5,0 %</span><span class="det">1 sur 20</span></td>
@@ -540,11 +554,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="1.07"><span class="v">1,1 %</span><span class="det">1 sur 93</span></td>
     <td class="n s" data-v="0.97"><span class="v">1,0 %</span><span class="det">1 sur 103</span></td>
     <td class="n s" data-v="0.55"><span class="v">0,6 %</span><span class="det">1 sur 182</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/swsh9.html">Stars Étincelantes</a><span class="det">févr. 2022</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 5 suivis</span></td>
-    <td class="v" data-v="1.15"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 87 rend ses 12,90 €</span><div class="pop"><ul><li><b>Chance</b> 1,1 % des boosters — 1 sur 87</li><li><b>Prix retenu</b> 12,90 € — investcollect, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="12.9"><span class="v">12,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://investcollect.com/eshop/p/booster-pokemon-stars-etincelantes-eb9-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+  </tr><tr data-dispo="fin" data-ext="Stars Étincelantes">
+    <td><a href="c/swsh9.html">Stars Étincelantes</a><span class="det">févr. 2022</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/5</span></td>
+    <td class="v" data-v="1.15"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 87 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 1,1 % des boosters — 1 sur 87</li><li><b>Prix retenu</b> 12,90 € — investcollect, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="12.9"><span class="v">12,90 €</span><span class="det"><a href="https://investcollect.com/eshop/p/booster-pokemon-stars-etincelantes-eb9-scelle-francais.html" target="_blank" rel="noopener">investcollect →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="1.14">1,14 €</td>
     <td class="n mauvais" data-v="0.09">0,09</td>
@@ -553,11 +567,11 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="1.73"><span class="v">1,7 %</span><span class="det">1 sur 58</span></td>
     <td class="n s" data-v="0.7"><span class="v">0,7 %</span><span class="det">1 sur 143</span></td>
     <td class="n s" data-v="0.37"><span class="v">0,4 %</span><span class="det">1 sur 270</span></td>
-  </tr><tr data-dispo="">
-    <td><a href="c/swsh10tg.html">Astres Radieux Galerie de Dresseurs</a><span class="det">mai 2022</span><span class="det " title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">—</span></td>
+  </tr><tr data-dispo="" data-ext="Astres Radieux Galerie de Dresseurs">
+    <td><a href="c/swsh10tg.html">Astres Radieux Galerie de Dresseurs</a><span class="det">mai 2022</span></td>
     <td class="v" data-v=""><span class="pa neutre"><i></i><i></i><i></i></span><span class="det">prix rayon du booster inconnu</span></td>
     <td class="n px"><span class="v">—</span><span class="det">plus en rayon</span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
     <td class="n px"><span class="v">—</span></td>
     <td class="n" data-v="1.02">1,02 €</td>
     <td class="n " data-v="">—</td>
@@ -566,12 +580,12 @@ th.s{white-space:nowrap}
     <td class="n s" data-v="2.29"><span class="v">2,3 %</span><span class="det">1 sur 44</span></td>
     <td class="n s" data-v="0.57"><span class="v">0,6 %</span><span class="det">1 sur 175</span></td>
     <td class="n s" data-v="0.57"><span class="v">0,6 %</span><span class="det">1 sur 175</span></td>
-  </tr><tr data-dispo="fin">
-    <td><a href="c/swsh12.5.html">Zénith Suprême</a><span class="det">janv. 2023</span><span class="det moyen" title="Nombre de références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie · 2 en stock sur 8 suivis</span></td>
-    <td class="v" data-v="0.46"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 217 rend ses 29,90 €</span><div class="pop"><ul><li><b>Chance</b> 0,5 % des boosters — 1 sur 217</li><li><b>Prix retenu</b> 29,90 € — hikaru distribution, PapyMonitor</li></ul></div></td>
-    <td class="n px" data-v="29.9"><span class="v">29,90 €</span><span class="det"><b class="bon">en rayon</b> · <a href="https://hikarudistribution.com/products/booster-pokemon-zenith-supreme-eb12-5" target="_blank" rel="noopener">hikaru distribution →</a></span></td>
-    <td class="v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente conclue relevée</span></td>
-    <td class="n px" data-v="31.89"><span class="v">31,89 € – 35,90 €</span><span class="det"><b class="moyen">annonce</b> · <a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Z%C3%A9nith+Supr%C3%AAme+EB12.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 offres →</a></span></td>
+  </tr><tr data-dispo="fin" data-ext="Zénith Suprême">
+    <td><a href="c/swsh12.5.html">Zénith Suprême</a><span class="det">janv. 2023</span><span class="det moyen" title="Références en stock aujourd&#39;hui, sur toutes celles que Cardz.gg et PapyMonitor surveillent pour cette extension, tous formats confondus. C&#39;est une photo des catalogues suivis, pas le stock d&#39;un magasin.">se raréfie 2/8</span></td>
+    <td class="v" data-v="0.46"><span class="pa mauvais"><i class="on"></i><i></i><i></i></span><span class="det">1 booster sur 217 rend son prix</span><div class="pop"><ul><li><b>Chance</b> 0,5 % des boosters — 1 sur 217</li><li><b>Prix retenu</b> 29,90 € — hikaru distribution, PapyMonitor</li></ul></div></td>
+    <td class="n px" data-v="29.9"><span class="v">29,90 €</span><span class="det"><a href="https://hikarudistribution.com/products/booster-pokemon-zenith-supreme-eb12-5" target="_blank" rel="noopener">hikaru distribution →</a></span></td>
+    <td class="n v rev" data-v=""><span class="px vide">—</span><span class="det">aucune vente</span></td>
+    <td class="n px" data-v="31.89"><span class="v">31,89 € – 35,90 €</span><span class="det"><a href="https://www.ebay.fr/sch/i.html?_nkw=booster+pokemon+Z%C3%A9nith+Supr%C3%AAme+EB12.5&amp;_sacat=183456&amp;LH_PrefLoc=1&amp;_sop=15" target="_blank" rel="noopener">3 annonces →</a></span></td>
     <td class="n" data-v="0.97">0,97 €</td>
     <td class="n mauvais" data-v="0.03">0,03</td>
     <td class="n s" data-v="11.33"><span class="v">11,3 %</span><span class="det">1 sur 9</span></td>
@@ -606,8 +620,8 @@ th.s{white-space:nowrap}
 
   <p><b>Prix en rayon</b> — le prix le plus bas <b>en stock aujourd'hui</b> pour un booster
   vendu à l'unité, relevé chez les marchands suivis par <b>Cardz.gg</b> et <b>PapyMonitor</b>,
-  plus les relevés faits en magasin. L'enseigne est cliquable&nbsp;: elle mène à la page de
-  l'offre. C'est un prix qu'on peut payer, contrairement à celui de la colonne suivante.</p>
+  plus les relevés faits en magasin. Le nom de l'enseigne mène à la page de l'offre. C'est un
+  prix qu'on peut payer, contrairement à celui de la colonne suivante.</p>
 
   <p><b>Annonces France</b> — la fourchette des annonces <b>eBay France</b>, relevée par l'API
   officielle chez des vendeurs situés en France. <b>Une annonce n'engage que son vendeur</b>
@@ -632,8 +646,10 @@ th.s{white-space:nowrap}
   de taux de tirage publié&nbsp;: le contenu moyen est sous-évalué d'un montant inconnu.</p>
 
   <p><b>Les cinq colonnes de seuils</b> — pour chaque montant, la probabilité qu'un booster
-  contienne <b>au moins une carte au-dessus</b>, et en dessous le nombre de boosters à ouvrir
-  pour en espérer une. Elles remplacent l'ancienne colonne «&nbsp;belle carte&nbsp;», qui
+  contienne <b>au moins une carte à ce prix ou au-dessus</b>, et en dessous le nombre de
+  boosters à ouvrir pour en espérer une. <b>Les colonnes se recouvrent</b>&nbsp;: une carte à
+  30&nbsp;€ est comptée dans les quatre premières. C'est pourquoi les pourcentages décroissent
+  toujours de gauche à droite. Elles remplacent l'ancienne colonne «&nbsp;belle carte&nbsp;», qui
   imposait un seuil choisi par nous&nbsp;: 2&nbsp;€ suffit à occuper un enfant, 50&nbsp;€
   intéresse un revendeur, et ce n'est pas la même extension qui gagne. Les taux de tirage ne
   sont pas publiés par l'éditeur, ce sont des estimations communautaires&nbsp;: elles
@@ -730,27 +746,54 @@ th.s{white-space:nowrap}
 
   // Filtre de disponibilité : juger une extension qu'on ne trouve plus en magasin n'aide pas
   // quelqu'un debout devant un présentoir.
-  var f = document.getElementById('fDispo'), vide = document.getElementById('vide');
+  var f = document.getElementById('fDispo'), fe = document.getElementById('fExt'),
+      vide = document.getElementById('vide');
   function filtrer(){
     var n = 0;
     [].forEach.call(tb.rows, function(r){
-      var ok = !f.checked || r.dataset.dispo === 'rayon';
+      var ok = (!f.checked || r.dataset.dispo === 'rayon')
+            && (!fe.value || r.dataset.ext === fe.value);
       r.style.display = ok ? '' : 'none';
       if (ok) n++;
     });
     vide.style.display = n ? 'none' : 'block';
   }
   f.addEventListener('change', filtrer);
-
-  // LE DÉTAIL AU CLIC. Le projet a appris à ses dépens qu'un chiffre entouré de réserves doit
-  // être retiré, pas habillé : ici l'inverse, la pastille n'a le droit d'exister que parce que
-  // les nombres qui la produisent sont à un clic, avec leur source et leur date.
-  [].forEach.call(tb.querySelectorAll('td.v'), function(td){
-    if (!td.querySelector('.pop')) return;
-    td.addEventListener('click', function(){ td.classList.toggle('ouvert'); });
-  });
+  fe.addEventListener('change', filtrer);
 
   trier(1);   // À ouvrir — l'index suit la position de la colonne, pas son data-c
+})();
+
+(function(){
+  var ouvert = null;
+  function fermer(){ if (ouvert){ ouvert.classList.remove('ouvert'); ouvert = null; } }
+  function placer(td){
+    var pop = td.querySelector('.pop'); if (!pop) return;
+    var r = td.getBoundingClientRect();
+    // Mesure après affichage : la hauteur dépend du contenu, qu'on ne connaît pas d'avance.
+    pop.style.left = '0px'; pop.style.top = '0px';
+    var p = pop.getBoundingClientRect(), m = 12;
+    var x = Math.min(Math.max(m, r.left), window.innerWidth - p.width - m);
+    var y = r.bottom + 6;
+    if (y + p.height > window.innerHeight - m) y = Math.max(m, r.top - p.height - 6);
+    pop.style.left = x + 'px'; pop.style.top = y + 'px';
+  }
+  document.addEventListener('click', function(e){
+    if (!e.target.closest) { fermer(); return; }
+    // Un clic DANS le panneau ne le referme pas : il peut contenir un lien à suivre.
+    if (e.target.closest('.pop')) return;
+    var td = e.target.closest('td.v');
+    if (!td || !td.querySelector('.pop')) { fermer(); return; }
+    if (td === ouvert) { fermer(); return; }
+    fermer();
+    td.classList.add('ouvert'); ouvert = td; placer(td);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') fermer(); });
+  window.addEventListener('resize', fermer);
+  // Le panneau SUIT sa cellule au défilement au lieu de se refermer : sur téléphone, un appui
+  // déplace souvent la page d'un pixel ou deux, et fermer là-dessus rendait le détail
+  // inatteignable.
+  window.addEventListener('scroll', function(){ if (ouvert) placer(ouvert); }, true);
 })();
 
 (function(){
