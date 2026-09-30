@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Test des liens Cardmarket</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#2a313c;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff}
+@media (prefers-color-scheme: light){:root{--bg:#f6f8fa;--panel:#fff;--line:#d0d7de;--text:#1f2328;--muted:#59636e;--accent:#0969da}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 56px}
+header{border-bottom:1px solid var(--line);margin-bottom:18px;padding:22px 0 14px}
+h1{margin:0 0 6px;font-size:1.4rem}
+.sous{color:var(--muted);font-size:.9rem;margin:4px 0}
+.cas{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+h2{font-size:1.05rem;margin:0 0 4px}
+.n{display:inline-block;min-width:1.6em;text-align:center;border-radius:6px;background:var(--accent);color:var(--bg);font-size:.85rem;margin-right:4px}
+.ctx{color:var(--muted);font-size:.88rem;margin:0 0 8px}
+.liens{list-style:none;padding:0;margin:0}
+.liens li{border-top:1px solid var(--line);padding:9px 0}
+.liens a{color:var(--accent);text-decoration:none;font-weight:600}
+.liens a:hover{text-decoration:underline}
+.att{font-size:.9rem;margin-top:2px}
+.url{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;color:var(--muted);overflow-wrap:anywhere;margin-top:2px}
+</style>
+</head>
+<body><div class="wrap">
+<header>
+<h1>Test des liens Cardmarket</h1>
+<p class="sous">Aucun script ne peut ouvrir Cardmarket : ce contrôle est à faire à la main. Ouvrez chaque lien, comparez à « ce qu'on doit voir », puis répondez cas par cas (par exemple « 1A ok, 4B = Additionals, 11A non filtré »).</p>
+<p class="sous">Les liens marqués « nouveau » ou « servi » sont ceux du site. Page générée le 2026-09-29 par scripts/gen-test-liens-cardmarket.mjs.</p>
+</header>
+
+<section class="cas">
+  <h2><span class="n">1</span> Mew-ex n°158 — 30 ans (Futuristic)</h2>
+  <p class="ctx">Carte récente, trois « Mew ex » homonymes dans le set (n°066, 152, 158). idProduct 907762.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907762&amp;language=2" target="_blank" rel="noopener"><b>1A</b> nouveau</a>
+      <div class="att">La FICHE de la carte, pas une liste. Extension « 30th Celebration », numéro 158. Filtres actifs : langue français, pays du vendeur France (l&#39;adresse se réécrit en …/Singles/30th-Celebration/Mew-ex-…?language=2&amp;sellerCountry=12).</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907762&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907762" target="_blank" rel="noopener"><b>1B</b> sans filtre</a>
+      <div class="att">La même fiche, toutes langues, tous pays : plus d&#39;offres qu&#39;en A.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907762</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Mew+ex" target="_blank" rel="noopener"><b>1C</b> ancien lien</a>
+      <div class="att">Une liste de tous les « Mew ex » de toutes les extensions : c&#39;est le défaut signalé.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=Mew+ex</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">2</span> Nymphali-ex n°071 contre n°153 — 30 ans</h2>
+  <p class="ctx">Homonymes exacts au catalogue Cardmarket (même nom, même attaque), prix sans rapport.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907678&amp;language=2" target="_blank" rel="noopener"><b>2A</b> n°071</a>
+      <div class="att">Fiche « Sylveon ex », numéro 071, prix de quelques euros.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907678&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907758&amp;language=2" target="_blank" rel="noopener"><b>2B</b> n°153</a>
+      <div class="att">Fiche « Sylveon ex », numéro 153, prix bien plus élevé. A et B doivent être DEUX fiches différentes.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907758&amp;language=2</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">3</span> Pikachu-ex n°149 contre n°150 — 30 ans</h2>
+  <p class="ctx">Pokedexia donnait le même produit (907757) aux deux ; la nouvelle table les sépare par les attaques.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907756&amp;language=2" target="_blank" rel="noopener"><b>3A</b> n°149</a>
+      <div class="att">Fiche numéro 149 (attaques Pika-Pika Parade, Thunderbolt).</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907756&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907757&amp;language=2" target="_blank" rel="noopener"><b>3B</b> n°150</a>
+      <div class="att">Fiche numéro 150 (attaques Zip-Zap Frenzy, Thunder).</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=907757&amp;language=2</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">4</span> Évoli-ex n°075 — Évolutions Prismatiques (le piège 810430)</h2>
+  <p class="ctx">TCGdex rattache deux produits à cette carte : 805465 (extension principale) et 810430 (autre extension Cardmarket). Le site doit ouvrir 805465.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805465&amp;language=2" target="_blank" rel="noopener"><b>4A</b> nouveau</a>
+      <div class="att">Fiche « Eevee ex », extension « Prismatic Evolutions », numéro 075 (PRE 075), tendance de quelques euros.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805465&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=810430&amp;language=2" target="_blank" rel="noopener"><b>4B</b> piège</a>
+      <div class="att">À titre de comparaison : quelle extension s&#39;affiche (probablement « Prismatic Evolutions: Additionals ») et quelle version de la carte ? Notez-le, c&#39;est la question ouverte de SUIVI.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=810430&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805561&amp;language=2" target="_blank" rel="noopener"><b>4C</b> n°167</a>
+      <div class="att">L&#39;illustration spéciale : même nom, numéro 167, prix sans commune mesure avec A.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805561&amp;language=2</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">5</span> Reverse — Noeunoeuf n°001, Évolutions Prismatiques</h2>
+  <p class="ctx">Sur Cardmarket, la reverse est un filtre de la fiche, pas un autre produit (paramètre isReverseHolo, doc API MKM).</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805390&amp;language=2" target="_blank" rel="noopener"><b>5A</b> normale</a>
+      <div class="att">Fiche « Exeggcute », numéro 001.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805390&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805390&amp;language=2&amp;isReverseHolo=Y" target="_blank" rel="noopener"><b>5B</b> reverse</a>
+      <div class="att">Même fiche, filtre « Reverse Holo : oui » coché, seules les offres reverse restent. Si le filtre n&#39;est pas coché, dites-le : le site n&#39;utilise pas encore ce paramètre.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=805390&amp;language=2&amp;isReverseHolo=Y</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">6</span> Ancienne carte — Dracaufeu n°4, Set de Base</h2>
+  <p class="ctx">Le catalogue a deux produits « Charizard [Energy Burn | Fire Spin] » dans l&#39;extension Base Set (273699, 660224). pokemontcg.io renvoie vers …/Charizard-V2-BS4. Le site sert 273699 (produit principal TCGdex).</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=273699&amp;language=2" target="_blank" rel="noopener"><b>6A</b> nouveau</a>
+      <div class="att">Fiche Dracaufeu 4/102 du Set de Base. Notez le suffixe de l&#39;adresse après redirection (V1 ou V2) et ce qui distingue cette version.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=273699&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=660224&amp;language=2" target="_blank" rel="noopener"><b>6B</b> autre produit</a>
+      <div class="att">L&#39;autre produit du même nom : quelle différence avec A (version, tampon, édition) ?</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=660224&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Singles/Base-Set/Charizard-V2-BS4?language=2&amp;sellerCountry=12" target="_blank" rel="noopener"><b>6C</b> slug pokemontcg.io</a>
+      <div class="att">Fiche relevée par pokemontcg.io. Est-ce la même page que A, ou que B ?</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Singles/Base-Set/Charizard-V2-BS4?language=2&amp;sellerCountry=12</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">7</span> Promo — Dracaufeu V SWSH050</h2>
+  <p class="ctx">Promo Black Star Épée et Bouclier, produit 505255. Hors de nos collections : cas de contrôle du format sur une extension de promos.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=505255&amp;language=2" target="_blank" rel="noopener"><b>7A</b> par identifiant</a>
+      <div class="att">Fiche « Charizard V », extension « SWSH Black Star Promos », numéro SWSH050.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=505255&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Singles/SWSH-Black-Star-Promos/Charizard-V-SWSH50?language=2&amp;sellerCountry=12" target="_blank" rel="noopener"><b>7B</b> slug pokemontcg.io</a>
+      <div class="att">La même fiche que A.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Singles/SWSH-Black-Star-Promos/Charizard-V-SWSH50?language=2&amp;sellerCountry=12</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">8</span> Carte hors catalogue — Mew R/RGB, 30 ans</h2>
+  <p class="ctx">Lien relevé à la main (slug). Le catalogue a quatre « Mew [Psychic | 30C] » : 907672 (n°065), puis 909509, 909510, 909511.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Singles/30th-Celebration/Mew-V1-30CRRGB" target="_blank" rel="noopener"><b>8A</b> relevé manuel (servi)</a>
+      <div class="att">Fiche du Mew R/RGB.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Singles/30th-Celebration/Mew-V1-30CRRGB</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=909509&amp;language=2" target="_blank" rel="noopener"><b>8B</b> par identifiant</a>
+      <div class="att">Est-ce la même fiche que A ? Si oui, les trois Mew RGB peuvent passer par l&#39;identifiant.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=909509&amp;language=2</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">9</span> Scellé — ETB 30 ans</h2>
+  <p class="ctx">Produit 895551, « 30th Celebration Elite Trainer Box » (page coffrets).</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=895551&amp;language=2" target="_blank" rel="noopener"><b>9A</b> nouveau</a>
+      <div class="att">Fiche de l&#39;ETB (pas l&#39;ETB Pokémon Center), offres en français depuis la France.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=895551&amp;language=2</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=895551" target="_blank" rel="noopener"><b>9B</b> sans filtre</a>
+      <div class="att">Même fiche, toutes langues. Si A affiche zéro offre alors que B en a, le filtre langue ne convient pas au scellé : dites-le.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=895551</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">10</span> Scellé — display Flammes Fantasmagoriques</h2>
+  <p class="ctx">Produit 846746, « Phantasmal Flames Booster Box » (display 36 boosters, page boosters et coffrets).</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products?idProduct=846746&amp;language=2" target="_blank" rel="noopener"><b>10A</b> nouveau</a>
+      <div class="att">Fiche du display 36 boosters, pas du demi-display 18, offres françaises.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products?idProduct=846746&amp;language=2</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">11</span> Repli — recherche restreinte à l&#39;extension (Reshiram, Célébrations)</h2>
+  <p class="ctx">Sans produit sûr (TCGdex donne le même produit à cel25-2 et cel25cc-CC020), le site sert une recherche restreinte à l&#39;extension 4347. C&#39;est le lien de 655 cartes du site : le cas le moins prouvé.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Singles?searchMode=v2&amp;idCategory=51&amp;idExpansion=4347&amp;searchString=Reshiram&amp;idRarity=0&amp;perSite=30" target="_blank" rel="noopener"><b>11A</b> nouveau (servi)</a>
+      <div class="att">Une LISTE limitée à l&#39;extension « Celebrations », ne montrant que des « Reshiram ». Si la liste mélange plusieurs extensions, le filtre idExpansion est ignoré sans slug : dites-le.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Singles?searchMode=v2&amp;idCategory=51&amp;idExpansion=4347&amp;searchString=Reshiram&amp;idRarity=0&amp;perSite=30</div></li>
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Singles/Celebrations?searchMode=v2&amp;idCategory=51&amp;idExpansion=4347&amp;searchString=Reshiram&amp;idRarity=0&amp;perSite=30" target="_blank" rel="noopener"><b>11B</b> avec slug</a>
+      <div class="att">Même résultat attendu que A. Si seul B est filtré, il faudra le slug d&#39;extension.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Singles/Celebrations?searchMode=v2&amp;idCategory=51&amp;idExpansion=4347&amp;searchString=Reshiram&amp;idRarity=0&amp;perSite=30</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">12</span> Dernier recours — recherche par nom (Dracaufeu-GX, Destinées Occultes Shiny Vault)</h2>
+  <p class="ctx">Extension Cardmarket inconnue pour les 94 cartes du Shiny Vault : lien de recherche par nom seul, comme avant.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Singles?searchMode=v2&amp;idCategory=51&amp;idExpansion=2514&amp;searchString=Charizard+GX&amp;idRarity=0&amp;perSite=30" target="_blank" rel="noopener"><b>12A</b> servi</a>
+      <div class="att">Liste de tous les « Charizard GX ». Attendu, c&#39;est la limite connue.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Singles?searchMode=v2&amp;idCategory=51&amp;idExpansion=2514&amp;searchString=Charizard+GX&amp;idRarity=0&amp;perSite=30</div></li>
+  </ol>
+</section>
+<section class="cas">
+  <h2><span class="n">13</span> Témoin négatif — /Singles?idProduct=</h2>
+  <p class="ctx">Forme signalée comme cassée par un dépôt open source (pkmn-master-set) : sert à vérifier que la différence avec A du cas 1 est bien réelle.</p>
+  <ol class="liens">
+    <li><a href="https://www.cardmarket.com/fr/Pokemon/Products/Singles?idProduct=805465" target="_blank" rel="noopener"><b>13A</b> forme fautive</a>
+      <div class="att">La liste générique des cartes, PAS la fiche Évoli-ex. Si c&#39;est la fiche, dites-le aussi.</div>
+      <div class="url">https://www.cardmarket.com/fr/Pokemon/Products/Singles?idProduct=805465</div></li>
+  </ol>
+</section>
+</div></body></html>
